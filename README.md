@@ -108,21 +108,21 @@ flowchart TD
 - [Imagery](#imagery) (see below)
 
 ### Colour Scheme:
-> ![NOTE]
+> [!NOTE]
 > TODO: Under development
 
 ### Typography:
-> ![NOTE]
+> [!NOTE]
 > TODO: Under development
 
 ### Imagery:
-> ![NOTE]
+> [!NOTE]
 > TODO: Under development
 ---
 
 
 ## Wireframes
-> ![NOTE]
+> [!NOTE]
 > TODO: Under development
 ---
 
@@ -148,7 +148,7 @@ flowchart TD
 
 
 ## Features
-> ![NOTE]
+> [!NOTE]
 > TODO: Under development
 - ### Existing Features:
 - ### Future Features:
@@ -156,13 +156,13 @@ flowchart TD
 
 
 ## Tools & Technologies
-> ![NOTE]
+> [!NOTE]
 > TODO: Under development
 ---
 
 
 ## Agile Development Process
-> ![NOTE]
+> [!NOTE]
 > TODO: Under development
 - ### GitHub Projects:
 - ### GitHub Issues:
@@ -171,13 +171,13 @@ flowchart TD
 
 
 ## Testing
-> ![IMPORTANT]
+> [!IMPORTANT]
 > For all testing, please refer to the [TESTING.md](TESTING.md) file.
 ---
 
 
 ## Deployment
-> ![NOTE]
+> [!NOTE]
 > TODO: Under development
 - ### GitHub Pages:
 - ### Local Development:
@@ -188,7 +188,7 @@ flowchart TD
 
 
 ## Credits
-> ![NOTE]
+> [!NOTE]
 > TODO: Under development
 - ### Content:
 - ### Media:
