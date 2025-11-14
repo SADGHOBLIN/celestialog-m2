@@ -2,9 +2,9 @@
 
 
 ## Project Rationale:
-
 > [!NOTE]
-> Section currently in progress.
+> TODO: Under development
+---
 
 
 ## UX
@@ -94,3 +94,102 @@ flowchart TD
     Fa <--> F
 ```
 - Users may also navigate to additional About, Contact pages to further learn about the website, or contact the developer.
+
+#### 4. Skeleton
+
+**Wireframes**:
+- (see illustrations here: [Wireframes](#wireframes))
+
+#### 5. Surface
+
+**Visual Design Elements**:
+- [Colours](#colour-scheme) (see below)
+- [Typography](#typography) (see below)
+- [Imagery](#imagery) (see below)
+
+### Colour Scheme:
+> ![NOTE]
+> TODO: Under development
+
+### Typography:
+> ![NOTE]
+> TODO: Under development
+
+### Imagery:
+> ![NOTE]
+> TODO: Under development
+---
+
+
+## Wireframes
+> ![NOTE]
+> TODO: Under development
+---
+
+
+## User Stories
+- A list of user stories can be found on this [Project's Board](https://github.com/users/SADGHOBLIN/projects/4/views/1), which was used to track development progress, using [MoSCoW Prioritisation](#moscow-prioritsation).
+- **Acceptance criteria** and **tasks** for each can user story can be found by following the project board link.
+- More information regarding the [Agile Development Process](#agile-development-process) that was used for this project can be found later in the document.
+
+| User Story & Classification | Project Board Link | Description |
+| --- | --- | --- |
+| #1: ![badge](https://img.shields.io/badge/must_have-b60205) | [Intuitive navigation and responsive design](https://github.com/SADGHOBLIN/celestialog-m2/issues/1) | As a first-time visitor, I should be able to quickly and easily navigate through the website without much guidance. The design and layout of information should infer where I need to go next, and how. I expect the website to respond according to my screen-size, or type of device, whilst still providing a quality experience. |
+| #2: ![badge](https://img.shields.io/badge/must_have-b60205) | [Create and save journal entries](https://github.com/SADGHOBLIN/celestialog-m2/issues/2) | As a first-time user, I expect to be able to create a new note / entry on my device of choice. I should be able to save the entry so that I can come to view it at a later date. |
+| #3: ![badge](https://img.shields.io/badge/must_have-b60205) | [Edit and delete journal entries](https://github.com/SADGHOBLIN/celestialog-m2/issues/3) | As a returning user to the website, I would like to be able to make edits to my notes, or delete unwanted entries. This would help keep my notes organised. |
+| #4: ![badge](https://img.shields.io/badge/must_have-b60205) | [Moon tracker information](https://github.com/SADGHOBLIN/celestialog-m2/issues/4) | As a moon-gazer, I want to be able to see the current phase that the moon is in, along with other information about the night's moon. Understanding the phase of the moon may add an unseen level of atmosphere to my journaling experience, allowing me to feel more connected to my writing. |
+| #5: ![badge](https://img.shields.io/badge/must_have-b60205) | [About and help sections](https://github.com/SADGHOBLIN/celestialog-m2/issues/5) | As a new user, I want to be able to find out more information about the website and its purpose. This would help me better understand how it may be of use to me, and allow me to better immerse myself in the experience. A tutorial / help section would be useful in helping me understand how to use specific features. |
+| #6: ![badge](https://img.shields.io/badge/should_have-1d76db) | [Contact section](https://github.com/SADGHOBLIN/celestialog-m2/issues/6) | As a user, I would like to be able to get in contact with the developer in case I have any questions about the website, or I spot a problem that I would like to report. It would be helpful to have various means of contacting the developer, so that I can use the one that best suits my preference. |
+| #7: ![badge](https://img.shields.io/badge/should_have-1d76db) | [Chat with journal planning advisor](https://github.com/SADGHOBLIN/celestialog-m2/issues/7) | As someone new to journaling, I would find it helpful to have access to some prompts to help me start writing. This would make me feel more immersed in the process, reduce hesitation and friction, and provide a better experience for someone new to journaling. |
+| #8: ![badge](https://img.shields.io/badge/should_have-1d76db) | [Add advisor personas](https://github.com/SADGHOBLIN/celestialog-m2/issues/8) | As a frequent user, I would like to further indulge in immersive features - I would like to chat with different advisor personas that are thematically relevant to the site's mood and tone. This would provide a more enriching user experience by adding an additional layer to the site's core functionality that would keep me coming back. |
+| #9: ![badge](https://img.shields.io/badge/could_have-0e8a16) | [Light theme mode with a todo list](https://github.com/SADGHOBLIN/celestialog-m2/issues/9) | As a frequent user who has enjoyed using the website for its moon and journaling features, I would like if I could also use it for 'day-time' features, such as making specific todo lists and task tracking. This could elevate the website from being solely a 'night-time' companion, to a full-day companion that allows me to keep track of my notes, lists, and journal in one place - with the additional advisor functionality. |
+| #10: ![badge](https://img.shields.io/badge/could_have-0e8a16) | [Error pages](https://github.com/SADGHOBLIN/celestialog-m2/issues/10) | As a user, I want to be notified of any errors that prevent me from using or accessing the website. I should then be able to direct myself easily back to the home page so that I can continue using the site. |
+---
+
+
+## Features
+> ![NOTE]
+> TODO: Under development
+- ### Existing Features:
+- ### Future Features:
+---
+
+
+## Tools & Technologies
+> ![NOTE]
+> TODO: Under development
+---
+
+
+## Agile Development Process
+> ![NOTE]
+> TODO: Under development
+- ### GitHub Projects:
+- ### GitHub Issues:
+- ### MoSCoW Priorisation:
+--- 
+
+
+## Testing
+> ![IMPORTANT]
+> For all testing, please refer to the [TESTING.md](TESTING.md) file.
+---
+
+
+## Deployment
+> ![NOTE]
+> TODO: Under development
+- ### GitHub Pages:
+- ### Local Development:
+- ### Cloning:
+- ### Forking:
+- ### Local vs Deployment:
+---
+
+
+## Credits
+> ![NOTE]
+> TODO: Under development
+- ### Content:
+- ### Media:
+- ### Acknowledgements:
