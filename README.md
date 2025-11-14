@@ -66,6 +66,7 @@
     - Contact information in footer, with prominent placement of social media links.
 
 **User Flow**:
+- Flowchart diagram to illustrate the primary user flow through the main content features.
 ```mermaid
 flowchart TD
     A{{Celestialog}} --> Aa[[Home Page]]
@@ -92,3 +93,4 @@ flowchart TD
     Fb --> E
     Fa <--> F
 ```
+- Users may also navigate to additional About, Contact pages to further learn about the website, or contact the developer.
