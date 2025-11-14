@@ -38,3 +38,57 @@
 - Create a unique, story-driven journaling experience that distinguishes itself thematically from other generic note-taking / wellness apps.
 - Improve user retention by offerring an engaging USP to accompany standard journaling / note-taking tools.
 - Build a scalable framework and prototype, that allows for further development into future features or products: *tarot-like decks, physical books, persona packs, and interactive fiction*.
+
+#### 2. Scope
+
+**Features**:
+- (see a breakdown here: [Features](#features))
+
+**Content Requirements**:
+- Responsive site that works across all devices and common browsers.
+- Functional journal with features to write, edit, and delete entries.
+- Interact with an advisor about journaling, with the option to select from multiple personas.
+- Moon information displayed to the user is clear, accurate, and up to date.
+- Onboarding text containing brief instructions to get the user set-up and accustomed to features.
+- Unified and coherent theme to set the appropriate tone for an immersive feeling app.
+
+#### 3. Structure
+
+**Information Architecture**:
+- **Navigation menu**:
+    - Accessible links in the navbar to relevant sections: Home, About, Contact.
+- **Information layout**:
+    - Structure of main website features arranged in order of priority: *Journal > Advisor chat > Persona selection > Moon information.*
+- **Hierarchy**:
+    - Easy to understand navigation bar.
+    - Main content features, structured appropriately.
+    - Clear call-to-action buttons.
+    - Contact information in footer, with prominent placement of social media links.
+
+**User Flow**:
+```mermaid
+flowchart TD
+    A{{Celestialog}} --> Aa[[Home Page]]
+    Aa --> B{Journaling Interface}
+
+    B --> Ba{{Display Moon}}
+    Ba --> Bb[Change between day / night mode]
+
+    B --> C(New User)
+    C --> Ca[Create first note / entry]
+    Ca --> Cb([Note is pre-populated with help instructions])
+
+    B --> D(Existing User)
+    D --> Da[Add note] & Db[Edit note] & Dc[Delete note]
+
+    B --> E{Advisor chat}
+    E --> Eb[User selects from different advisor personas]
+    E --> Ea[User input to send message to advisor]
+
+    Ea --> Fa{{Local AI model from WebLLM}}
+    Da & Db & Dc --> F[(Saved in Local Storage)]
+
+    Fa --> Fb([Feedback response to user])
+    Fb --> E
+    Fa <--> F
+```
