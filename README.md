@@ -122,8 +122,15 @@ flowchart TD
 
 
 ## Wireframes
-> [!NOTE]
-> TODO: Under development
+
+To follow best practice, wireframes were constructed for mobile, tablet, and desktop. [Figma](https://figma.com/) was used to design the wireframes for this site, and the full file can be viewed [in the browser, here](https://www.figma.com/design/N0rk5xWMFahP6trWY6VegF/celestialog-wireframes?node-id=0-1&t=Mc1hnYq4OYLsRT0t-1).
+
+| Page | Wireframe - desktop, tablet, mobile |
+| --- | --- |
+| index.html | ![screenshot](documentation/wireframes/home-1.png) ![screenshot](documentation/wireframes/home-2.png) ![screenshot](documentation/wireframes/home-3.png)|
+| journal.html | ![screenshot](documentation/wireframes/journal-1.png) ![screenshot](documentation/wireframes/journal-2.png) ![screenshot](documentation/wireframes/journal-3.png) |
+| about.html | ![screenshot](documentation/wireframes/about.png) |
+| contact.html | ![screenshot](documentation/wireframes/contact.png) |
 ---
 
 
