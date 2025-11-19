@@ -15,6 +15,7 @@ async function saveAstronomyData() {
             timestamp: Date.now()
         };
         localStorage.setItem("astronomyData", JSON.stringify(payload));
+        console.log("Data successfully saved to local stoage");
         return payload;
     } else {
         const errorMessage = data.message || data.error || "Unknown API error";
@@ -25,32 +26,34 @@ async function saveAstronomyData() {
 // Load API data from local storage or fetch new data if none stored
 async function getMoonData() {
     const savedData = localStorage.getItem("astronomyData");
-
     return savedData
-    ? JSON.parse(savedData)
-    : await saveAstronomyData();
+        ? JSON.parse(savedData)
+        : await saveAstronomyData();
 }
 
-getMoonData().then(savedData => {
-    console.log(savedData.moonData);
-    console.log(savedData.timestamp);
-    console.log(savedData.moonData.astronomy);
-});
+// Check if API data is fresh
+function isDataFresh(payload) {
+    const age = Date.now() - payload.timestamp;
+    const expiryTime = 12 * 60 * 60 * 1000;
 
+    if (age <= expiryTime) {
+        console.log("data is fresh");
+        return true;
+    } else {
+        console.log("data is stale");
+        return false;
+    }
+}
 
-// async function displayMoonData() {
-//     getMoonData();
-//     console.log(moonData.astronomy);
-// }
+// Main function to display moon data to user
+// Working function -> Retrieve moon data, check if valid, and display it to the user
+async function displayMoonData() {
+    let payload = await getMoonData();
 
-// on refresh:
-// Is data available?
+    if (!isDataFresh(payload)) {
+        payload = await saveAstronomyData();
+    }
 
-// no > GET NEW DATA > data
-//      run get function, return data
-
-// yes > IS DATA FRESH? > no ^ > yes > data
-//      data.time IF statement > data
-//      GET NEW DATA > data
-
-// FRESH DATA > use
+    const moonData = payload.moonData;
+    console.log(moonData);
+}
