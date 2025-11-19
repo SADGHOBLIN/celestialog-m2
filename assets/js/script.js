@@ -23,7 +23,7 @@ async function saveAstronomyData() {
     }
 }
 
-// Load API data from local storage or fetch new data if none stored
+// Load API data from local storage or fetch new data if none is stored
 async function getMoonData() {
     const savedData = localStorage.getItem("astronomyData");
     return savedData
@@ -31,12 +31,14 @@ async function getMoonData() {
         : await saveAstronomyData();
 }
 
-// Check if API data is fresh
+// Check if API data is fresh - less than 12 hours and the same current date
 function isDataFresh(payload) {
     const age = Date.now() - payload.timestamp;
     const expiryTime = 12 * 60 * 60 * 1000;
+    const dataDate = new Date(payload.timestamp).toDateString();
+    const currentDate = new Date().toDateString();
 
-    if (age <= expiryTime) {
+    if (age <= expiryTime && dataDate === currentDate) {
         console.log("data is fresh");
         return true;
     } else {
@@ -46,7 +48,7 @@ function isDataFresh(payload) {
 }
 
 // Main function to display moon data to user
-// Working function -> Retrieve moon data, check if valid, and display it to the user
+// TODO: get element ID and display appropriate data
 async function displayMoonData() {
     let payload = await getMoonData();
 
@@ -55,5 +57,5 @@ async function displayMoonData() {
     }
 
     const moonData = payload.moonData;
-    console.log(moonData);
+    console.log("Data ready for use:", moonData);
 }
