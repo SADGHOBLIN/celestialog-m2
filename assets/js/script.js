@@ -1,3 +1,23 @@
+// AI language models and engine from WebLLM (MLC AI)
+// Import engine from WebLLM
+import { CreateMLCEngine } from "https://esm.run/@mlc-ai/web-llm";
+// Load language models in the browser, dependent on device
+async function createEngine() {
+    const llmList = {
+        defaultModel: "Llama-3.2-3B-Instruct-q4f16_1-MLC",
+        mobileModel: "Llama-3.2-1B-Instruct-q4f16_1-MLC",
+        experimentalModel: "NeuralHermes-2.5-Mistral-7B-q4f16_1-MLC"
+    };
+
+    const engine = await CreateMLCEngine(llmList.defaultModel, {
+        initProgressCallback: (progress) => {
+            console.log("loading:", progress.progress);
+        }
+    });
+    console.log("model loading complete");
+    return engine;
+}
+
 // Astronomy API from ipgeolocation
 // GET astronomy data from API and save to local storage
 async function saveAstronomyData() {
@@ -70,10 +90,8 @@ function checkMoonVisibility(today, moonrise, moonset) {
 }
 
 // Main function to display moon data to user
-// TODO: get element ID and display appropriate data
 async function displayMoonData() {
     let payload = await getMoonData();
-
     if (!isDataFresh(payload)) {
         payload = await saveAstronomyData();
     }
@@ -97,12 +115,12 @@ async function displayMoonData() {
     const moonVisibility = document.getElementById("moon-visibility-data");
     const isVisible = checkMoonVisibility(today, moonrise, moonset);
     if (isVisible) {
-        moonVisibility.innerHTML = `<p id="moon-visibility">VISIBLE<br>${moonrise} --- ${moonset}</p>`;
+        moonVisibility.innerHTML = `<p id="moon-visibility">VISIBLE<br>${moonrise} - ${moonset}</p>`;
     } else {
         moonVisibility.innerHTML = `<p id="moon-visibility">Moonrise:<br>${moonrise}</p>`;
     }
-
     console.log(moonData);
 }
 
 displayMoonData();
+createEngine();
