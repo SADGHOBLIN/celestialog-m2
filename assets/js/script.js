@@ -21,6 +21,16 @@ const elements = {
 
 // HELPERS ------------------------------
 // CREATE language model engine, in cache storage
+function cacheEngine() {
+    let cachedEngine = null;
+
+    return async function getEngine() {
+        return cachedEngine
+            ? cachedEngine
+            : cachedEngine = await createEngine();
+    };
+}
+
 async function createEngine() {
     const engine = await CreateMLCEngine(config.MODELS.defaultModel, {
         initProgressCallback: (progress) => {
@@ -92,12 +102,12 @@ function checkMoonVisibility(today, moonrise, moonset) {
     const [rh, rm] = moonrise.split(":").map(Number);
     const [sh, sm] = moonset.split(":").map(Number);
 
-    const moonrise = rh * 100 + rm;
-    const moonset = sh * 100 + sm;
+    const rise = rh * 100 + rm;
+    const set = sh * 100 + sm;
 
-    return moonsise > moonset
-        ? now >= moonrise || now <= moonset
-        : now >= moonrise && now <= moonset;
+    return rise > set
+        ? now >= rise || now <= set
+        : now >= rise && now <= set;
 }
 
 // FEATURES ------------------------------
@@ -128,5 +138,10 @@ async function displayMoonData() {
 }
 
 // INITIALISE ------------------------------
-createEngine();
 displayMoonData();
+
+const getEngine = cacheEngine();
+async function useEngine() {
+    const engine = await getEngine();
+    /// engine can now be used with engine.action, etc.
+}
