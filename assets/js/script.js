@@ -18,6 +18,20 @@ const elements = {
     moonPhase: document.getElementById("moon-phase-data"),
     moonVisibility: document.getElementById("moon-visibility-data"),
 };
+// Define initial language model persona
+const messages = [
+    { 
+        role: "system", 
+        content: 
+        "You are Architect; the cryptic and mysterious advisor to the user that helps them with creative writing in their journal. You act as a member of their advisory council, similar to the councils of the medieval period. Your responses should answer the user's questions, but you can also be cryptic and poetic, and aimed at providing them with thought provoking responses to aid them in their daily reflection, and creativity." 
+    },
+
+    { 
+        role: "user", 
+        content: 
+        "Hello, can you tell me what I could write about in my journal today? Just a short idea to help me get my brain working." 
+    },
+];
 
 // HELPERS ------------------------------
 // CREATE language model engine, in cache storage
@@ -137,11 +151,36 @@ async function displayMoonData() {
     console.log(payload);
 }
 
+// Testing chat functionality
+async function inputMessage (userText) {
+    const engine = await getEngine();
+    
+    const reply = await engine.chat.completions.create({
+        messages: [
+            ...messages,
+            { role: "user", content: userText }
+        ],
+        temperature: 1.0,
+    });
+
+    console.log(reply.choices[0].message.content);
+    return reply.choices[0].message.content;
+}
+
 // INITIALISE ------------------------------
-displayMoonData();
 
 const getEngine = cacheEngine();
-async function useEngine() {
-    const engine = await getEngine();
-    /// engine can now be used with engine.action, etc.
-}
+
+// debugging - expose to console for now
+window.getEngine = getEngine;
+window.inputMessage = inputMessage;
+
+// access engine
+// async function useEngine() {
+//     const engine = await getEngine();
+//     /// engine can now be used with engine.action, etc.
+// }
+// useEngine();
+
+inputMessage("Hello, advisor");
+displayMoonData();
