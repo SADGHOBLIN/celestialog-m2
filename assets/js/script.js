@@ -77,45 +77,13 @@ async function getReply (userText) {
     return reply.choices[0].message.content;
 }
 
-// User send message to advisor
-async function sendMessage() {
-    const message = elements.userMsgInput.value.trim();
-    if (!message) {
-        return;
-    }
-    elements.userMsgInput.value = "";
-    isWaitingForReply = true;
-    elements.sendMsgBtn.disabled = true;
-
-    try {
-        // display user input in chat window
-        createChatBubble("user-msg", message);
-
-        // send to model, await response
-        const thinking = createLoadingBubble();
-        const reply = await getReply(message);
-        thinking.textContent = reply;
-        thinking.classList.remove("loading");
-
-    } catch (error) {
-        console.error("Failed to get a reply:", error);
-        createChatBubble("advisor-msg", error.message);
-
-    } finally {
-        // enable user input again
-        isWaitingForReply = false;
-        elements.sendMsgBtn.disabled = false;
-        elements.userMsgInput.focus();
-    }
-}
-
 // Create a new chat bubble in the chat window
 function createChatBubble(userClass, message) {
     const newMessage = document.createElement("div");
     newMessage.classList.add(userClass);
     newMessage.textContent = message;
     elements.chatWindow.appendChild(newMessage);
-    elements.chatWindow.scrollTop = elements.chatWindow.scrollHeight;
+    scrollSmooth(elements.chatWindow);
 }
 
 // Create loading bubble whilst awaiting advisor response
@@ -124,8 +92,16 @@ function createLoadingBubble() {
     thinking.classList.add("advisor-msg", "loading");
     thinking.textContent = "Advisor is thinking...";
     elements.chatWindow.appendChild(thinking);
-    elements.chatWindow.scrollTop = elements.chatWindow.scrollHeight;
+    scrollSmooth(elements.chatWindow);
     return thinking;
+}
+
+// Scroll smoothly to location
+function scrollSmooth(scrollToLocation) {
+    scrollToLocation.scrollTo({
+        top: scrollToLocation.scrollHeight,
+        behavior: "smooth"
+    });
 }
 
 // LOAD API data from local storage and check freshness, or GET new fresh data
@@ -228,6 +204,39 @@ async function displayMoonData() {
         : `<p id="moon-visibility">Moonrise:<br>${moonrise}</p>`;
     
     console.log(payload);
+}
+
+// User send message to advisor
+async function sendMessage() {
+    const message = elements.userMsgInput.value.trim();
+    if (!message) {
+        return;
+    }
+    elements.userMsgInput.value = "";
+    isWaitingForReply = true;
+    elements.sendMsgBtn.disabled = true;
+
+    try {
+        // display user input in chat window
+        createChatBubble("user-msg", message);
+
+        // send to model, await response
+        const thinking = createLoadingBubble();
+        const reply = await getReply(message);
+        thinking.textContent = reply;
+        thinking.classList.remove("loading");
+
+    } catch (error) {
+        console.error("Failed to get a reply:", error);
+        createChatBubble("advisor-msg", error.message);
+
+    } finally {
+        // enable user input again
+        isWaitingForReply = false;
+        elements.sendMsgBtn.disabled = false;
+        elements.userMsgInput.focus();
+        scrollSmooth(elements.chatWindow);
+    }
 }
 
 // JOURNAL FUNCTIONALITY - in development

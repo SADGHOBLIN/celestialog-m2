@@ -100,8 +100,6 @@
     display: flex;
     justify-content: center;
     align-items: center;
-
-    outline: 2px solid red;
 }
 
 .journal-wrapper,
@@ -116,14 +114,11 @@
 
 #chat-body {
     width: 100%;
-    height: 200px;
-    /* max-height: 100%; */
     flex-grow: 1;
     display: flex;
     flex-direction: column;
-    justify-content: flex-end;
     overflow-y: auto;
-    gap: 12px;
+    gap: 16px;
 }
 
 .user-msg,
@@ -143,6 +138,10 @@
     align-self: flex-end;
 
     background-color: white;
+}
+
+.first-msg {
+    margin-top: auto;
 }
 
 /* debugging */
