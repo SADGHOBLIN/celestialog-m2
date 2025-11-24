@@ -77,6 +77,32 @@ async function getReply (userText) {
     return reply.choices[0].message.content;
 }
 
+// User send message to advisor
+async function sendMessage() {
+    const message = elements.userMsgInput.value.trim();
+    if (!message) {
+        return;
+    }
+    elements.userMsgInput.value = "";
+
+    // display user input in chat window
+    const newUserMsg = document.createElement("div");
+    newUserMsg.classList.add("user-msg");
+    newUserMsg.textContent = message;
+    elements.chatWindow.appendChild(newUserMsg);
+    elements.chatWindow.scrollTop = elements.chatWindow.scrollHeight;
+
+    // send to model, await response
+    const reply = await getReply(message);
+
+    // display reply message in chat window
+    let newReply = document.createElement("div");
+    newReply.classList.add("advisor-msg");
+    newReply.textContent = reply;
+    elements.chatWindow.appendChild(newReply);
+    elements.chatWindow.scrollTop = elements.chatWindow.scrollHeight;
+}
+
 // LOAD API data from local storage and check freshness, or GET new fresh data
 async function getMoonData() {
     const savedData = localStorage.getItem("astronomyData");
@@ -188,46 +214,18 @@ elements.useJournal.addEventListener("click", () => {
     toggleHidden("journal", "advisor");
 });
 
-// Use chat when message sent into chat box
+// Advisor chatbox functionality
 elements.userMsgInput.focus();
-elements.sendMsgBtn.addEventListener("click", async () => {
-    const message = elements.userMsgInput.value.trim();
-    if (!message) {
-        return;
+elements.sendMsgBtn.addEventListener("click", sendMessage);
+elements.userMsgInput.addEventListener("keypress", event => {
+    if (event.key === "Enter") {
+        sendMessage();
     }
-    console.log(message);
-
-    // display user input in chat window
-    const newUserMsg = document.createElement("div");
-    newUserMsg.classList.add("user-msg");
-    newUserMsg.textContent = message;
-    elements.chatWindow.appendChild(newUserMsg);
-    elements.chatWindow.scrollTop = elements.chatWindow.scrollHeight;
-
-    // send to model, await response
-    const reply = await getReply(message);
-
-    // display reply message in chat window
-    let newReply = document.createElement("div");
-    newReply.classList.add("advisor-msg");
-    newReply.textContent = reply;
-    elements.chatWindow.appendChild(newReply);
-    elements.chatWindow.scrollTop = elements.chatWindow.scrollHeight;
 });
 
 // INITIALISE ------------------------------
-
 const getEngine = cacheEngine();
+displayMoonData();
 
 // debugging - expose to console for now
 window.getEngine = getEngine;
-
-// access engine
-// async function useEngine() {
-//     const engine = await getEngine();
-//     /// engine can now be used with engine.action, etc.
-// }
-
-// useEngine();
-// getReply("Hello, advisor");
-displayMoonData();
