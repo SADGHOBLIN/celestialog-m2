@@ -17,6 +17,10 @@ const elements = {
     date: document.getElementById("current-date-data"),
     moonPhase: document.getElementById("moon-phase-data"),
     moonVisibility: document.getElementById("moon-visibility-data"),
+
+    chatWindow: document.getElementById("chat-body"),
+    userMsgInput: document.getElementById("user-msg-input"),
+    sendMsgBtn: document.getElementById("send-msg-btn"),
 };
 // Define initial language model persona
 const messages = [
@@ -166,6 +170,34 @@ async function inputMessage (userText) {
     console.log(reply.choices[0].message.content);
     return reply.choices[0].message.content;
 }
+
+
+elements.userMsgInput.focus();
+elements.sendMsgBtn.addEventListener("click", async () => {
+    const message = elements.userMsgInput.value.trim();
+    console.log(message);
+
+    // display user input in chat window
+    const newUserMsg = document.createElement("div");
+    newUserMsg.classList.add("user-msg");
+    newUserMsg.textContent = message;
+    elements.chatWindow.appendChild(newUserMsg);
+
+    elements.chatWindow.scrollTop = elements.chatWindow.scrollHeight;
+
+
+    // send to model, await response
+    const reply = await inputMessage(message);
+
+    // display reply message in chat window
+    let newReply = document.createElement("div");
+    newReply.classList.add("advisor-msg");
+    newReply.textContent = reply;
+    elements.chatWindow.appendChild(newReply);
+
+    elements.chatWindow.scrollTop = elements.chatWindow.scrollHeight;
+
+})
 
 // INITIALISE ------------------------------
 
