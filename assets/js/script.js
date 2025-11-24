@@ -90,35 +90,30 @@ async function sendMessage() {
 
     try {
         // display user input in chat window
-        const newUserMsg = document.createElement("div");
-        newUserMsg.classList.add("user-msg");
-        newUserMsg.textContent = message;
-        elements.chatWindow.appendChild(newUserMsg);
-        elements.chatWindow.scrollTop = elements.chatWindow.scrollHeight;
+        createChatBubble("user-msg", message);
 
         // send to model, await response
         const reply = await getReply(message);
-
-        const newReply = document.createElement("div");
-        newReply.classList.add("advisor-msg");
-        newReply.textContent = reply;
-        elements.chatWindow.appendChild(newReply);
-        elements.chatWindow.scrollTop = elements.chatWindow.scrollHeight;
+        createChatBubble("advisor-msg", reply);
 
     } catch (error) {
         console.error("Failed to get a reply:", error);
-
-        const displayError = document.createElement("div");
-        displayError.classList.add("advisor-msg");
-        displayError.textContent = error.message || "Unknown error occurred";
-        elements.chatWindow.appendChild(displayError);
-        elements.chatWindow.scrollTop = elements.chatWindow.scrollHeight;
+        createChatBubble("advisor-msg", error.message);
 
     } finally {
         // enable user input again
         isWaitingForReply = false;
         elements.sendMsgBtn.disabled = false;
     }
+}
+
+// Create a new chat bubble in the chat window
+function createChatBubble(userClass, message) {
+    const newMessage = document.createElement("div");
+    newMessage.classList.add(userClass);
+    newMessage.textContent = message;
+    elements.chatWindow.appendChild(newMessage);
+    elements.chatWindow.scrollTop = elements.chatWindow.scrollHeight;
 }
 
 // LOAD API data from local storage and check freshness, or GET new fresh data
