@@ -18,6 +18,11 @@ const elements = {
     moonPhase: document.getElementById("moon-phase-data"),
     moonVisibility: document.getElementById("moon-visibility-data"),
 
+    journal: document.getElementById("journal"),
+    advisor: document.getElementById("advisor"),
+    useJournal: document.getElementById("use-journal"),
+    useAdvisor: document.getElementById("use-advisor"),
+
     chatWindow: document.getElementById("chat-body"),
     userMsgInput: document.getElementById("user-msg-input"),
     sendMsgBtn: document.getElementById("send-msg-btn"),
@@ -48,7 +53,6 @@ function cacheEngine() {
             : cachedEngine = await createEngine();
     };
 }
-
 async function createEngine() {
     const engine = await CreateMLCEngine(config.MODELS.defaultModel, {
         initProgressCallback: (progress) => {
@@ -57,6 +61,20 @@ async function createEngine() {
     });
     console.log("Model loading complete");
     return engine;
+}
+
+// Get a reply from the language model
+async function getReply (userText) {
+    const engine = await getEngine();
+    
+    const reply = await engine.chat.completions.create({
+        messages: [
+            ...messages,
+            { role: "user", content: userText }
+        ],
+        temperature: 1.0,
+    });
+    return reply.choices[0].message.content;
 }
 
 // LOAD API data from local storage and check freshness, or GET new fresh data
@@ -128,6 +146,12 @@ function checkMoonVisibility(today, moonrise, moonset) {
         : now >= rise && now <= set;
 }
 
+// Toggle visibility
+function toggleHidden(showID, hideID) {
+    elements[showID].classList.remove("hidden");
+    elements[hideID].classList.add("hidden");
+}
+
 // FEATURES ------------------------------
 async function displayMoonData() {
     let payload = await getMoonData();
@@ -155,26 +179,22 @@ async function displayMoonData() {
     console.log(payload);
 }
 
-// Testing chat functionality
-async function inputMessage (userText) {
-    const engine = await getEngine();
-    
-    const reply = await engine.chat.completions.create({
-        messages: [
-            ...messages,
-            { role: "user", content: userText }
-        ],
-        temperature: 1.0,
-    });
+// JOURNAL FUNCTIONALITY - in development
+// Toggle between journal entries and advisor chat
+elements.useAdvisor.addEventListener("click", () => {
+    toggleHidden("advisor", "journal");
+});
+elements.useJournal.addEventListener("click", () => {
+    toggleHidden("journal", "advisor");
+});
 
-    console.log(reply.choices[0].message.content);
-    return reply.choices[0].message.content;
-}
-
-
+// Use chat when message sent into chat box
 elements.userMsgInput.focus();
 elements.sendMsgBtn.addEventListener("click", async () => {
     const message = elements.userMsgInput.value.trim();
+    if (!message) {
+        return;
+    }
     console.log(message);
 
     // display user input in chat window
@@ -182,22 +202,18 @@ elements.sendMsgBtn.addEventListener("click", async () => {
     newUserMsg.classList.add("user-msg");
     newUserMsg.textContent = message;
     elements.chatWindow.appendChild(newUserMsg);
-
     elements.chatWindow.scrollTop = elements.chatWindow.scrollHeight;
 
-
     // send to model, await response
-    const reply = await inputMessage(message);
+    const reply = await getReply(message);
 
     // display reply message in chat window
     let newReply = document.createElement("div");
     newReply.classList.add("advisor-msg");
     newReply.textContent = reply;
     elements.chatWindow.appendChild(newReply);
-
     elements.chatWindow.scrollTop = elements.chatWindow.scrollHeight;
-
-})
+});
 
 // INITIALISE ------------------------------
 
@@ -205,7 +221,6 @@ const getEngine = cacheEngine();
 
 // debugging - expose to console for now
 window.getEngine = getEngine;
-window.inputMessage = inputMessage;
 
 // access engine
 // async function useEngine() {
@@ -214,5 +229,5 @@ window.inputMessage = inputMessage;
 // }
 
 // useEngine();
-// inputMessage("Hello, advisor");
+// getReply("Hello, advisor");
 displayMoonData();
