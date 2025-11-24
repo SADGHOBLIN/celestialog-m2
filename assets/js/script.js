@@ -83,24 +83,42 @@ async function sendMessage() {
     if (!message) {
         return;
     }
+
     elements.userMsgInput.value = "";
+    isWaitingForReply = true;
+    elements.sendMsgBtn.disabled = true;
 
-    // display user input in chat window
-    const newUserMsg = document.createElement("div");
-    newUserMsg.classList.add("user-msg");
-    newUserMsg.textContent = message;
-    elements.chatWindow.appendChild(newUserMsg);
-    elements.chatWindow.scrollTop = elements.chatWindow.scrollHeight;
+    try {
+        // display user input in chat window
+        const newUserMsg = document.createElement("div");
+        newUserMsg.classList.add("user-msg");
+        newUserMsg.textContent = message;
+        elements.chatWindow.appendChild(newUserMsg);
+        elements.chatWindow.scrollTop = elements.chatWindow.scrollHeight;
 
-    // send to model, await response
-    const reply = await getReply(message);
+        // send to model, await response
+        const reply = await getReply(message);
 
-    // display reply message in chat window
-    let newReply = document.createElement("div");
-    newReply.classList.add("advisor-msg");
-    newReply.textContent = reply;
-    elements.chatWindow.appendChild(newReply);
-    elements.chatWindow.scrollTop = elements.chatWindow.scrollHeight;
+        const newReply = document.createElement("div");
+        newReply.classList.add("advisor-msg");
+        newReply.textContent = reply;
+        elements.chatWindow.appendChild(newReply);
+        elements.chatWindow.scrollTop = elements.chatWindow.scrollHeight;
+
+    } catch (error) {
+        console.error("Failed to get a reply:", error);
+
+        const displayError = document.createElement("div");
+        displayError.classList.add("advisor-msg");
+        displayError.textContent = error.message || "Unknown error occurred";
+        elements.chatWindow.appendChild(displayError);
+        elements.chatWindow.scrollTop = elements.chatWindow.scrollHeight;
+
+    } finally {
+        // enable user input again
+        isWaitingForReply = false;
+        elements.sendMsgBtn.disabled = false;
+    }
 }
 
 // LOAD API data from local storage and check freshness, or GET new fresh data
@@ -219,12 +237,17 @@ elements.userMsgInput.focus();
 elements.sendMsgBtn.addEventListener("click", sendMessage);
 elements.userMsgInput.addEventListener("keypress", event => {
     if (event.key === "Enter") {
+        if (isWaitingForReply) {
+            event.preventDefault();
+            return;
+        }
         sendMessage();
     }
 });
 
 // INITIALISE ------------------------------
 const getEngine = cacheEngine();
+let isWaitingForReply = false;
 displayMoonData();
 
 // debugging - expose to console for now
