@@ -83,7 +83,6 @@ async function sendMessage() {
     if (!message) {
         return;
     }
-
     elements.userMsgInput.value = "";
     isWaitingForReply = true;
     elements.sendMsgBtn.disabled = true;
@@ -93,8 +92,10 @@ async function sendMessage() {
         createChatBubble("user-msg", message);
 
         // send to model, await response
+        const thinking = createLoadingBubble();
         const reply = await getReply(message);
-        createChatBubble("advisor-msg", reply);
+        thinking.textContent = reply;
+        thinking.classList.remove("loading");
 
     } catch (error) {
         console.error("Failed to get a reply:", error);
@@ -104,6 +105,7 @@ async function sendMessage() {
         // enable user input again
         isWaitingForReply = false;
         elements.sendMsgBtn.disabled = false;
+        elements.userMsgInput.focus();
     }
 }
 
@@ -114,6 +116,16 @@ function createChatBubble(userClass, message) {
     newMessage.textContent = message;
     elements.chatWindow.appendChild(newMessage);
     elements.chatWindow.scrollTop = elements.chatWindow.scrollHeight;
+}
+
+// Create loading bubble whilst awaiting advisor response
+function createLoadingBubble() {
+    const thinking = document.createElement("div");
+    thinking.classList.add("advisor-msg", "loading");
+    thinking.textContent = "Advisor is thinking...";
+    elements.chatWindow.appendChild(thinking);
+    elements.chatWindow.scrollTop = elements.chatWindow.scrollHeight;
+    return thinking;
 }
 
 // LOAD API data from local storage and check freshness, or GET new fresh data
@@ -222,13 +234,13 @@ async function displayMoonData() {
 // Toggle between journal entries and advisor chat
 elements.useAdvisor.addEventListener("click", () => {
     toggleHidden("advisor", "journal");
+    elements.userMsgInput.focus();
 });
 elements.useJournal.addEventListener("click", () => {
     toggleHidden("journal", "advisor");
 });
 
 // Advisor chatbox functionality
-elements.userMsgInput.focus();
 elements.sendMsgBtn.addEventListener("click", sendMessage);
 elements.userMsgInput.addEventListener("keypress", event => {
     if (event.key === "Enter") {
