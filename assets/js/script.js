@@ -180,7 +180,7 @@ window.inputMessage = inputMessage;
 //     const engine = await getEngine();
 //     /// engine can now be used with engine.action, etc.
 // }
-// useEngine();
 
-inputMessage("Hello, advisor");
+// useEngine();
+// inputMessage("Hello, advisor");
 displayMoonData();
