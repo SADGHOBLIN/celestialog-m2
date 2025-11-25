@@ -259,7 +259,7 @@ function saveNote(e) {
 
     let noteFormId = elements.noteForm.dataset.noteId;
     if (!noteFormId) {
-        console.log("New ID required. Run create function");
+        noteFormId = Date.now();
     }
 
     const newNote = {
@@ -269,9 +269,10 @@ function saveNote(e) {
         moon: moon,
         content: content
     }
-
     notes.unshift(newNote);
+    console.log("note saved");
 }
+
 
 // JOURNAL FUNCTIONALITY - in development
 // Toggle between journal entries and advisor chat
@@ -284,7 +285,7 @@ elements.useJournal.addEventListener("click", () => {
 });
 
 // Notes functionality
-elements.saveNoteBtn.addEventListener("click", saveNote);
+elements.noteForm.addEventListener("submit", saveNote);
 
 
 // Advisor chatbox functionality
