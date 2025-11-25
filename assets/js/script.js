@@ -30,6 +30,10 @@ const elements = {
     noteContent: document.getElementById("note-content"),
     saveNoteBtn: document.getElementById("save-note"),
 
+    viewNotesBtn: document.getElementById("view-notes"),
+    notesContainerModal: document.getElementById("notes-container-modal"),
+    notesContainer: document.getElementById("notes-container"),
+
     chatWindow: document.getElementById("chat-body"),
     userMsgInput: document.getElementById("user-msg-input"),
     sendMsgBtn: document.getElementById("send-msg-btn"),
@@ -49,7 +53,7 @@ const messages = [
     },
 ];
 // User notes:
-const notes = [];
+let notes = JSON.parse(localStorage.getItem("notes")) || [];
 
 // HELPERS ------------------------------
 // CREATE language model engine, in cache storage
@@ -250,6 +254,7 @@ async function sendMessage() {
     }
 }
 
+// Journal, handle note saving
 function saveNote(e) {
     e.preventDefault();
     const title = elements.noteTitle.value;
@@ -270,9 +275,58 @@ function saveNote(e) {
         content: content
     }
     notes.unshift(newNote);
+
+    localStorage.setItem("notes", JSON.stringify(notes));
     console.log("note saved");
 }
 
+// View all notes
+function viewAllNotes(viewNotes = notes) {
+    elements.notesContainer.innerHTML = "";
+
+    viewNotes.forEach((note, index) => {
+        const noteElement = document.createElement("div");
+        noteElement.setAttribute("data-id", note.id);
+        noteElement.innerHTML = `
+        <div class="note">
+            <h3 class="note-title">${note.title}</h3>
+            <h4 class="note-date">${note.date}</h4>
+            <h4 class="note-moon">${note.moon}</h4>
+        </div>`;
+
+        noteElement.addEventListener("click", () => {
+            loadNote(index);
+        });
+
+        elements.notesContainer.appendChild(noteElement);
+        console.log(`${index}`);
+    });
+}
+
+function loadNote(index) {
+    const noteToLoad = notes[index];
+
+    elements.noteForm.dataset.noteId = noteToLoad.id;
+    elements.noteTitle.value = noteToLoad.title;
+    elements.noteDate.innerText = noteToLoad.date;
+    elements.noteMoon.innerText = noteToLoad.moon;
+    elements.noteContent.value = noteToLoad.content;
+}
+
+// Journal, initialise notes
+function initialiseNote() {
+    if (notes.length === 0) {
+        return;
+    }
+
+    const mostRecentNote = notes[0];
+    const today = elements.date.innerText;
+
+    if (mostRecentNote.date === today) {
+        elements.noteTitle.value = mostRecentNote.title;
+        elements.noteContent.value = mostRecentNote.content;
+    }
+}
 
 // JOURNAL FUNCTIONALITY - in development
 // Toggle between journal entries and advisor chat
@@ -284,8 +338,22 @@ elements.useJournal.addEventListener("click", () => {
     toggleHidden("journal", "advisor");
 });
 
-// Notes functionality
+// NOTES FUNCTIONALITY - in dev
+// Save new note
 elements.noteForm.addEventListener("submit", saveNote);
+
+// View all notes modal, close modal
+elements.viewNotesBtn.addEventListener("click", () => {
+    viewAllNotes()
+    elements.notesContainerModal.classList.add("active");
+});
+elements.notesContainerModal.addEventListener("click", (e) => {
+    if (e.target === e.currentTarget) {
+        elements.notesContainerModal.classList.remove("active");
+    }
+});
+
+
 
 
 // Advisor chatbox functionality
@@ -303,8 +371,19 @@ elements.userMsgInput.addEventListener("keypress", event => {
 // INITIALISE ------------------------------
 const getEngine = cacheEngine();
 let isWaitingForReply = false;
-displayMoonData();
+
+await displayMoonData();
+initialiseNote();
+
+
 
 // debugging - expose to console for now
 window.getEngine = getEngine;
 window.notes = notes;
+
+// debugging - delete notes from local storage
+document.getElementById("clear-notes").addEventListener("click", () => {
+    localStorage.removeItem("notes")
+    notes = [];
+    console.log("notes cleared");
+});

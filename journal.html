@@ -66,7 +66,7 @@
                       <div class="title-container">
 
                       <label for="note-title"></label>
-                      <input id="note-title" type="text" placeholder="Journal Title">
+                      <input id="note-title" type="text" placeholder="Journal Title" autocomplete="off">
                       <p id="note-date"></p>
                     </div>
 
@@ -86,6 +86,12 @@
                     <button id="save-note" type="submit">Save note</button>
                   </div>
                 </form>
+
+                <!-- View notes -->
+                <button id="view-notes">View notes</button>
+
+                <!-- Debugging - remove later -->
+                <button id="clear-notes">Delete all notes</button>
 
               </div>
             </div>
@@ -111,6 +117,22 @@
             </div>
 
          </div>
+
+         <!-- View notes modal -->
+          <div id="notes-container-modal" class="modal-overlay">
+
+            <div class="modal">
+
+              <div class="modal-header">
+                <div class="modal-title">
+                  <p>Select note</p>
+                </div>
+              </div>
+
+              <div id="notes-container" class="modal-body"></div>
+
+            </div>
+          </div>
 
 
         

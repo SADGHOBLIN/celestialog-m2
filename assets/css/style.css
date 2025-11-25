@@ -133,6 +133,56 @@
     overflow-y: auto;
 }
 
+/* View notes modal */
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 999;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.5s, visibility 0.5s;
+    /* TODO: blur */
+    background: rgb(93 220 237 / 0.3);
+}
+.modal-overlay.active {
+    opacity: 1;
+    visibility: visible;
+}
+.modal {
+    width: auto;
+    /* min-width: 300px; */
+    max-width: 900px;
+    max-height: 60vh;
+    overflow-y: auto;
+    margin: 1rem;
+    transform: translateY(240px);
+    transition: transform 0.5s;
+    background-color: white;
+    color: black;
+}
+.modal-overlay.active .modal {
+    transform: translateY(0);
+}
+
+#notes-container {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 24px;
+}
+
+.note {
+    background: rgb(60 60 60 / 0.5);
+    margin: 2rem;
+    outline: 2px solid red;
+}
+
 /* Advisor chat */
 #chat-body {
     width: 100%;
