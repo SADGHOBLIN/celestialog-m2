@@ -23,7 +23,12 @@ const elements = {
     useJournal: document.getElementById("use-journal"),
     useAdvisor: document.getElementById("use-advisor"),
 
+    noteForm: document.getElementById("note-form"),
+    noteTitle: document.getElementById("note-title"),
+    noteDate: document.getElementById("note-date"),
     noteMoon: document.getElementById("note-moon"),
+    noteContent: document.getElementById("note-content"),
+    saveNoteBtn: document.getElementById("save-note"),
 
     chatWindow: document.getElementById("chat-body"),
     userMsgInput: document.getElementById("user-msg-input"),
@@ -43,6 +48,8 @@ const messages = [
         "Hello, can you tell me what I could write about in my journal today? Just a short idea to help me get my brain working." 
     },
 ];
+// User notes:
+const notes = [];
 
 // HELPERS ------------------------------
 // CREATE language model engine, in cache storage
@@ -198,6 +205,7 @@ async function displayMoonData() {
 
     // Display current date
     elements.date.innerText = today.toDateString();
+    elements.noteDate.innerText = today.toDateString();
 
     // Display moon visibility
     const isVisible = checkMoonVisibility(today, moonrise, moonset);
@@ -242,6 +250,29 @@ async function sendMessage() {
     }
 }
 
+function saveNote(e) {
+    e.preventDefault();
+    const title = elements.noteTitle.value;
+    const date = elements.noteDate.textContent;
+    const moon = elements.noteMoon.textContent;
+    const content = elements.noteContent.value;
+
+    let noteFormId = elements.noteForm.dataset.noteId;
+    if (!noteFormId) {
+        console.log("New ID required. Run create function");
+    }
+
+    const newNote = {
+        id: noteFormId,
+        title: title,
+        date: date,
+        moon: moon,
+        content: content
+    }
+
+    notes.unshift(newNote);
+}
+
 // JOURNAL FUNCTIONALITY - in development
 // Toggle between journal entries and advisor chat
 elements.useAdvisor.addEventListener("click", () => {
@@ -251,6 +282,10 @@ elements.useAdvisor.addEventListener("click", () => {
 elements.useJournal.addEventListener("click", () => {
     toggleHidden("journal", "advisor");
 });
+
+// Notes functionality
+elements.saveNoteBtn.addEventListener("click", saveNote);
+
 
 // Advisor chatbox functionality
 elements.sendMsgBtn.addEventListener("click", sendMessage);
@@ -271,3 +306,4 @@ displayMoonData();
 
 // debugging - expose to console for now
 window.getEngine = getEngine;
+window.notes = notes;
