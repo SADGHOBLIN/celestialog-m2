@@ -23,6 +23,8 @@ const elements = {
     useJournal: document.getElementById("use-journal"),
     useAdvisor: document.getElementById("use-advisor"),
 
+    noteMoon: document.getElementById("note-moon"),
+
     chatWindow: document.getElementById("chat-body"),
     userMsgInput: document.getElementById("user-msg-input"),
     sendMsgBtn: document.getElementById("send-msg-btn"),
@@ -192,6 +194,7 @@ async function displayMoonData() {
 
     // Display current moon phase
     elements.moonPhase.innerText = moonPhase;
+    elements.noteMoon.innerText= `Moon: ${moonPhase.toUpperCase()}`;
 
     // Display current date
     elements.date.innerText = today.toDateString();

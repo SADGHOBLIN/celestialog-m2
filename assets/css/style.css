@@ -108,10 +108,32 @@
     height: 80%;
     display: flex;
     flex-direction: column;
+
+    outline: 2px solid orange;
+}
+
+/* Journal entries */
+#note-form {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+}
+.note-header {
+    display: flex;
+    flex-direction: row;
+}
+.note-header > div {
+    width: 50%;
+    background: rgb(0 100 0 / 0.2);
+}
+
+#note-content {
+    flex-grow: 1;
+    overflow-y: auto;
 }
 
 /* Advisor chat */
-
 #chat-body {
     width: 100%;
     flex-grow: 1;

@@ -60,7 +60,32 @@
           <!-- Journal pages -->
             <div id="journal" class="journal-container">
               <div class="journal-wrapper">
-                <p>Journal input</p>
+
+                <form id="note-form">
+                  <div class="note-header">
+                      <div class="title-container">
+                      <label for="note-title"></label>
+                      <input id="note-title" type="text" placeholder="Journal Title">
+                      <p id="note-date">Date:</p>
+                    </div>
+
+                    <div class="moon-container">
+                      <p id="note-moon"></p>
+                    </div>
+                  </div>
+
+                  <textarea 
+                    name="note-content" 
+                    id="note-content"
+                    placeholder="Begin your writing..."
+                    required
+                    ></textarea>
+                  
+                  <div class="note-footer">
+                    <button id="save-note">Save note</button>
+                  </div>
+                </form>
+
               </div>
             </div>
 
