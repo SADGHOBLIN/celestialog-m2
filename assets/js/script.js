@@ -33,6 +33,7 @@ const elements = {
     viewNotesBtn: document.getElementById("view-notes"),
     notesContainerModal: document.getElementById("notes-container-modal"),
     notesContainer: document.getElementById("notes-container"),
+    closeModalBtn: document.getElementById("close-modal"),
 
     chatWindow: document.getElementById("chat-body"),
     userMsgInput: document.getElementById("user-msg-input"),
@@ -45,7 +46,6 @@ const messages = [
         content: 
         "You are Architect; the cryptic and mysterious advisor to the user that helps them with creative writing in their journal. You act as a member of their advisory council, similar to the councils of the medieval period. Your responses should answer the user's questions, but you can also be cryptic and poetic, and aimed at providing them with thought provoking responses to aid them in their daily reflection, and creativity." 
     },
-
     { 
         role: "user", 
         content: 
@@ -281,11 +281,25 @@ function saveNote(e) {
 }
 
 // View all notes
-function viewAllNotes(viewNotes = notes) {
+function viewAllNotes() {
     elements.notesContainer.innerHTML = "";
+    const viewNotes = notes;
 
+    // if no notes, inform user none are saved
+    if (notes.length === 0) {
+        const noteElement = document.createElement("div");
+        noteElement.innerHTML = `
+        <div class="note">
+            <h3 class="note-title">Currently there are no saved notes!</h3>
+        </div>`;
+        elements.notesContainer.appendChild(noteElement);
+        openModal();
+    }
+
+    // else, display saved notes
     viewNotes.forEach((note, index) => {
         const noteElement = document.createElement("div");
+
         noteElement.setAttribute("data-id", note.id);
         noteElement.innerHTML = `
         <div class="note">
@@ -295,15 +309,24 @@ function viewAllNotes(viewNotes = notes) {
         </div>`;
 
         noteElement.addEventListener("click", () => {
-            loadNote(index);
+            loadSavedNote(index);
         });
-
         elements.notesContainer.appendChild(noteElement);
-        console.log(`${index}`);
+
+        openModal();
     });
 }
 
-function loadNote(index) {
+// Open modal
+function openModal() {
+    elements.notesContainerModal.classList.add("active");
+}
+// Close modal
+function closeModal() {
+    elements.notesContainerModal.classList.remove("active");
+}
+// Load selected saved note
+function loadSavedNote(index) {
     const noteToLoad = notes[index];
 
     elements.noteForm.dataset.noteId = noteToLoad.id;
@@ -311,6 +334,8 @@ function loadNote(index) {
     elements.noteDate.innerText = noteToLoad.date;
     elements.noteMoon.innerText = noteToLoad.moon;
     elements.noteContent.value = noteToLoad.content;
+
+    closeModal();
 }
 
 // Journal, initialise notes
@@ -341,15 +366,13 @@ elements.useJournal.addEventListener("click", () => {
 // NOTES FUNCTIONALITY - in dev
 // Save new note
 elements.noteForm.addEventListener("submit", saveNote);
-
-// View all notes modal, close modal
-elements.viewNotesBtn.addEventListener("click", () => {
-    viewAllNotes()
-    elements.notesContainerModal.classList.add("active");
-});
+// View all notes, open modal
+elements.viewNotesBtn.addEventListener("click", viewAllNotes);
+// Close modal with button, or click outside
+elements.closeModalBtn.addEventListener("click", closeModal);
 elements.notesContainerModal.addEventListener("click", (e) => {
     if (e.target === e.currentTarget) {
-        elements.notesContainerModal.classList.remove("active");
+        closeModal();
     }
 });
 
