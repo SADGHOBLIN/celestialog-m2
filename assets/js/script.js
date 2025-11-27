@@ -37,6 +37,7 @@ const elements = {
     // journal notes
     journal: document.getElementById("journal"),
     notesContainerModal: document.getElementById("notes-container-modal"),
+    modalTitle: document.getElementById("modal-title"),
     notesContainer: document.getElementById("notes-container"),
 
     // advisor chat
@@ -288,6 +289,57 @@ function closeModal() {
     elements.notesContainerModal.classList.remove("active");
 }
 
+function viewAllNotes() {
+    // show no notes if none saved
+    elements.notesContainer.innerHTML = "";
+    if (notes.length === 0) {
+        const noteElement = document.createElement("div");
+        noteElement.innerHTML = `
+        <div class="note">
+            <h3 class="note-title"
+            >Currently there are no saved notes!</h3>
+        </div>`;
+        elements.notesContainer.appendChild(noteElement);
+        return openModal();
+    }
+    // display all saved notes
+    formatSavedNotes();
+    openModal();
+}
+
+function formatSavedNotes() {
+    // create note element for each saved note
+    notes.forEach((note) => {
+        const noteElement = document.createElement("div");
+        noteElement.id = `${note.id}`;
+        noteElement.setAttribute("data-note-id", note.id);
+        noteElement.classList.add("note");
+        noteElement.innerHTML = `
+        <div class="note-info">
+                <h3 class="note-title">${note.title}</h3>
+                <h4 class="note-date">${note.date}</h4>
+                <h4 class="note-moon">${note.moon}</h4>
+        </div>`;
+
+        const openNoteBtn = document.createElement("button");
+        openNoteBtn.innerText = "Open note";
+        openNoteBtn.addEventListener("click", () => {
+            openSavedNote(note.id);
+        });
+
+        const deleteNoteBtn = document.createElement("button");
+        deleteNoteBtn.innerText = "Delete note";
+        deleteNoteBtn.addEventListener("click", () => {
+            deleteSavedNote(note.id);
+        });
+        
+        // add note to modal with open/delete buttons
+        elements.notesContainer.appendChild(noteElement);
+        noteElement.appendChild(openNoteBtn)
+        noteElement.appendChild(deleteNoteBtn);
+    });
+}
+
 // Load selected saved note
 function openSavedNote(noteId) {
     const noteIndex = notes.findIndex((note) => note.id === noteId);
@@ -314,39 +366,6 @@ function deleteSavedNote(noteId) {
     localStorage.setItem("notes", JSON.stringify(notes));
 }
 
-function displayAllNotes() {
-    // create note element for each saved note
-    notes.forEach((note) => {
-        const noteElement = document.createElement("div");
-        noteElement.id = `${note.id}`;
-        noteElement.setAttribute("data-note-id", note.id);
-        noteElement.classList.add("note");
-        noteElement.innerHTML = `
-        <div class="note-info">
-                <h3 class="note-title">${note.title}</h3>
-                <h4 class="note-date">${note.date}</h4>
-                <h4 class="note-moon">${note.moon}</h4>
-        </div>`;
-
-        const openNoteBtn = document.createElement("button");
-        openNoteBtn.innerText = "Open note";
-        openNoteBtn.addEventListener("click", () => {
-            openSavedNote(note.id);
-        });
-
-        const deleteNoteBtn = document.createElement("button");
-        deleteNoteBtn.innerText = "Delete note";
-        deleteNoteBtn.addEventListener("click", () => {
-            deleteSavedNote(note.id);
-        });
-        
-        // add note to DOM with open/delete buttons
-        elements.notesContainer.appendChild(noteElement);
-        noteElement.appendChild(openNoteBtn)
-        noteElement.appendChild(deleteNoteBtn);
-    });
-}
-
 function saveNote(e) {
     e.preventDefault();
     // get user inputted data
@@ -356,46 +375,70 @@ function saveNote(e) {
     const content = elements.noteContent.value;
 
     // set unique ID if this is a new note
-    let noteFormId = elements.noteForm.dataset.noteId;
-    if (!noteFormId) {
-        noteFormId = Date.now();
+    let noteId = elements.noteForm.dataset.noteId;
+    if (!noteId) {
+        noteId = Date.now().toString();
+        elements.noteForm.setAttribute("data-note-id", noteId);
     }
 
-    // store user inputted data to local storage
+    // check if ID matches existing note
+    const existingNote = notes.find( (note) => note.id === noteId);
+
+    // new note
+    if (!existingNote) {
+        addNewNote({noteId, title, date, moon, content});
+        return;
+    }
+
+    // existing note
+    displayOverrideCheck();
+}
+
+function displayOverrideCheck() {
+    elements.notesContainer.innerHTML = "";
+    elements.modalTitle.innerText = "Do you wish to override this save?";
+    
+    // create save button
+    const saveBtn = document.createElement("button");
+        saveBtn.innerText = "Save note";
+    saveBtn.addEventListener("click", () => {
+        overrideSave();
+        closeModal();
+        elements.modalTitle.innerText = "Select note";
+    });
+    elements.notesContainer.appendChild(saveBtn);
+
+    //create cancel button
+    const cancelBtn = document.createElement("button");
+    cancelBtn.innerText = "Cancel";
+    cancelBtn.addEventListener("click", () => {
+        closeModal();
+        elements.modalTitle.innerText = "Select note";
+    });
+    elements.notesContainer.appendChild(cancelBtn);
+
+    openModal();
+}
+
+function overrideSave() {
+    const noteId = elements.noteForm.dataset.noteId;
+    const index = notes.findIndex( (note) => note.id === noteId);
+
+    notes[index].title = elements.noteTitle.value;
+    notes[index].content = elements.noteContent.value;
+    localStorage.setItem("notes", JSON.stringify(notes));
+}
+
+function addNewNote({noteId, title, date, moon, content}) {
     const newNote = {
-        id: noteFormId,
+        id: noteId,
         title: title,
         date: date,
         moon: moon,
-        content: content
-    }
+        content: content}
 
-    // TODO: check ID to avoid duplicates
-    notes.unshift(newNote);
-    localStorage.setItem("notes", JSON.stringify(notes));
-
-    // TODO: replace with SAVED message
-    console.log("note saved");
-}
-
-function viewAllNotes() {
-    elements.notesContainer.innerHTML = "";
-
-    // show no notes if none saved
-    if (notes.length === 0) {
-        const noteElement = document.createElement("div");
-        noteElement.innerHTML = `
-        <div class="note">
-            <h3 class="note-title"
-            >Currently there are no saved notes!</h3>
-        </div>`;
-        elements.notesContainer.appendChild(noteElement);
-        openModal();
-    }
-
-    // display all saved notes
-    displayAllNotes();
-    openModal();
+        notes.unshift(newNote);
+        localStorage.setItem("notes", JSON.stringify(notes));
 }
 
 
