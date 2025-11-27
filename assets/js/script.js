@@ -274,6 +274,7 @@ function initialiseNote() {
     const today = elements.date.innerText;
     
     if (mostRecentNote.date === today) {
+        elements.noteForm.setAttribute("data-note-id", mostRecentNote.id);
         elements.noteTitle.value = mostRecentNote.title;
         elements.noteContent.value = mostRecentNote.content;
     }
@@ -288,16 +289,62 @@ function closeModal() {
 }
 
 // Load selected saved note
-function loadSavedNote(index) {
-    const noteToLoad = notes[index];
+function openSavedNote(noteId) {
+    const noteIndex = notes.findIndex((note) => note.id === noteId);
+    const noteToOpen = notes[noteIndex];
 
-    elements.noteForm.dataset.noteId = noteToLoad.id;
-    elements.noteTitle.value = noteToLoad.title;
-    elements.noteDate.innerText = noteToLoad.date;
-    elements.noteMoon.innerText = noteToLoad.moon;
-    elements.noteContent.value = noteToLoad.content;
-
+    elements.noteForm.dataset.noteId = noteToOpen.id;
+    elements.noteTitle.value = noteToOpen.title;
+    elements.noteDate.innerText = noteToOpen.date;
+    elements.noteMoon.innerText = noteToOpen.moon;
+    elements.noteContent.value = noteToOpen.content;
     closeModal();
+}
+
+function deleteSavedNote(noteId) {
+    // remove from modal
+    const noteToDelete = document.getElementById(noteId);
+    noteToDelete.remove();
+
+    // remove from saved notes array
+    const noteIndex = notes.findIndex( (note) => note.id === noteId);
+    notes.splice(noteIndex, 1);
+
+    // update notes in local storage
+    localStorage.setItem("notes", JSON.stringify(notes));
+}
+
+function displayAllNotes() {
+    // create note element for each saved note
+    notes.forEach((note) => {
+        const noteElement = document.createElement("div");
+        noteElement.id = `${note.id}`;
+        noteElement.setAttribute("data-note-id", note.id);
+        noteElement.classList.add("note");
+        noteElement.innerHTML = `
+        <div class="note-info">
+                <h3 class="note-title">${note.title}</h3>
+                <h4 class="note-date">${note.date}</h4>
+                <h4 class="note-moon">${note.moon}</h4>
+        </div>`;
+
+        const openNoteBtn = document.createElement("button");
+        openNoteBtn.innerText = "Open note";
+        openNoteBtn.addEventListener("click", () => {
+            openSavedNote(note.id);
+        });
+
+        const deleteNoteBtn = document.createElement("button");
+        deleteNoteBtn.innerText = "Delete note";
+        deleteNoteBtn.addEventListener("click", () => {
+            deleteSavedNote(note.id);
+        });
+        
+        // add note to DOM with open/delete buttons
+        elements.notesContainer.appendChild(noteElement);
+        noteElement.appendChild(openNoteBtn)
+        noteElement.appendChild(deleteNoteBtn);
+    });
 }
 
 function saveNote(e) {
@@ -345,24 +392,10 @@ function viewAllNotes() {
         elements.notesContainer.appendChild(noteElement);
         openModal();
     }
+
     // display all saved notes
-    notes.forEach((note, index) => {
-        const noteElement = document.createElement("div");
-        noteElement.setAttribute("data-id", note.id);
-        noteElement.innerHTML = `
-        <div class="note">
-            <h3 class="note-title">${note.title}</h3>
-            <h4 class="note-date">${note.date}</h4>
-            <h4 class="note-moon">${note.moon}</h4>
-        </div>`;
-
-        noteElement.addEventListener("click", () => {
-            loadSavedNote(index);
-        });
-
-        elements.notesContainer.appendChild(noteElement);
-        openModal();
-    });
+    displayAllNotes();
+    openModal();
 }
 
 
