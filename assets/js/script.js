@@ -60,6 +60,32 @@ const messages = [
 ];
 let notes = JSON.parse(localStorage.getItem("notes")) || [];
 
+// DEBUGGING:
+notes = [
+    {
+        id: "1761888000000",
+        title: "THIS IS TODAY",
+        date: "Fri Nov 28 2025",
+        moon: "moon",
+        content: "Filler content"
+    },
+    {
+        id: "1761801600000",
+        title: "THIS IS YESTERDAY",
+        date: "Thu Nov 27 2025",
+        moon: "moon",
+        content: "Filler content"
+    },
+    {
+        id: "1761532800000",
+        title: "THIS IS MONDAY",
+        date: "Mon Nov 24 2025",
+        moon: "moon",
+        content: "Filler content"
+    },
+]
+
+
 // HELPERS ------------------------------
 
 // WEBLLM helpers
@@ -273,6 +299,10 @@ function initialiseNote() {
 
     const mostRecentNote = notes[0];
     const today = elements.date.innerText;
+
+    // debug
+    console.log(mostRecentNote.date);
+    console.log(today);
     
     if (mostRecentNote.date === today) {
         elements.noteForm.setAttribute("data-note-id", mostRecentNote.id);
@@ -289,19 +319,110 @@ function closeModal() {
     elements.notesContainerModal.classList.remove("active");
 }
 
+
+function createEmptyNotesMessage() {
+    const emptyMessage = document.createElement("div");
+    emptyMessage.innerHTML = `
+        <div class="note">
+            <h3 class="note-title"
+            >You currently have no saved notes!</h3>
+        </div>`;
+    elements.notesContainer.appendChild(emptyMessage);
+}
+
+function createNoteElement(note) {
+    const savedNote = document.createElement("div");
+    savedNote.id = `${note.id}`;
+    savedNote.setAttribute("data-note-id", note.id);
+    savedNote.classList.add("note");
+    savedNote.innerHTML = `
+        <div class="note-info">
+                <h3 class="note-title">${note.title}</h3>
+                <h4 class="note-date">${note.date}</h4>
+                <h4 class="note-moon">${note.moon}</h4>
+        </div>`;
+
+    const openNoteBtn = createModalBtn("Open note", () => {
+        openSavedNote(note.id);
+    })
+    const deleteNoteBtn = createModalBtn("Delete note", () => {
+        deleteSavedNote(note.id);
+    })
+
+    // add note to modal with open/delete buttons
+    elements.notesContainer.appendChild(savedNote);
+    savedNote.appendChild(openNoteBtn)
+    savedNote.appendChild(deleteNoteBtn);
+}
+
+
+
+
+
+
+function isYesterday(index) {
+    // get current and prev note dates, based on ID
+    let noteDate = new Date(Number(notes[index].id));
+    let prevNoteDate = new Date(Number(notes[index + 1].id));
+    
+    // check if prev note date is one day ago
+    let trueYesterday = new Date(noteDate);
+    trueYesterday.setDate(trueYesterday.getDate() - 1);
+
+    return (prevNoteDate.toDateString() === trueYesterday.toDateString())
+        ? { isYesterday: true }
+        : { 
+            isYesterday: false,
+            placeholderDate: trueYesterday.toDateString(),
+            placeholderID: trueYesterday.getTime().toString()
+        };
+}
+
+function addPlaceholderDay(index, yesterday) {
+
+    const placeholderNote = {
+        id: yesterday.placeholderID,
+        title: "Placeholder title",
+        date: yesterday.placeholderDate,
+        moon: "RED MOON",
+        content: ""
+    };
+
+    notes.splice(index +1, 0, placeholderNote);
+}
+
+
+
+function checkDayGaps() {
+
+    for (let index = 0; index < notes.length -1; index++) {
+        
+        const yesterday = isYesterday(index);
+
+        // insert placeholder if needed
+        if (!yesterday.isYesterday) {
+            addPlaceholderDay(index, yesterday);
+            console.log("gaps found!");
+        }
+    }
+
+}
+
+
 function viewAllNotes() {
     // show no notes if none saved
     elements.notesContainer.innerHTML = "";
     if (notes.length === 0) {
-        const noteElement = document.createElement("div");
-        noteElement.innerHTML = `
-        <div class="note">
-            <h3 class="note-title"
-            >Currently there are no saved notes!</h3>
-        </div>`;
-        elements.notesContainer.appendChild(noteElement);
+        createEmptyNotesMessage();
         return openModal();
     }
+
+    if (notes.length === 1) {
+        createNoteElement(notes[0]);
+        return openModal();
+    }
+
+    checkDayGaps();
     // display all saved notes
     formatSavedNotes();
     openModal();
