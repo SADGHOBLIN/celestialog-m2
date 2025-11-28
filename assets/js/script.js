@@ -1,6 +1,6 @@
-// AI language models and engine from WebLLM (MLC AI) & Astronomy API from IPGeolocation
-// IMPORT engine from WebLLM
-import { CreateMLCEngine } from "https://esm.run/@mlc-ai/web-llm";
+// Import custom functions from other modules
+import { displayMoonData } from "./moon.js";
+import { sendMessage, cacheEngine } from "./advisor.js";
 
 // CONFIG
 const config = {
@@ -45,21 +45,14 @@ const elements = {
     chatWindow: document.getElementById("chat-body"),
     userMsgInput: document.getElementById("user-msg-input"),
 };
-// Define initial language model persona
-const messages = [
-    { 
-        role: "system", 
-        content: 
-        "You are Architect; the cryptic and mysterious advisor to the user that helps them with creative writing in their journal. You act as a member of their advisory council, similar to the councils of the medieval period. Your responses should answer the user's questions, but you can also be cryptic and poetic, and aimed at providing them with thought provoking responses to aid them in their daily reflection, and creativity." 
-    },
-    { 
-        role: "user", 
-        content: 
-        "Hello, can you tell me what I could write about in my journal today? Just a short idea to help me get my brain working." 
-    },
-];
+const state = {
+    isWaitingForReply: false
+}
 let notes = JSON.parse(localStorage.getItem("notes")) || [];
+const getEngine = cacheEngine();
 
+// ------------------------------------------------------------------------------------------------------
+// ------------------------------------------------------------------------------------------------------
 // DEBUGGING:
 notes = [
     {
@@ -84,282 +77,30 @@ notes = [
         content: "Filler content"
     },
 ]
+// ------------------------------------------------------------------------------------------------------
+// ------------------------------------------------------------------------------------------------------
 
-
-// HELPERS ------------------------------
-
-// WEBLLM helpers
-// store language model engine, or create a new engine instance
-function cacheEngine() {
-    let cachedEngine = null;
-
-    return async function getEngine() {
-        return cachedEngine
-            ? cachedEngine
-            : cachedEngine = await createEngine();
-    };
-}
-
-async function createEngine() {
-    const engine = await CreateMLCEngine(config.MODELS.defaultModel, {
-        initProgressCallback: (progress) => {
-            console.log("loading:", progress.progress);
-        }
-    });
-    console.log("Model loading complete");
-    return engine;
-}
-
-// submit user inputted message to the language model and await a reply
-async function getReply (userText) {
-    const engine = await getEngine();
-    
-    const reply = await engine.chat.completions.create({
-        messages: [
-            ...messages,
-            { role: "user", content: userText }
-        ],
-        temperature: 1.0,
-    });
-    return reply.choices[0].message.content;
-}
-
-// fill advisor chat window with appropriate messages
-function createChatBubble(classList, message) {
-    const newMessage = document.createElement("div");
-
-    if (Array.isArray(classList)) {
-        newMessage.classList.add(...classList);
-    } else {
-        newMessage.classList.add(classList);
-    }
-    newMessage.textContent = message;
-    
-    elements.chatWindow.appendChild(newMessage);
-    scrollSmooth(elements.chatWindow);
-    return newMessage;
-}
-
-// scroll smoothly to target location
-function scrollSmooth(scrollToLocation) {
-    scrollToLocation.scrollTo({
-        top: scrollToLocation.scrollHeight,
-        behavior: "smooth"
-    });
-}
-
-// MOON API HELPERS
-// load API data from local storage and check freshness, or GET new fresh data
-async function getMoonData() {
-    const savedData = localStorage.getItem("astronomyData");
-
-    if (!savedData) {
-        return await saveAstronomyData();
-    }
-
-    const payload = JSON.parse(savedData);
-    return isDataFresh(payload)
-        ? payload
-        : await saveAstronomyData();
-}
-
-// get astronomy data from API and save to local storage
-async function saveAstronomyData() {
-    let city = "Leeds%2C%20UK";
-    const queryString = `${config.API_URL}?apiKey=${config.API_KEY}&location=${city}`;
-
-    const response = await fetch(queryString);
-    const data = await response.json();
-    
-    if (response.ok) {
-        const payload = {
-            moonData: data,
-            timestamp: Date.now()
-        };
-        localStorage.setItem("astronomyData", JSON.stringify(payload));
-        console.log("Data successfully saved to local storage");
-        return payload;
-    } else {
-        const errorMessage = data.message || data.error || "Unknown API error";
-        throw new Error(errorMessage);
-    }
-}
-
-// check if data is from same date, and less than 12 hours old
-function isDataFresh(payload) {
-    const age = Date.now() - payload.timestamp;
-    const expiryTime = config.DATA_EXPIRY_HOURS * 60 * 60 * 1000;
-    const dataDate = new Date(payload.timestamp).toDateString();
-    const currentDate = new Date().toDateString();
-
-    return age <= expiryTime && dataDate === currentDate;
-}
-
-// convert API data into a readable format
-function formatMoonData(currentPhase) {
-    return currentPhase
-        .toLowerCase()
-        .split("_")
-        .map(word => word[0].toUpperCase() + word.slice(1))
-        .join(" ");
-}
-
-// check moon visibility based on moonrise and moonset data (HHMM format)
-function checkMoonVisibility(today, moonrise, moonset) {
-    const now = today.getHours() * 100 + today.getMinutes();
-    const [rh, rm] = moonrise.split(":").map(Number);
-    const [sh, sm] = moonset.split(":").map(Number);
-
-    const rise = rh * 100 + rm;
-    const set = sh * 100 + sm;
-
-    return rise > set
-        ? now >= rise || now <= set
-        : now >= rise && now <= set;
-}
-
-// Toggle visibility
-function toggleHidden(showID, hideID) {
-    elements[showID].classList.remove("hidden");
-    elements[hideID].classList.add("hidden");
-}
-
-// FEATURES ------------------------------
-// MOON API
-async function displayMoonData() {
-    let payload = await getMoonData();
-
-    // moon info variables
-    const today = new Date(payload.timestamp);
-    const moonData = payload.moonData;
-    const moonPhase = formatMoonData(moonData.astronomy.moon_phase);
-    const moonrise = moonData.astronomy.moonrise;
-    const moonset = moonData.astronomy.moonset;
-
-    // display current moon phase
-    elements.moonPhase.innerText = moonPhase;
-    elements.noteMoon.innerText= `Moon: ${moonPhase.toUpperCase()}`;
-
-    // display current date
-    elements.date.innerText = today.toDateString();
-    elements.noteDate.innerText = today.toDateString();
-
-    // display moon visibility
-    const isVisible = checkMoonVisibility(today, moonrise, moonset);
-
-    elements.moonVisibility.innerHTML = isVisible
-        ? `<p id="moon-visibility">VISIBLE<br>${moonrise} - ${moonset}</p>`
-        : `<p id="moon-visibility">Moonrise:<br>${moonrise}</p>`;
-    
-
-    // DEBUGGING:
-    console.log(payload);
-}
-
-// WEBLLM
-async function sendMessage() {
-    // return if message is blank
-    const message = elements.userMsgInput.value.trim();
-    if (!message) {
-        return;
-    }
-
-    // clear input box, and stop using sending new messages until reply is received
-    elements.userMsgInput.value = "";
-    isWaitingForReply = true;
-    elements.sendMsgBtn.disabled = true;
-
-    try {
-        createChatBubble("user-msg", message);
-        const advisor = createChatBubble(["advisor-msg", "loading"], "Advisor is thinking...");
-        const reply = await getReply(message);
-        advisor.textContent = reply;
-        advisor.classList.remove("loading");
-
-    } catch (error) {
-        console.error("Failed to get a reply:", error);
-        createChatBubble("advisor-msg", error.message);
-
-    } finally {
-        // enable user input again
-        isWaitingForReply = false;
-        elements.sendMsgBtn.disabled = false;
-        elements.userMsgInput.focus();
-        scrollSmooth(elements.chatWindow);
-    }
-}
 
 
 // JOURNAL NOTES - IN DEVELOPMENT
-// display today's note
-function initialiseNote() {
-    if (notes.length === 0) {
-        return;
-    }
+// ------------------------------------------------------------------------------------------------------
+// notes data functions
+// ------------------------------------------------------------------------------------------------------
 
-    const mostRecentNote = notes[0];
-    const today = elements.date.innerText;
+// check for gaps in journaling days, and fill in missing data
+function checkDayGaps() {
+    for (let index = 0; index < notes.length -1; index++) {
+        const yesterday = isYesterday(index);
 
-    // debug
-    console.log(mostRecentNote.date);
-    console.log(today);
-    
-    if (mostRecentNote.date === today) {
-        elements.noteForm.setAttribute("data-note-id", mostRecentNote.id);
-        elements.noteTitle.value = mostRecentNote.title;
-        elements.noteContent.value = mostRecentNote.content;
+        // insert placeholder if needed
+        if (!yesterday.isYesterday) {
+            addPlaceholderDay(index, yesterday);
+            console.log("gaps found!");
+        }
     }
 }
 
-// open and close modal, where notes are saved
-function openModal() {
-    elements.notesContainerModal.classList.add("active");
-}
-function closeModal() {
-    elements.notesContainerModal.classList.remove("active");
-}
-
-
-function createEmptyNotesMessage() {
-    const emptyMessage = document.createElement("div");
-    emptyMessage.innerHTML = `
-        <div class="note">
-            <h3 class="note-title"
-            >You currently have no saved notes!</h3>
-        </div>`;
-    elements.notesContainer.appendChild(emptyMessage);
-}
-
-function createNoteElement(note) {
-    const savedNote = document.createElement("div");
-    savedNote.id = `${note.id}`;
-    savedNote.setAttribute("data-note-id", note.id);
-    savedNote.classList.add("note");
-    savedNote.innerHTML = `
-        <div class="note-info">
-                <h3 class="note-title">${note.title}</h3>
-                <h4 class="note-date">${note.date}</h4>
-                <h4 class="note-moon">${note.moon}</h4>
-        </div>`;
-
-    const openNoteBtn = createModalBtn("Open note", () => {
-        openSavedNote(note.id);
-    })
-    const deleteNoteBtn = createModalBtn("Delete note", () => {
-        deleteSavedNote(note.id);
-    })
-
-    // add note to modal with open/delete buttons
-    elements.notesContainer.appendChild(savedNote);
-    savedNote.appendChild(openNoteBtn)
-    savedNote.appendChild(deleteNoteBtn);
-}
-
-
-
-
-
-
+// check if previous note is from exactly yesterday
 function isYesterday(index) {
     // get current and prev note dates, based on ID
     let noteDate = new Date(Number(notes[index].id));
@@ -378,8 +119,9 @@ function isYesterday(index) {
         };
 }
 
+// insert placeholder data into notes array for missing days
 function addPlaceholderDay(index, yesterday) {
-
+    // create RED MOON note that represents a missed journaling day
     const placeholderNote = {
         id: yesterday.placeholderID,
         title: "Placeholder title",
@@ -387,73 +129,9 @@ function addPlaceholderDay(index, yesterday) {
         moon: "RED MOON",
         content: ""
     };
-
-    notes.splice(index +1, 0, placeholderNote);
-}
-
-
-
-function checkDayGaps() {
-
-    for (let index = 0; index < notes.length -1; index++) {
-        
-        const yesterday = isYesterday(index);
-
-        // insert placeholder if needed
-        if (!yesterday.isYesterday) {
-            addPlaceholderDay(index, yesterday);
-            console.log("gaps found!");
-        }
-    }
-
-}
-
-
-function viewAllNotes() {
-    // show no notes if none saved
-    elements.notesContainer.innerHTML = "";
-    if (notes.length === 0) {
-        createEmptyNotesMessage();
-        return openModal();
-    }
-
-    if (notes.length === 1) {
-        createNoteElement(notes[0]);
-        return openModal();
-    }
-
-    checkDayGaps();
-    // display all saved notes
-    formatSavedNotes();
-    openModal();
-}
-
-function formatSavedNotes() {
-    // create note element for each saved note
-    notes.forEach((note) => {
-        const noteElement = document.createElement("div");
-        noteElement.id = `${note.id}`;
-        noteElement.setAttribute("data-note-id", note.id);
-        noteElement.classList.add("note");
-        noteElement.innerHTML = `
-        <div class="note-info">
-                <h3 class="note-title">${note.title}</h3>
-                <h4 class="note-date">${note.date}</h4>
-                <h4 class="note-moon">${note.moon}</h4>
-        </div>`;
-
-        const openNoteBtn = createModalBtn("Open note", () => {
-            openSavedNote(note.id);
-        })
-        const deleteNoteBtn = createModalBtn("Delete note", () => {
-            deleteSavedNote(note.id);
-        })
-
-        // add note to modal with open/delete buttons
-        elements.notesContainer.appendChild(noteElement);
-        noteElement.appendChild(openNoteBtn)
-        noteElement.appendChild(deleteNoteBtn);
-    });
+    // insert into notes and save to local storage
+    notes.splice(index + 1, 0, placeholderNote);
+    localStorage.setItem("notes", JSON.stringify(notes));
 }
 
 // Load selected saved note
@@ -500,15 +178,138 @@ function saveNote(e) {
     // check if ID matches existing note
     const existingNote = notes.find( (note) => note.id === noteId);
 
-    // new note
+    // handle saving a new note
     if (!existingNote) {
         addNewNote({noteId, title, date, moon, content});
         return;
     }
 
-    // existing note
+    // handle existing note save override
     displayOverrideCheck();
 }
+
+// override existing save data
+function overrideSave() {
+    const noteId = elements.noteForm.dataset.noteId;
+    const index = notes.findIndex( (note) => note.id === noteId);
+
+    notes[index].title = elements.noteTitle.value;
+    notes[index].content = elements.noteContent.value;
+    localStorage.setItem("notes", JSON.stringify(notes));
+}
+
+// store data for new notes
+function addNewNote({noteId, title, date, moon, content}) {
+    const newNote = {
+        id: noteId,
+        title: title,
+        date: date,
+        moon: moon,
+        content: content}
+
+        notes.unshift(newNote);
+        localStorage.setItem("notes", JSON.stringify(notes));
+}
+
+// ------------------------------------------------------------------------------------------------------
+// notes visual functions
+// ------------------------------------------------------------------------------------------------------
+
+// toggle between journal and advisor windows
+function toggleHidden(showID, hideID) {
+    elements[showID].classList.remove("hidden");
+    elements[hideID].classList.add("hidden");
+}
+
+// open and close modal, where notes are saved
+function openModal() {
+    elements.notesContainerModal.classList.add("active");
+}
+function closeModal() {
+    elements.notesContainerModal.classList.remove("active");
+}
+
+// display today's note
+function initialiseNote() {
+    if (notes.length === 0) {
+        return;
+    }
+
+    const mostRecentNote = notes[0];
+    const today = elements.date.innerText;
+
+    if (mostRecentNote.date === today) {
+        elements.noteForm.setAttribute("data-note-id", mostRecentNote.id);
+        elements.noteTitle.value = mostRecentNote.title;
+        elements.noteContent.value = mostRecentNote.content;
+    }
+}
+
+// view all saved notes
+function viewAllNotes() {
+    // show no notes if none saved
+    elements.notesContainer.innerHTML = "";
+    if (notes.length === 0) {
+        createEmptyNotesMessage();
+        return openModal();
+    }
+
+    // show first note
+    if (notes.length === 1) {
+        createNoteElement(notes[0]);
+        return openModal();
+    }
+
+    checkDayGaps();
+    formatSavedNotes();
+    openModal();
+}
+
+// create a DOM element for each note
+function formatSavedNotes() {
+    // create note element for each saved note
+    notes.forEach((note) => {
+        createNoteElement(note);
+    });
+}
+
+// display to user that no notes are currently saved
+function createEmptyNotesMessage() {
+    const emptyMessage = document.createElement("div");
+    emptyMessage.innerHTML = `
+        <div class="note">
+            <h3 class="note-title"
+            >You currently have no saved notes!</h3>
+        </div>`;
+    elements.notesContainer.appendChild(emptyMessage);
+}
+
+// create DOM element for a saved note
+function createNoteElement(note) {
+    const savedNote = document.createElement("div");
+    savedNote.id = `${note.id}`;
+    savedNote.setAttribute("data-note-id", note.id);
+    savedNote.classList.add("note");
+    savedNote.innerHTML = `
+        <div class="note-info">
+                <h3 class="note-title">${note.title}</h3>
+                <h4 class="note-date">${note.date}</h4>
+                <h4 class="note-moon">${note.moon}</h4>
+        </div>`;
+
+    const openNoteBtn = createModalBtn("Open note", () => {
+        openSavedNote(note.id);
+    })
+    const deleteNoteBtn = createModalBtn("Delete note", () => {
+        deleteSavedNote(note.id);
+    })
+
+    // add note to modal with open/delete buttons
+    elements.notesContainer.appendChild(savedNote);
+    savedNote.appendChild(openNoteBtn)
+    savedNote.appendChild(deleteNoteBtn);
+}
+
 
 function displayOverrideCheck() {
     elements.notesContainer.innerHTML = "";
@@ -532,27 +333,7 @@ function displayOverrideCheck() {
     openModal();
 }
 
-function overrideSave() {
-    const noteId = elements.noteForm.dataset.noteId;
-    const index = notes.findIndex( (note) => note.id === noteId);
-
-    notes[index].title = elements.noteTitle.value;
-    notes[index].content = elements.noteContent.value;
-    localStorage.setItem("notes", JSON.stringify(notes));
-}
-
-function addNewNote({noteId, title, date, moon, content}) {
-    const newNote = {
-        id: noteId,
-        title: title,
-        date: date,
-        moon: moon,
-        content: content}
-
-        notes.unshift(newNote);
-        localStorage.setItem("notes", JSON.stringify(notes));
-}
-
+// create modal buttons
 function createModalBtn(text, event) {
     const button = document.createElement("button");
     // TODO: unify css classes and add here
@@ -562,6 +343,9 @@ function createModalBtn(text, event) {
 }
 
 
+
+// ------------------------------------------------------------------------------------------------------
+// ------------------------------------------------------------------------------------------------------
 // JOURNAL FUNCTIONALITY - in development
 
 // Toggle between journal entries and advisor chat
@@ -586,37 +370,38 @@ elements.notesContainerModal.addEventListener("click", (e) => {
     }
 });
 
-
 // ADVISOR FUNCTIONALITY
 // handle messages sent into the chat by the user
-elements.sendMsgBtn.addEventListener("click", sendMessage);
+elements.sendMsgBtn.addEventListener("click", () => {
+    sendMessage(getEngine, config, elements, state);
+});
+
 elements.userMsgInput.addEventListener("keypress", event => {
     if (event.key === "Enter") {
-        if (isWaitingForReply) {
+        if (state.isWaitingForReply) {
             event.preventDefault();
             return;
         }
-        sendMessage();
+        sendMessage(getEngine, config, elements, state);
     }
 });
 
-// INITIALISE ------------------------------
-await displayMoonData();
-
-const getEngine = cacheEngine();
-let isWaitingForReply = false;
+// ------------------------------------------------------------------------------------------------------
+// INITIALISE
+// ------------------------------------------------------------------------------------------------------
+await displayMoonData(config, elements);
 
 initialiseNote();
 
 
-
+// ------------------------------------------------------------------------------------------------------
+// ------------------------------------------------------------------------------------------------------
 // debugging - expose to console for now
-window.getEngine = getEngine;
 window.notes = notes;
 
 // debugging - delete notes from local storage
 document.getElementById("clear-notes").addEventListener("click", () => {
-    localStorage.removeItem("notes")
+    localStorage.removeItem("notes");
     notes = [];
     console.log("notes cleared");
 });
