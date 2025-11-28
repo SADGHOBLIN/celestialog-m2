@@ -321,18 +321,13 @@ function formatSavedNotes() {
                 <h4 class="note-moon">${note.moon}</h4>
         </div>`;
 
-        const openNoteBtn = document.createElement("button");
-        openNoteBtn.innerText = "Open note";
-        openNoteBtn.addEventListener("click", () => {
+        const openNoteBtn = createModalBtn("Open note", () => {
             openSavedNote(note.id);
-        });
-
-        const deleteNoteBtn = document.createElement("button");
-        deleteNoteBtn.innerText = "Delete note";
-        deleteNoteBtn.addEventListener("click", () => {
+        })
+        const deleteNoteBtn = createModalBtn("Delete note", () => {
             deleteSavedNote(note.id);
-        });
-        
+        })
+
         // add note to modal with open/delete buttons
         elements.notesContainer.appendChild(noteElement);
         noteElement.appendChild(openNoteBtn)
@@ -399,22 +394,18 @@ function displayOverrideCheck() {
     elements.modalTitle.innerText = "Do you wish to override this save?";
     
     // create save button
-    const saveBtn = document.createElement("button");
-        saveBtn.innerText = "Save note";
-    saveBtn.addEventListener("click", () => {
+    const saveBtn = createModalBtn("Save note", () => {
         overrideSave();
         closeModal();
         elements.modalTitle.innerText = "Select note";
-    });
+    })
     elements.notesContainer.appendChild(saveBtn);
 
     //create cancel button
-    const cancelBtn = document.createElement("button");
-    cancelBtn.innerText = "Cancel";
-    cancelBtn.addEventListener("click", () => {
+    const cancelBtn = createModalBtn("Cancel", () => {
         closeModal();
         elements.modalTitle.innerText = "Select note";
-    });
+    })
     elements.notesContainer.appendChild(cancelBtn);
 
     openModal();
@@ -439,6 +430,14 @@ function addNewNote({noteId, title, date, moon, content}) {
 
         notes.unshift(newNote);
         localStorage.setItem("notes", JSON.stringify(notes));
+}
+
+function createModalBtn(text, event) {
+    const button = document.createElement("button");
+    // TODO: unify css classes and add here
+    button.innerText = text;
+    button.addEventListener("click", event);
+    return button;
 }
 
 
