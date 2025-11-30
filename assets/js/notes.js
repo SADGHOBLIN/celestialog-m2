@@ -1,27 +1,63 @@
 // NOTES DATA helpers
-// save new note to localStorage, update array
+
+/*  creates a timestamp for midnight UTC on that specific day,
+    this is used as a unique NOTE ID,
+    which can be used to calculate exactly how many days have occurred between user notes (in days)
+*/
+function generateNoteId() {
+    const timestamp = new Date();
+    return Date.UTC(
+        timestamp.getUTCFullYear(),
+        timestamp.getUTCMonth(),
+        timestamp.getUTCDate()
+    ).toString();
+}
+
+
+/*  formats user submitted note data into an object for the note array
+    - id: UTC midnight timestamp, uniquely identifies notes for management and sorting
+    - moon: represents moon phase at time of creation, influcences logic, styling and display
+*/
+function formatNoteData (noteId, title, date, moon, content) {
+    return {
+        id: noteId,
+        title: title,
+        date: date, // TODO: format date function
+        moon: moon,
+        content: content
+    };
+}
+
+// formats placeholder data for missed journaling days ('Red Moons')
+function createPlaceholderNoteData(missingId) {
+    return {
+        id: missingId,
+        title: "Inkless interval",
+        date: formatIdToDisplayDate(missingId),
+        moon: "RED MOON",
+        content: "A silent page..."
+    };
+}
+
+// generates a missed journaling date from a placeholder note ID
+function formatIdToDisplayDate(noteId) {
+    const date = new Date(Number(noteId));
+    return date.toDateString();
+}
+
+
+// creates a new formatted note and saves to localStorage, add new note to start of array
 function saveNewNote(newNote, notes) {
     notes.unshift(newNote);
     localStorage.setItem("notes", JSON.stringify(notes));
 }
 
 
-// save placeholder note to fill journal gaps
-function savePlaceholderNote(placeholderNote, index, notes) {
-    notes.splice(index + 1, 0, placeholderNote);
-    localStorage.setItem("notes", JSON.stringify(notes));
-}
-
-
 // saves over existing note data (only TITLE and CONTENT)
-function overrideNoteData(userEntry, data) {
+// updates existing notes array data, and saves to localStorage
+function overrideNoteData(userEntry, notes) {
 
-    // double check id matches
-    if (userEntry.id !== data.id) {
-        return;
-    }
-
-    // get index of note to override
+    // use the unique note ID to retrieve its index in array
     const index = notes.findIndex( (note) => userEntry.id === note.id);
 
     // override data
@@ -32,126 +68,91 @@ function overrideNoteData(userEntry, data) {
 
 
 // deletes a note from localStorage and notes array
-function deleteNoteData(noteId) {
+function deleteNoteData(noteId, notes) {
     const noteIndex = notes.findIndex( (note) => note.id === noteId);
     notes.splice(noteIndex, 1);
     localStorage.setItem("notes", JSON.stringify(notes));
 }
 
 
-// formats new note data
-function createNoteData (noteId, title, date, moon, content) {
-    return {
-        id: noteId,
-        title: title,
-        date: date,
-        moon: moon,
-        content: content
-    };
-}
+// checks whether at least one day has passed between user created notes,
+// inidicating that they have 'missed a journaling day'
+function checkForMissingDays(notes) {
 
+    // safeguard that ensures notes are sorted in descending order
+    notes.sort((a,b ) => Number(b.id) - Number(a.id));
+    localStorage.setItem("notes", JSON.stringify(notes));
 
-// formats placeholder data for missed journaling days (Red Moons)
-function createPlaceholderNoteData({ placeholderId, placeholderDate }) {
-    return {
-        id: placeholderId,
-        title: "Inkless interval",
-        date: placeholderDate,
-        moon: "RED MOON",
-        content: "A silent page..."
-    };
-}
-
-
-// check if the note ID of new user entries matches any existing notes
-function isNewNote(userEntry) {
-    const existingNote = notes.find( (note) => note.id === userEntry.id);
-
-    return existingNote
-    ? { exists: true, id: userEntry.id }
-    : { exists: false };
-}
-
-
-// check to see if there are any missed journaling days, and populate with placeholder data (Red Moons)
-function fillMissingDaysData(notes) {
-    for (let index = 0; index < notes.length - 1; index++) {
-        const { isYesterday, placeholderId, placeholderDate } = isPrevNoteYesterday(index, notes);
-
-        // insert placeholder data to backfill missing days
-        if (!isYesterday) {
-            const placeholderNote = createPlaceholderNoteData({ placeholderId, placeholderDate });
-            savePlaceholderNote(placeholderNote, index, notes);
-        }
+    // nothing to fill
+    if (notes.length <= 1) {
+        return notes;
     }
-}
-// helper for backfilling days, checks if previous note in array is considered Yestreday
-function isPrevNoteYesterday(index, notes) {
 
-    // get current and prev note dates, based on ID
-    let noteDate = new Date(Number(notes[index].id));
-    let prevNoteDate = new Date(Number(notes[index + 1].id));
-    
-    // get expected date
-    let trueYesterday = new Date(noteDate);
-    trueYesterday.setDate(trueYesterday.getDate() - 1);
+    // store in a new array to avoid mutating original notes array
+    const filledDays = [notes[0]];
 
-    // check if the previous note in array is exactly yesterday
-    return (prevNoteDate.toDateString() === trueYesterday.toDateString())
-        ? { isYesterday: true }
-        : { 
-            isYesterday: false,
-            placeholderDate: trueYesterday.toDateString(),
-            placeholderId: trueYesterday.getTime().toString()
-        };
+    // push original notes into new array, inserting placeholders between user created notes
+    for (let i = 0; i < notes.length - 1; i++) {
+        const currentNote = notes[i];
+        const nextNote = notes[i + 1];
+
+        const currentDay = Number(currentNote.id);
+        const nextDay = Number(nextNote.id);
+
+        insertMissingDays(filledDays, currentDay, nextDay);
+        filledDays.push(nextNote);
+    }
+    return filledDays;
 }
 
+// inserts placeholder notes into the notes array,
+// stylised as 'Red Moons', which display to the user how many journaling days they have missed
+function insertMissingDays(filledDays, currentDay, nextDay) {
+    // calculate the number of days passed between two user created notes
+    const msPerDay = 24 * 60 * 60 * 1000;
+    const difInDays = Math.round((currentDay - nextDay) / msPerDay);
 
-// NOTES UI helpers
-// display today's note
-function initialiseNote(notes, elements) {
-    if (notes.length === 0) {
+    if (difInDays <= 1) {
         return;
     }
 
-    const mostRecentNote = notes[0];
-    const today = elements.date.innerText;
-
-    if (mostRecentNote.date === today) {
-        elements.noteForm.setAttribute("data-note-id", mostRecentNote.id);
-        elements.noteTitle.value = mostRecentNote.title;
-        elements.noteContent.value = mostRecentNote.content;
+    // insert new placeholder notes per day, up to the number of days between notes
+    // calculate a placeholder ID by decreasing the current note ID by one day per gap
+    for (let days = 1; days < difInDays; days++) {
+        const missingId = (currentDay - (days * msPerDay)).toString();
+        filledDays.push(createPlaceholderNoteData(missingId));
     }
 }
 
 
-// displays a check to user before initiating save override
-function displayOverrideCheck(userEntry, note, elements) {
+//  NOTES UI helpers
+
+//  displays a message, with buttons, in the DOM to check whether user wishes to overwrite their data
+function displayOverrideCheck(userEntry, notes, elements) {
     elements.notesContainer.innerHTML = "";
     elements.modalTitle.innerText = "Do you wish to override this save?";
     
-    // create save button
+    //  create save button
     const saveBtn = createModalBtn("Save note", () => {
-        overrideNoteData(userEntry, note);
+        overrideNoteData(userEntry, notes);
         closeModal(elements);
         elements.modalTitle.innerText = "Select note";
     })
     elements.notesContainer.appendChild(saveBtn);
 
-    //create cancel button
+    //  create cancel button
     const cancelBtn = createModalBtn("Cancel", () => {
         closeModal(elements);
         elements.modalTitle.innerText = "Select note";
     })
     elements.notesContainer.appendChild(cancelBtn);
 
-    // display model and allow user to make a decision
     openModal(elements);
 }
 
 
-// injects saved note data into UI
-function openSavedNote(noteId, elements) {
+// injects a user selected note's data into UI for user editing
+function openSavedNote(noteId, notes, elements) {
     const noteToOpen = notes.find((note) => note.id === noteId);
 
     elements.noteForm.dataset.noteId = noteToOpen.id;
@@ -170,10 +171,9 @@ function deleteNoteElement(noteId) {
 }
 
 
-// create DOM element for a saved note
-function createNoteElement(note, elements) {
+// create modal DOM element to display a saved note
+function createNoteElement(note, notes, elements) {
 
-    // creates DOM elements for visual information, and injects with data
     const savedNote = document.createElement("div");
     savedNote.id = `${note.id}`;
     savedNote.setAttribute("data-note-id", note.id);
@@ -185,13 +185,13 @@ function createNoteElement(note, elements) {
                 <h4 class="note-moon">${note.moon}</h4>
         </div>`;
 
-    // create buttons with event listeners
+    // create buttons that allow user to open a saved note, or delete a saved note
     const openNoteBtn = createModalBtn("Open note", () => {
-        openSavedNote(note.id, elements);
+        openSavedNote(note.id, notes, elements);
     })
     const deleteNoteBtn = createModalBtn("Delete note", () => {
         deleteNoteElement(note.id, elements);
-        deleteNoteData(note.id);
+        deleteNoteData(note.id, notes);
     })
 
     // attaches elements to DOM
@@ -201,7 +201,7 @@ function createNoteElement(note, elements) {
 }
 
 
-// create message to inform user that no notes are currently saved
+// create modal message to inform user that no notes are currently saved
 function createEmptyNotesMessage(elements) {
     const emptyMessage = document.createElement("div");
     emptyMessage.innerHTML = `
@@ -214,7 +214,7 @@ function createEmptyNotesMessage(elements) {
 }
 
 
-// open and close modal, where notes are saved
+// helper to open and close modal, displays saved notes to user
 function openModal(elements) {
     elements.notesContainerModal.classList.add("active");
 }
@@ -223,7 +223,8 @@ function closeModal(elements) {
 }
 
 
-// create modal buttons
+//  helper to create any buttons required for modal
+//  attaches event listeners that await for user input
 function createModalBtn(text, event) {
     const button = document.createElement("button");
     // TODO: unify css classes and add here
@@ -239,47 +240,71 @@ function toggleHidden(elements, showID, hideID) {
     elements[hideID].classList.add("hidden");
 }
 
+
 // NOTES MAIN FUNCTIONS
-// captures user entry when "Save note" is clicked
+
+// displays the most recent note to the user, if note is from today
+function initialiseNote(notes, elements) {
+    if (notes.length === 0) {
+        return;
+    }
+
+    const mostRecentNote = notes[0];
+    const today = elements.date.innerText;
+
+    if (mostRecentNote.date === today) {
+        elements.noteForm.setAttribute("data-note-id", mostRecentNote.id);
+        elements.noteTitle.value = mostRecentNote.title;
+        elements.noteContent.value = mostRecentNote.content;
+    }
+}
+
+/*  when user requests to save a note:
+    - generate a unique ID for new notes, if one doesn't exist,
+    - fetch rest of associated note data from the DOM,
+    - format data, ready to be saved
+    - check whether user is saving a new note, or overwriting an existing note
+*/
 function captureUserEntry(e, elements, notes) {
     e.preventDefault();
 
-    // check if user has created a new unique note
     let noteId = elements.noteForm.dataset.noteId;
+    let isNewNote = false;
+    
     if (!noteId) {
-        noteId = Date.now().toString();
+        isNewNote = true;
+        noteId = generateNoteId();
         elements.noteForm.setAttribute("data-note-id", noteId);
     }
-
     const title = elements.noteTitle.value;
     const date = elements.noteDate.textContent;
     const moon = elements.noteMoon.textContent;
     const content = elements.noteContent.value;
 
-    // store user submitted data
-   const userEntry = createNoteData(noteId, title, date, moon, content);
+    const userEntry = formatNoteData(noteId, title, date, moon, content);
 
-   // process note inputted by user
-   handleSaveNote(userEntry, elements, notes);
-}
-
-
-// takes user inputted data and handles how to process
-function handleSaveNote(userEntry, elements, notes) {
-
-    // save new unique note to localStorage and update notes array
-    const note = isNewNote(userEntry);
-    if (!note.exists) {
+    if (isNewNote) {
         return saveNewNote(userEntry, notes);
     }
-
-    // if note is already stored, check user wishes to update the data
-    displayOverrideCheck(userEntry, note, elements);
+    displayOverrideCheck(userEntry,notes, elements);
 }
 
 
-// display all saved notes to user
+
+/*  when user requests to view their saved notes, either:
+    - return an "Empty Notes" message, if there are currently no saved notes
+    - or check the notes array and detect any gaps bewtween journaling days
+    - if there are no gaps, display notes as is
+    - or fill those gaps with placeholder notes ("Red Moons"), which indicate missed days to the user
+
+    the notes are then displayed in a modal, that wait for the user to:
+    - view a specific note, which is opened in the UI
+    - delete note(s), which are removed from localStorage, note array, and the DOM
+*/
 function viewAllNotes(elements, notes) {
+
+    // safeguard to ensure notes array is up to date
+    notes = JSON.parse(localStorage.getItem("notes")) || [];
 
     // clear modal container
     elements.notesContainer.innerHTML = "";
@@ -290,18 +315,14 @@ function viewAllNotes(elements, notes) {
         return openModal(elements);
     }
 
-    // display note if only one is saved
-    if (notes.length === 1) {
-        createNoteElement(notes[0], elements);
-        return openModal(elements);
-    }
-
-    // if multiple saved notes, fill any gaps before displaying
-    fillMissingDaysData(notes);
+    // fill any missed journaling days with placeholder notes,
+    // updates the notes array and saves the new notes data to localStorage
+    notes = checkForMissingDays(notes);
+    localStorage.setItem("notes", JSON.stringify(notes));
 
     // create a DOM element for each saved note
     notes.forEach( (note) => {
-        createNoteElement(note, elements);
+        createNoteElement(note, notes, elements);
     });
     openModal(elements);
 }

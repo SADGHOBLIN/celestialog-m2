@@ -28,14 +28,14 @@ const elements = {
     closeModalBtn: document.getElementById("close-modal"),
     sendMsgBtn: document.getElementById("send-msg-btn"),
 
-    // journal notes data
+    // journal notes form data
     noteForm: document.getElementById("note-form"),
     noteTitle: document.getElementById("note-title"),
     noteDate: document.getElementById("note-date"),
     noteMoon: document.getElementById("note-moon"),
     noteContent: document.getElementById("note-content"),
 
-    // journal notes
+    // journal notes modal
     journal: document.getElementById("journal"),
     notesContainerModal: document.getElementById("notes-container-modal"),
     modalTitle: document.getElementById("modal-title"),
@@ -49,45 +49,15 @@ const elements = {
 const state = {
     isWaitingForReply: false
 }
-let notes = JSON.parse(localStorage.getItem("notes")) || [];
 const getEngine = cacheEngine();
-
-// ------------------------------------------------------------------------------------------------------
-// ------------------------------------------------------------------------------------------------------
-// DEBUGGING:
-notes = [
-    {
-        id: "1761888000000",
-        title: "THIS IS TODAY",
-        date: "Fri Nov 28 2025",
-        moon: "moon",
-        content: "Filler content"
-    },
-    {
-        id: "1761801600000",
-        title: "THIS IS YESTERDAY",
-        date: "Thu Nov 27 2025",
-        moon: "moon",
-        content: "Filler content"
-    },
-    {
-        id: "1761532800000",
-        title: "THIS IS MONDAY",
-        date: "Mon Nov 24 2025",
-        moon: "moon",
-        content: "Filler content"
-    },
-]
-// ------------------------------------------------------------------------------------------------------
-// ------------------------------------------------------------------------------------------------------
+let notes = JSON.parse(localStorage.getItem("notes")) || [];
 
 
 // ------------------------------------------------------------------------------------------------------
 // ------------------------------------------------------------------------------------------------------
 // JOURNAL FUNCTIONALITY - in development
 
-
-// TOGGLE BETWEEN NOTES AND ADVISOR
+// TOGGLE BETWEEN NOTES AND ADVISOR WINDOWS
 elements.useAdvisor.addEventListener("click", () => {
     toggleHidden(elements, "advisor", "journal");
     elements.userMsgInput.focus();
@@ -107,7 +77,7 @@ elements.noteForm.addEventListener("submit", (e) => captureUserEntry(e, elements
 elements.viewNotesBtn.addEventListener("click", () => viewAllNotes(elements, notes));
 
 
-// Close modal with button, or click outside
+// CLOSE NOTES MODAL
 elements.closeModalBtn.addEventListener("click", () => closeModal(elements));
 elements.notesContainerModal.addEventListener("click", (e) => {
     if (e.target === e.currentTarget) {
@@ -115,8 +85,10 @@ elements.notesContainerModal.addEventListener("click", (e) => {
     }
 });
 
+
 // ADVISOR FUNCTIONALITY
-// handle messages sent into the chat by the user
+
+// HANDLE USER SUBMITTED MESSAGES
 elements.sendMsgBtn.addEventListener("click", () => {
     sendMessage(getEngine, config, elements, state);
 });
@@ -134,19 +106,24 @@ elements.userMsgInput.addEventListener("keypress", event => {
 // ------------------------------------------------------------------------------------------------------
 // INITIALISE
 // ------------------------------------------------------------------------------------------------------
+
+// display moon data information to user
 await displayMoonData(config, elements);
 
+// fetch user notes and display, if note is from today
 initialiseNote(notes, elements);
 
 
 // ------------------------------------------------------------------------------------------------------
 // ------------------------------------------------------------------------------------------------------
-// debugging - expose to console for now
+
+// debugging - delete all notes from local storage
 window.notes = notes;
 
-// debugging - delete notes from local storage
 document.getElementById("clear-notes").addEventListener("click", () => {
     localStorage.removeItem("notes");
     notes = [];
+    window.notes = notes;
+    initialiseNote(notes, elements);
     console.log("notes cleared");
 });

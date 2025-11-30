@@ -75,6 +75,7 @@ async function displayMoonData(config, elements) {
     // moon info variables
     const today = new Date(payload.timestamp);
     const moonData = payload.moonData;
+    
     const moonPhase = formatMoonData(moonData.astronomy.moon_phase);
     const moonrise = moonData.astronomy.moonrise;
     const moonset = moonData.astronomy.moonset;
