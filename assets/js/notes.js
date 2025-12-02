@@ -194,6 +194,11 @@ function createNoteElement(note, notes, elements) {
         deleteNoteData(note.id, notes);
     })
 
+    // add .red-moon class to placeholder notes for styling and `display visibility` toggle
+    if (note.moon === "RED MOON") {
+        savedNote.classList.add("red-moon");
+    }
+
     // attaches elements to DOM
     elements.notesContainer.appendChild(savedNote);
     savedNote.appendChild(openNoteBtn)
@@ -213,6 +218,19 @@ function createEmptyNotesMessage(elements) {
     elements.notesContainer.appendChild(emptyMessage);
 }
 
+// toggle display of missed journaling days when user tries to view all notes
+function toggleMissedDays(elements, state) {
+    const redMoons = document.querySelectorAll(".red-moon");
+    state.showRedMoons = !state.showRedMoons;
+    
+    elements.toggleRedMoons.innerText = state.showRedMoons
+    ? "Hide missed journaling days"
+    : "Show missed journaling days";
+
+    redMoons.forEach(note => {
+        note.classList.toggle("hidden");
+    })
+}
 
 // helper to open and close modal, displays saved notes to user
 function openModal(elements) {
@@ -328,4 +346,4 @@ function viewAllNotes(elements, notes) {
 }
 
 // export functions
-export { initialiseNote, captureUserEntry, viewAllNotes, toggleHidden, closeModal };
+export { initialiseNote, captureUserEntry, viewAllNotes, toggleHidden, toggleMissedDays, closeModal };

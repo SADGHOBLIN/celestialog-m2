@@ -1,7 +1,7 @@
 // Import custom functions from other modules
 import { displayMoonData } from "./moon.js";
 import { sendMessage, cacheEngine } from "./advisor.js";
-import { initialiseNote, captureUserEntry, viewAllNotes, toggleHidden, closeModal } from "./notes.js";
+import { initialiseNote, captureUserEntry, viewAllNotes, toggleHidden, toggleMissedDays, closeModal } from "./notes.js";
 
 // CONFIG
 const config = {
@@ -25,6 +25,7 @@ const elements = {
     useAdvisor: document.getElementById("use-advisor"),
     saveNoteBtn: document.getElementById("save-note"),
     viewNotesBtn: document.getElementById("view-notes"),
+    toggleRedMoons: document.getElementById("toggle-missed-days"),
     closeModalBtn: document.getElementById("close-modal"),
     sendMsgBtn: document.getElementById("send-msg-btn"),
 
@@ -47,7 +48,8 @@ const elements = {
     userMsgInput: document.getElementById("user-msg-input"),
 };
 const state = {
-    isWaitingForReply: false
+    isWaitingForReply: false,
+    showRedMoons: true
 }
 const getEngine = cacheEngine();
 let notes = JSON.parse(localStorage.getItem("notes")) || [];
@@ -75,6 +77,10 @@ elements.noteForm.addEventListener("submit", (e) => captureUserEntry(e, elements
 
 // DISPLAY SAVED NOTES TO USER
 elements.viewNotesBtn.addEventListener("click", () => viewAllNotes(elements, notes));
+
+
+// TOGGLE VISIBILITY OF MISSED JOURNALING DAYS
+elements.toggleRedMoons.addEventListener("click", () => toggleMissedDays(elements, state));
 
 
 // CLOSE NOTES MODAL

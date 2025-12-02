@@ -192,6 +192,10 @@
     outline: 2px solid red;
 }
 
+#hide-missed-days :checked > .red-moon {
+    visibility: none;
+}
+
 /* Advisor chat */
 #chat-body {
     width: 100%;
