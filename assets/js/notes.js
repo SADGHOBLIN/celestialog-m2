@@ -1,16 +1,23 @@
 // NOTES DATA helpers
 
+// generates a unique timestamp at time of creation to be used as the Note ID
+function generateNoteId() {
+    const timestamp = Date.now();
+    return timestamp.toString();
+}
+
+
 /*  creates a timestamp for midnight UTC on that specific day,
-    this is used as a unique NOTE ID,
+    this is taken from the unique NOTE ID,
     which can be used to calculate exactly how many days have occurred between user notes (in days)
 */
-function generateNoteId() {
-    const timestamp = new Date();
+function getDayOfNote(noteId) {
+    const timestamp = new Date(Number(noteId));
     return Date.UTC(
         timestamp.getUTCFullYear(),
         timestamp.getUTCMonth(),
         timestamp.getUTCDate()
-    ).toString();
+    );
 }
 
 
@@ -22,7 +29,7 @@ function formatNoteData (noteId, title, date, moon, content) {
     return {
         id: noteId,
         title: title,
-        date: date, // TODO: format date function
+        date: date,
         moon: moon,
         content: content
     };
@@ -48,8 +55,9 @@ function formatIdToDisplayDate(noteId) {
 
 // creates a new formatted note and saves to localStorage, add new note to start of array
 function saveNewNote(newNote, notes) {
-    notes.unshift(newNote);
+    notes.userNotes.unshift(newNote);
     localStorage.setItem("notes", JSON.stringify(notes));
+    return sortNotes(notes);
 }
 
 
@@ -58,46 +66,75 @@ function saveNewNote(newNote, notes) {
 function overrideNoteData(userEntry, notes) {
 
     // use the unique note ID to retrieve its index in array
-    const index = notes.findIndex( (note) => userEntry.id === note.id);
+    const index = notes.userNotes.findIndex( (note) => userEntry.id === note.id);
 
     // override data
-    notes[index].title = userEntry.title;
-    notes[index].content = userEntry.content;
-    localStorage.setItem("notes", JSON.stringify(notes));
+    notes.userNotes[index].title = userEntry.title;
+    notes.userNotes[index].content = userEntry.content;
+    return sortNotes(notes);
 }
 
 
-// deletes a note from localStorage and notes array
+/*  handles deletion of notes
+    find whether the note exists in the main notes array:
+    - if it does not, delete the note permanantly,
+    - if it does, remove and add to the recycle bin
+*/
 function deleteNoteData(noteId, notes) {
-    const noteIndex = notes.findIndex( (note) => note.id === noteId);
-    notes.splice(noteIndex, 1);
-    localStorage.setItem("notes", JSON.stringify(notes));
+    const noteIndex = notes.userNotes.findIndex( (note) => note.id === noteId);
+
+    // if findIndex on notes array returns -1, the note must be in the recycle bin
+    if (noteIndex < 0) {
+        const noteInBinIndex = notes.recycleBin.findIndex( (note) => note.id === noteId)
+        notes.recycleBin.splice(noteInBinIndex, 1);
+        return sortNotes(notes);
+    }
+
+    // else, delete note from main array but keep back up in recycle bin
+    const noteToBin = notes.userNotes.find( (note) => note.id === noteId);
+    notes.userNotes.splice(noteIndex, 1);
+    notes.recycleBin.push(noteToBin);
+    return sortNotes(notes);
 }
+
+
+// restore a previously deleted note in the correct order to the main notes array,
+// and remove it from the recycle bin
+function restoreDeletedNote(noteId, notes) {
+
+    const noteToRestore = notes.recycleBin.find( (note) => note.id === noteId);
+    const noteIndex = notes.recycleBin.findIndex ( (note) => note.id === noteId);
+
+    notes.recycleBin.splice(noteIndex, 1);
+    notes.userNotes.push(noteToRestore);
+
+    return sortNotes(notes);
+}
+
 
 
 // checks whether at least one day has passed between user created notes,
 // inidicating that they have 'missed a journaling day'
-function checkForMissingDays(notes) {
+function checkForMissingDays(userNotes) {
 
     // safeguard that ensures notes are sorted in descending order
-    notes.sort((a,b ) => Number(b.id) - Number(a.id));
-    localStorage.setItem("notes", JSON.stringify(notes));
+    userNotes.sort((a,b ) => Number(b.id) - Number(a.id));
 
     // nothing to fill
-    if (notes.length <= 1) {
-        return notes;
+    if (userNotes.length <= 1) {
+        return userNotes;
     }
 
     // store in a new array to avoid mutating original notes array
-    const filledDays = [notes[0]];
+    const filledDays = [userNotes[0]];
 
     // push original notes into new array, inserting placeholders between user created notes
-    for (let i = 0; i < notes.length - 1; i++) {
-        const currentNote = notes[i];
-        const nextNote = notes[i + 1];
+    for (let i = 0; i < userNotes.length - 1; i++) {
+        const currentNote = userNotes[i];
+        const nextNote = userNotes[i + 1];
 
-        const currentDay = Number(currentNote.id);
-        const nextDay = Number(nextNote.id);
+        const currentDay = getDayOfNote(currentNote.id);
+        const nextDay = getDayOfNote(nextNote.id);
 
         insertMissingDays(filledDays, currentDay, nextDay);
         filledDays.push(nextNote);
@@ -125,6 +162,15 @@ function insertMissingDays(filledDays, currentDay, nextDay) {
 }
 
 
+// returns a sorted notes object, sorting both the userNotes and recycleBin into descending order (newest notes first)
+function sortNotes(notes) {
+    notes.userNotes.sort((a,b ) => Number(b.id) - Number(a.id));
+    notes.recycleBin.sort((a,b ) => Number(b.id) - Number(a.id));
+    localStorage.setItem("notes", JSON.stringify(notes));
+    return notes;
+}
+
+
 //  NOTES UI helpers
 
 //  displays a message, with buttons, in the DOM to check whether user wishes to overwrite their data
@@ -134,7 +180,7 @@ function displayOverrideCheck(userEntry, notes, elements) {
     
     //  create save button
     const saveBtn = createModalBtn("Save note", () => {
-        overrideNoteData(userEntry, notes);
+        notes = overrideNoteData(userEntry, notes);
         closeModal(elements);
         elements.modalTitle.innerText = "Select note";
     })
@@ -153,7 +199,7 @@ function displayOverrideCheck(userEntry, notes, elements) {
 
 // injects a user selected note's data into UI for user editing
 function openSavedNote(noteId, notes, elements) {
-    const noteToOpen = notes.find((note) => note.id === noteId);
+    const noteToOpen = notes.userNotes.find((note) => note.id === noteId);
 
     elements.noteForm.dataset.noteId = noteToOpen.id;
     elements.noteTitle.value = noteToOpen.title;
@@ -172,47 +218,62 @@ function deleteNoteElement(noteId) {
 
 
 // create modal DOM element to display a saved note
-function createNoteElement(note, notes, elements) {
+function createNoteElement(note, elements, notes, arrayType) {
 
-    const savedNote = document.createElement("div");
-    savedNote.id = `${note.id}`;
-    savedNote.setAttribute("data-note-id", note.id);
-    savedNote.classList.add("note");
-    savedNote.innerHTML = `
+    const noteElement = document.createElement("div");
+    noteElement.id = `${note.id}`;
+    noteElement.setAttribute("data-note-id", note.id);
+    noteElement.classList.add("note");
+    noteElement.innerHTML = `
         <div class="note-info">
                 <h3 class="note-title">${note.title}</h3>
                 <h4 class="note-date">${note.date}</h4>
                 <h4 class="note-moon">${note.moon}</h4>
         </div>`;
 
-    // create buttons that allow user to open a saved note, or delete a saved note
-    const openNoteBtn = createModalBtn("Open note", () => {
-        openSavedNote(note.id, notes, elements);
-    })
+    // main action button, dependent on array,
+    // user can either open a selected note from main array,
+    //  or restore a deleted file from the recycle bin to the main array
+    let mainBtn;
+
+    if (arrayType === "userNotesArray") {
+        mainBtn = createModalBtn("Open note", () => {
+            openSavedNote(note.id, notes, elements);
+        })
+    }
+    if (arrayType === "recycleBinArray") {
+        mainBtn = createModalBtn("Restore note", () => {
+            deleteNoteElement(note.id, elements);
+            notes = restoreDeletedNote(note.id, notes);
+        })
+    }
+
+    // delete button, will either permanantly delete a note from recycle bin,
+    // or remove the note from the main array and add to recycle bin
     const deleteNoteBtn = createModalBtn("Delete note", () => {
         deleteNoteElement(note.id, elements);
-        deleteNoteData(note.id, notes);
+        notes = deleteNoteData(note.id, notes);
     })
 
     // add .red-moon class to placeholder notes for styling and `display visibility` toggle
     if (note.moon === "RED MOON") {
-        savedNote.classList.add("red-moon");
+        noteElement.classList.add("red-moon");
     }
 
     // attaches elements to DOM
-    elements.notesContainer.appendChild(savedNote);
-    savedNote.appendChild(openNoteBtn)
-    savedNote.appendChild(deleteNoteBtn);
+    elements.notesContainer.appendChild(noteElement);
+    noteElement.appendChild(mainBtn);
+    noteElement.appendChild(deleteNoteBtn);
 }
 
 
 // create modal message to inform user that no notes are currently saved
-function createEmptyNotesMessage(elements) {
+function createEmptyNotesMessage(elements, message) {
     const emptyMessage = document.createElement("div");
     emptyMessage.innerHTML = `
         <div class="note">
             <h3 class="note-title"
-            >You currently have no saved notes!</h3>
+            >${message}</h3>
         </div>`;
 
     elements.notesContainer.appendChild(emptyMessage);
@@ -262,12 +323,12 @@ function toggleHidden(elements, showID, hideID) {
 // NOTES MAIN FUNCTIONS
 
 // displays the most recent note to the user, if note is from today
-function initialiseNote(notes, elements) {
-    if (notes.length === 0) {
+function displayTodaysNote(elements, notes) {
+    if (notes.userNotes.length === 0) {
         return;
     }
 
-    const mostRecentNote = notes[0];
+    const mostRecentNote = notes.userNotes[0];
     const today = elements.date.innerText;
 
     if (mostRecentNote.date === today) {
@@ -278,18 +339,20 @@ function initialiseNote(notes, elements) {
 }
 
 /*  when user requests to save a note:
-    - generate a unique ID for new notes, if one doesn't exist,
+    - generate a unique ID for new notes, if one doesn't exist, or if note is in recycling bin
     - fetch rest of associated note data from the DOM,
     - format data, ready to be saved
     - check whether user is saving a new note, or overwriting an existing note
 */
 function captureUserEntry(e, elements, notes) {
     e.preventDefault();
+    notes = sortNotes(notes);
 
     let noteId = elements.noteForm.dataset.noteId;
+    const isInRecycleBin = notes.recycleBin.find ( (note) => note.id === noteId);
     let isNewNote = false;
     
-    if (!noteId) {
+    if (!noteId || isInRecycleBin) {
         isNewNote = true;
         noteId = generateNoteId();
         elements.noteForm.setAttribute("data-note-id", noteId);
@@ -304,7 +367,8 @@ function captureUserEntry(e, elements, notes) {
     if (isNewNote) {
         return saveNewNote(userEntry, notes);
     }
-    displayOverrideCheck(userEntry,notes, elements);
+    
+    displayOverrideCheck(userEntry, notes, elements);
 }
 
 
@@ -321,29 +385,45 @@ function captureUserEntry(e, elements, notes) {
 */
 function viewAllNotes(elements, notes) {
 
-    // safeguard to ensure notes array is up to date
-    notes = JSON.parse(localStorage.getItem("notes")) || [];
+    // safeguard to ensure notes array is up to date and in descending order
+    notes = sortNotes(notes);
 
     // clear modal container
     elements.notesContainer.innerHTML = "";
 
     // show no notes if none saved
-    if (notes.length === 0) {
-        createEmptyNotesMessage(elements);
+    if (notes.userNotes.length === 0) {
+        createEmptyNotesMessage(elements, "You currently have no saved notes!");
         return openModal(elements);
     }
 
     // fill any missed journaling days with placeholder notes,
     // updates the notes array and saves the new notes data to localStorage
-    notes = checkForMissingDays(notes);
-    localStorage.setItem("notes", JSON.stringify(notes));
+    notes.userNotes = checkForMissingDays(notes.userNotes);
+    notes = sortNotes(notes);
 
     // create a DOM element for each saved note
-    notes.forEach( (note) => {
-        createNoteElement(note, notes, elements);
+    notes.userNotes.forEach( (note) => {
+        createNoteElement(note, elements, notes, "userNotesArray");
+    });
+    openModal(elements);
+}
+
+function viewRecycleBin(elements, notes) {
+    notes = sortNotes(notes);
+
+    elements.notesContainer.innerHTML = "";
+
+    if (notes.recycleBin.length === 0) {
+        createEmptyNotesMessage(elements, "Your recycle bin is empty");
+        return openModal(elements);
+    }
+
+    notes.recycleBin.forEach( (note) => {
+        createNoteElement(note, elements, notes, "recycleBinArray");
     });
     openModal(elements);
 }
 
 // export functions
-export { initialiseNote, captureUserEntry, viewAllNotes, toggleHidden, toggleMissedDays, closeModal };
+export { displayTodaysNote, captureUserEntry, viewAllNotes, viewRecycleBin, toggleHidden, toggleMissedDays, closeModal };

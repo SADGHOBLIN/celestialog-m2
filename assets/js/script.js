@@ -1,7 +1,7 @@
 // Import custom functions from other modules
 import { displayMoonData } from "./moon.js";
 import { sendMessage, cacheEngine } from "./advisor.js";
-import { initialiseNote, captureUserEntry, viewAllNotes, toggleHidden, toggleMissedDays, closeModal } from "./notes.js";
+import { displayTodaysNote, captureUserEntry, viewAllNotes, viewRecycleBin, toggleHidden, toggleMissedDays, closeModal } from "./notes.js";
 
 // CONFIG
 const config = {
@@ -25,6 +25,7 @@ const elements = {
     useAdvisor: document.getElementById("use-advisor"),
     saveNoteBtn: document.getElementById("save-note"),
     viewNotesBtn: document.getElementById("view-notes"),
+    viewRecycleBtn: document.getElementById("view-recycle-bin"),
     toggleRedMoons: document.getElementById("toggle-missed-days"),
     closeModalBtn: document.getElementById("close-modal"),
     sendMsgBtn: document.getElementById("send-msg-btn"),
@@ -52,7 +53,11 @@ const state = {
     showRedMoons: true
 }
 const getEngine = cacheEngine();
-let notes = JSON.parse(localStorage.getItem("notes")) || [];
+let notes = JSON.parse(localStorage.getItem("notes")) || {
+    userNotes: [],
+    recycleBin: [],
+};
+
 
 
 // ------------------------------------------------------------------------------------------------------
@@ -77,6 +82,10 @@ elements.noteForm.addEventListener("submit", (e) => captureUserEntry(e, elements
 
 // DISPLAY SAVED NOTES TO USER
 elements.viewNotesBtn.addEventListener("click", () => viewAllNotes(elements, notes));
+
+
+// DISPLAY RECYCLE BIN TO USER
+elements.viewRecycleBtn.addEventListener("click", () => viewRecycleBin(elements, notes));
 
 
 // TOGGLE VISIBILITY OF MISSED JOURNALING DAYS
@@ -117,7 +126,7 @@ elements.userMsgInput.addEventListener("keypress", event => {
 await displayMoonData(config, elements);
 
 // fetch user notes and display, if note is from today
-initialiseNote(notes, elements);
+displayTodaysNote(elements, notes);
 
 
 // ------------------------------------------------------------------------------------------------------
@@ -128,8 +137,11 @@ window.notes = notes;
 
 document.getElementById("clear-notes").addEventListener("click", () => {
     localStorage.removeItem("notes");
-    notes = [];
+    notes = {
+        userNotes: [],
+        recycleBin: [],
+    }
     window.notes = notes;
-    initialiseNote(notes, elements);
+    initialiseNote(elements, notes);
     console.log("notes cleared");
 });
