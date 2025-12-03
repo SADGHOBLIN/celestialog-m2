@@ -1,7 +1,7 @@
 // Import custom functions from other modules
 import { displayMoonData } from "./moon.js";
 import { sendMessage, cacheEngine } from "./advisor.js";
-import { displayTodaysNote, captureUserEntry, viewAllNotes, viewRecycleBin, toggleHidden, toggleMissedDays, closeModal } from "./notes.js";
+import { displayTodaysNote, captureUserEntry, createNewNote, viewAllNotes, viewRecycleBin, toggleHidden, toggleMissedDays, closeModal } from "./notes.js";
 
 // CONFIG
 const config = {
@@ -24,6 +24,7 @@ const elements = {
     useJournal: document.getElementById("use-journal"),
     useAdvisor: document.getElementById("use-advisor"),
     saveNoteBtn: document.getElementById("save-note"),
+    createNoteBtn: document.getElementById("create-note"),
     viewNotesBtn: document.getElementById("view-notes"),
     viewRecycleBtn: document.getElementById("view-recycle-bin"),
     toggleRedMoons: document.getElementById("toggle-missed-days"),
@@ -79,6 +80,12 @@ elements.useJournal.addEventListener("click", () => {
 // SAVE NEW NOTE
 elements.noteForm.addEventListener("submit", (e) => captureUserEntry(e, elements, notes));
 
+
+// CREATE NEW NOTE
+elements.createNoteBtn.addEventListener("click", () => {
+    createNewNote(elements);
+    displayMoonData(config, elements);
+});
 
 // DISPLAY SAVED NOTES TO USER
 elements.viewNotesBtn.addEventListener("click", () => viewAllNotes(elements, notes));

@@ -179,6 +179,16 @@ function sortNotes(notes) {
 
 //  NOTES UI helpers
 
+
+// empty UI to allow for new note creation
+function createNewNote(elements) {
+    elements.noteForm.dataset.noteId = "";
+    elements.noteTitle.value = "";
+    elements.noteDate.innerText = "";
+    elements.noteMoon.innerText = "";
+    elements.noteContent.value = "";
+}
+
 //  displays a message, with buttons, in the DOM to check whether user wishes to overwrite their data
 function displayOverrideCheck(userEntry, notes, elements) {
     elements.notesContainer.innerHTML = "";
@@ -432,4 +442,4 @@ function viewRecycleBin(elements, notes) {
 }
 
 // export functions
-export { displayTodaysNote, captureUserEntry, viewAllNotes, viewRecycleBin, toggleHidden, toggleMissedDays, closeModal };
+export { displayTodaysNote, captureUserEntry, createNewNote, viewAllNotes, viewRecycleBin, toggleHidden, toggleMissedDays, closeModal };
