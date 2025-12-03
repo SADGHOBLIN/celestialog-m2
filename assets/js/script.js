@@ -82,10 +82,7 @@ elements.noteForm.addEventListener("submit", (e) => captureUserEntry(e, elements
 
 
 // CREATE NEW NOTE
-elements.createNoteBtn.addEventListener("click", () => {
-    createNewNote(elements);
-    displayMoonData(config, elements);
-});
+elements.createNoteBtn.addEventListener("click", () => createNewNote(config, elements, notes));
 
 // DISPLAY SAVED NOTES TO USER
 elements.viewNotesBtn.addEventListener("click", () => viewAllNotes(elements, notes));
@@ -149,6 +146,6 @@ document.getElementById("clear-notes").addEventListener("click", () => {
         recycleBin: [],
     }
     window.notes = notes;
-    initialiseNote(elements, notes);
+    displayTodaysNote(elements, notes);
     console.log("notes cleared");
 });

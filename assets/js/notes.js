@@ -1,3 +1,4 @@
+import { displayMoonData } from "./moon.js";
 // NOTES DATA helpers
 
 // generates a unique timestamp at time of creation to be used as the Note ID
@@ -118,7 +119,6 @@ function restoreDeletedNote(noteId, notes) {
 }
 
 
-
 // checks whether at least one day has passed between user created notes,
 // inidicating that they have 'missed a journaling day'
 function checkForMissingDays(userNotes) {
@@ -167,6 +167,13 @@ function insertMissingDays(filledDays, currentDay, nextDay) {
     }
 }
 
+// ensures notes object is up to date, and saved in localStorage
+function updateNotesObject(newNotes) {
+    notes.userNotes = newNotes.userNotes;
+    notes.recycleBin = newNotes.recycleBin;
+    localStorage.setItem("notes", JSON.stringify(notes));
+    return notes;
+}
 
 // returns a sorted notes object, sorting both the userNotes and recycleBin into descending order (newest notes first)
 function sortNotes(notes) {
@@ -177,38 +184,90 @@ function sortNotes(notes) {
 }
 
 
+// buffer check to ensure that user doesn't take actions and lose their unsaved progress
+// only runs the check if they have ammended a saved note and not saved
+function checkSaveChanges(elements, notes, nextAction) {
+
+    const currentNoteId = elements.noteForm.dataset.noteId;
+    const currentTitle = elements.noteTitle.value;
+    const currentMessage =  elements.noteContent.value;
+
+    let isSaved = notes.userNotes.find( (note) => currentNoteId === note.id);
+
+    // If no existing save note, safe to proceed
+    if (!isSaved) {
+        nextAction();
+        return;
+    }
+
+    // if note exists but no data has been changed, safe to proceed
+    if (currentTitle === isSaved.title && currentMessage === isSaved.content) {
+        nextAction();
+        return;
+    }
+
+    // if note exists, and some content has changed, display warning to user asking if they wish to save changes
+    const userEntry = {
+        id: currentNoteId,
+        title: currentTitle,
+        date: isSaved.date,
+        moon: isSaved.moon,
+        content: currentMessage
+    };
+
+    let saveChangesPrompt = "Do you wish to save changes?";
+    displayOverrideCheck(userEntry, notes, elements, saveChangesPrompt, nextAction);
+}
+
+function createNewNote(config, elements, notes) {
+
+    // safeguard against trying to create multiple new notes when UI is already empty
+    if (!elements.noteForm.dataset.noteId) {
+        return;
+    }
+
+    checkSaveChanges(elements, notes, () => {
+        clearNoteUI(config, elements);
+    });
+}
+
+
 //  NOTES UI helpers
 
 
 // empty UI to allow for new note creation
-function createNewNote(elements) {
+// run displayMoonData to get up to date Date and Moon info
+function clearNoteUI(config, elements) {
     elements.noteForm.dataset.noteId = "";
     elements.noteTitle.value = "";
     elements.noteDate.innerText = "";
     elements.noteMoon.innerText = "";
     elements.noteContent.value = "";
+    displayMoonData(config, elements);
 }
 
 //  displays a message, with buttons, in the DOM to check whether user wishes to overwrite their data
-function displayOverrideCheck(userEntry, notes, elements) {
+function displayOverrideCheck(userEntry, notes, elements, message, nextAction) {
     elements.notesContainer.innerHTML = "";
-    elements.modalTitle.innerText = "Do you wish to override this save?";
+    elements.modalTitle.innerText = message;
     
     //  create save button
     const saveBtn = createModalBtn("Save note", () => {
-        notes = overrideNoteData(userEntry, notes);
+        updateNotesObject(overrideNoteData(userEntry, notes));
         closeModal(elements);
+        nextAction();
         elements.modalTitle.innerText = "Select note";
     })
-    elements.notesContainer.appendChild(saveBtn);
 
     //  create cancel button
     const cancelBtn = createModalBtn("Cancel", () => {
         closeModal(elements);
+        nextAction();
         elements.modalTitle.innerText = "Select note";
     })
-    elements.notesContainer.appendChild(cancelBtn);
 
+    elements.notesContainer.appendChild(saveBtn);
+    elements.notesContainer.appendChild(cancelBtn);
     openModal(elements);
 }
 
@@ -254,13 +313,15 @@ function createNoteElement(note, elements, notes, arrayType) {
 
     if (arrayType === "userNotesArray") {
         mainBtn = createModalBtn("Open note", () => {
-            openSavedNote(note.id, notes, elements);
-        })
+            checkSaveChanges(elements, notes, () => {
+                openSavedNote(note.id, notes, elements);
+            });
+        });
     }
     if (arrayType === "recycleBinArray") {
         mainBtn = createModalBtn("Restore note", () => {
             deleteNoteElement(note.id, elements);
-            notes = restoreDeletedNote(note.id, notes);
+            return updateNotesObject(restoreDeletedNote(note.id, notes));
         })
     }
 
@@ -268,7 +329,7 @@ function createNoteElement(note, elements, notes, arrayType) {
     // or remove the note from the main array and add to recycle bin
     const deleteNoteBtn = createModalBtn("Delete note", () => {
         deleteNoteElement(note.id, elements);
-        notes = deleteNoteData(note.id, notes);
+        return updateNotesObject(deleteNoteData(note.id, notes));
     })
 
     // add .red-moon class to placeholder notes for styling and `display visibility` toggle
@@ -381,10 +442,11 @@ function captureUserEntry(e, elements, notes) {
     const userEntry = formatNoteData(noteId, title, date, moon, content);
 
     if (isNewNote) {
-        return saveNewNote(userEntry, notes);
+        return updateNotesObject(saveNewNote(userEntry, notes));
     }
     
-    displayOverrideCheck(userEntry, notes, elements);
+    let overridePrompt = "Do you wish to override changes?";
+    displayOverrideCheck(userEntry, notes, elements, overridePrompt, closeModal);
 }
 
 
