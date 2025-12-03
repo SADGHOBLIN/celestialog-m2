@@ -56,7 +56,6 @@ function formatIdToDisplayDate(noteId) {
 // creates a new formatted note and saves to localStorage, add new note to start of array
 function saveNewNote(newNote, notes) {
     notes.userNotes.unshift(newNote);
-    localStorage.setItem("notes", JSON.stringify(notes));
     return sortNotes(notes);
 }
 
@@ -67,6 +66,12 @@ function overrideNoteData(userEntry, notes) {
 
     // use the unique note ID to retrieve its index in array
     const index = notes.userNotes.findIndex( (note) => userEntry.id === note.id);
+
+    // handle errors, if a user tries to save over a deleted note
+    if (index < 0) {
+        notes.userNotes.push(userEntry);
+        return sortNotes(notes);
+    }
 
     // override data
     notes.userNotes[index].title = userEntry.title;
@@ -84,6 +89,7 @@ function deleteNoteData(noteId, notes) {
     const noteIndex = notes.userNotes.findIndex( (note) => note.id === noteId);
 
     // if findIndex on notes array returns -1, the note must be in the recycle bin
+    // permanantly delete a note from the recycle bin
     if (noteIndex < 0) {
         const noteInBinIndex = notes.recycleBin.findIndex( (note) => note.id === noteId)
         notes.recycleBin.splice(noteInBinIndex, 1);
