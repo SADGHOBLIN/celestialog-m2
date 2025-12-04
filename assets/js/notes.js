@@ -1,12 +1,14 @@
+// import displayMoonData to ensure an updated time/moon phase is displayed when creating a new note
 import { displayMoonData } from "./moon.js";
+
 // NOTES DATA helpers
 
-// generates a unique timestamp at time of creation to be used as the Note ID
+
+// generates a unique timestamp at time of creation to be used as the unique Note ID
 function generateNoteId() {
     const timestamp = Date.now();
     return timestamp.toString();
 }
-
 
 /*  creates a timestamp for midnight UTC on that specific day,
     this is taken from the unique NOTE ID,
@@ -19,6 +21,12 @@ function getDayOfNote(noteId) {
         timestamp.getUTCMonth(),
         timestamp.getUTCDate()
     );
+}
+
+// generates a missed journaling date from a placeholder note ID
+function formatIdToDisplayDate(noteId) {
+    const date = new Date(Number(noteId));
+    return date.toDateString();
 }
 
 
@@ -47,10 +55,21 @@ function createPlaceholderNoteData(missingId) {
     };
 }
 
-// generates a missed journaling date from a placeholder note ID
-function formatIdToDisplayDate(noteId) {
-    const date = new Date(Number(noteId));
-    return date.toDateString();
+
+// ensures notes object is up to date, and saved in localStorage
+function updateNotesObject(newNotes) {
+    notes.userNotes = newNotes.userNotes;
+    notes.recycleBin = newNotes.recycleBin;
+    localStorage.setItem("notes", JSON.stringify(notes));
+    return notes;
+}
+
+// returns a sorted notes object, sorting both the userNotes and recycleBin into descending order (newest notes first)
+function sortNotes(notes) {
+    notes.userNotes.sort((a,b ) => Number(b.id) - Number(a.id));
+    notes.recycleBin.sort((a,b ) => Number(b.id) - Number(a.id));
+    localStorage.setItem("notes", JSON.stringify(notes));
+    return notes;
 }
 
 
@@ -58,6 +77,55 @@ function formatIdToDisplayDate(noteId) {
 function saveNewNote(newNote, notes) {
     notes.userNotes.unshift(newNote);
     return sortNotes(notes);
+}
+
+
+function createNewNote(config, elements, notes) {
+
+    // safeguard against trying to create multiple new notes when UI is already empty
+    if (!elements.noteForm.dataset.noteId) {
+        return;
+    }
+
+    checkSaveChanges(elements, notes, () => {
+        clearNoteUI(config, elements);
+    });
+}
+
+
+// buffer check to ensure that user doesn't take actions and lose their unsaved progress
+// only runs the check if they have ammended a saved note and not saved
+function checkSaveChanges(elements, notes, nextAction) {
+
+    const currentNoteId = elements.noteForm.dataset.noteId;
+    const currentTitle = elements.noteTitle.value;
+    const currentMessage =  elements.noteContent.value;
+
+    let isSaved = notes.userNotes.find( (note) => currentNoteId === note.id);
+
+    // If no existing save note, safe to proceed
+    if (!isSaved) {
+        nextAction();
+        return;
+    }
+
+    // if note exists but no data has been changed, safe to proceed
+    if (currentTitle === isSaved.title && currentMessage === isSaved.content) {
+        nextAction();
+        return;
+    }
+
+    // if note exists, and some content has changed, display warning to user asking if they wish to save changes
+    const userEntry = {
+        id: currentNoteId,
+        title: currentTitle,
+        date: isSaved.date,
+        moon: isSaved.moon,
+        content: currentMessage
+    };
+
+    let saveChangesPrompt = "Do you wish to save changes?";
+    displayOverrideCheck(userEntry, notes, elements, saveChangesPrompt, nextAction);
 }
 
 
@@ -167,71 +235,6 @@ function insertMissingDays(filledDays, currentDay, nextDay) {
     }
 }
 
-// ensures notes object is up to date, and saved in localStorage
-function updateNotesObject(newNotes) {
-    notes.userNotes = newNotes.userNotes;
-    notes.recycleBin = newNotes.recycleBin;
-    localStorage.setItem("notes", JSON.stringify(notes));
-    return notes;
-}
-
-// returns a sorted notes object, sorting both the userNotes and recycleBin into descending order (newest notes first)
-function sortNotes(notes) {
-    notes.userNotes.sort((a,b ) => Number(b.id) - Number(a.id));
-    notes.recycleBin.sort((a,b ) => Number(b.id) - Number(a.id));
-    localStorage.setItem("notes", JSON.stringify(notes));
-    return notes;
-}
-
-
-// buffer check to ensure that user doesn't take actions and lose their unsaved progress
-// only runs the check if they have ammended a saved note and not saved
-function checkSaveChanges(elements, notes, nextAction) {
-
-    const currentNoteId = elements.noteForm.dataset.noteId;
-    const currentTitle = elements.noteTitle.value;
-    const currentMessage =  elements.noteContent.value;
-
-    let isSaved = notes.userNotes.find( (note) => currentNoteId === note.id);
-
-    // If no existing save note, safe to proceed
-    if (!isSaved) {
-        nextAction();
-        return;
-    }
-
-    // if note exists but no data has been changed, safe to proceed
-    if (currentTitle === isSaved.title && currentMessage === isSaved.content) {
-        nextAction();
-        return;
-    }
-
-    // if note exists, and some content has changed, display warning to user asking if they wish to save changes
-    const userEntry = {
-        id: currentNoteId,
-        title: currentTitle,
-        date: isSaved.date,
-        moon: isSaved.moon,
-        content: currentMessage
-    };
-
-    let saveChangesPrompt = "Do you wish to save changes?";
-    displayOverrideCheck(userEntry, notes, elements, saveChangesPrompt, nextAction);
-}
-
-function createNewNote(config, elements, notes) {
-
-    // safeguard against trying to create multiple new notes when UI is already empty
-    if (!elements.noteForm.dataset.noteId) {
-        return;
-    }
-
-    checkSaveChanges(elements, notes, () => {
-        clearNoteUI(config, elements);
-    });
-}
-
-
 //  NOTES UI helpers
 
 
@@ -245,6 +248,20 @@ function clearNoteUI(config, elements) {
     elements.noteContent.value = "";
     displayMoonData(config, elements);
 }
+
+
+// injects a user selected note's data into UI for user editing
+function openSavedNote(noteId, notes, elements) {
+    const noteToOpen = notes.userNotes.find((note) => note.id === noteId);
+
+    elements.noteForm.dataset.noteId = noteToOpen.id;
+    elements.noteTitle.value = noteToOpen.title;
+    elements.noteDate.innerText = noteToOpen.date;
+    elements.noteMoon.innerText = noteToOpen.moon;
+    elements.noteContent.value = noteToOpen.content;
+    closeModal(elements);
+}
+
 
 //  displays a message, with buttons, in the DOM to check whether user wishes to overwrite their data
 function displayOverrideCheck(userEntry, notes, elements, message, nextAction) {
@@ -269,26 +286,6 @@ function displayOverrideCheck(userEntry, notes, elements, message, nextAction) {
     elements.notesContainer.appendChild(saveBtn);
     elements.notesContainer.appendChild(cancelBtn);
     openModal(elements);
-}
-
-
-// injects a user selected note's data into UI for user editing
-function openSavedNote(noteId, notes, elements) {
-    const noteToOpen = notes.userNotes.find((note) => note.id === noteId);
-
-    elements.noteForm.dataset.noteId = noteToOpen.id;
-    elements.noteTitle.value = noteToOpen.title;
-    elements.noteDate.innerText = noteToOpen.date;
-    elements.noteMoon.innerText = noteToOpen.moon;
-    elements.noteContent.value = noteToOpen.content;
-    closeModal(elements);
-}
-
-
-// removes a note from the modal UI
-function deleteNoteElement(noteId) {
-    const noteToDelete = document.getElementById(noteId);
-    noteToDelete.remove();
 }
 
 
@@ -356,6 +353,14 @@ function createEmptyNotesMessage(elements, message) {
     elements.notesContainer.appendChild(emptyMessage);
 }
 
+
+// removes a note from the modal UI
+function deleteNoteElement(noteId) {
+    const noteToDelete = document.getElementById(noteId);
+    noteToDelete.remove();
+}
+
+
 // toggle display of missed journaling days when user tries to view all notes
 function toggleMissedDays(elements, state) {
     const redMoons = document.querySelectorAll(".red-moon");
@@ -396,8 +401,8 @@ function toggleHidden(elements, showID, hideID) {
     elements[hideID].classList.add("hidden");
 }
 
-
 // NOTES MAIN FUNCTIONS
+
 
 // displays the most recent note to the user, if note is from today
 function displayTodaysNote(elements, notes) {
@@ -414,6 +419,7 @@ function displayTodaysNote(elements, notes) {
         elements.noteContent.value = mostRecentNote.content;
     }
 }
+
 
 /*  when user requests to save a note:
     - generate a unique ID for new notes, if one doesn't exist, or if note is in recycling bin
@@ -448,7 +454,6 @@ function captureUserEntry(e, elements, notes) {
     let overridePrompt = "Do you wish to override changes?";
     displayOverrideCheck(userEntry, notes, elements, overridePrompt, closeModal);
 }
-
 
 
 /*  when user requests to view their saved notes, either:
