@@ -1,7 +1,7 @@
 // Import custom functions from other modules
 import { displayMoonData } from "./moon.js";
 import { sendMessage, cacheEngine } from "./advisor.js";
-import { displayTodaysNote, captureUserEntry, createNewNote, viewAllNotes, viewRecycleBin, toggleHidden, toggleMissedDays, closeModal } from "./notes.js";
+import { displayTodaysNote, captureUserEntry, createNewNote, viewAllNotes, viewRecycleBin, toggleHidden, closeModal } from "./notes.js";
 
 // CONFIG
 const config = {
@@ -27,7 +27,6 @@ const elements = {
     createNoteBtn: document.getElementById("create-note"),
     viewNotesBtn: document.getElementById("view-notes"),
     viewRecycleBtn: document.getElementById("view-recycle-bin"),
-    toggleRedMoons: document.getElementById("toggle-missed-days"),
     closeModalBtn: document.getElementById("close-modal"),
     sendMsgBtn: document.getElementById("send-msg-btn"),
 
@@ -41,8 +40,10 @@ const elements = {
     // journal notes modal
     journal: document.getElementById("journal"),
     notesContainerModal: document.getElementById("notes-container-modal"),
+    modalElement: document.getElementById("modal-element"),
     modalTitle: document.getElementById("modal-title"),
-    notesContainer: document.getElementById("notes-container"),
+    modalBody: document.getElementById("modal-body"),
+    modalFooter: document.getElementById("modal-footer"),
 
     // advisor chat
     advisor: document.getElementById("advisor"),
@@ -58,6 +59,17 @@ let notes = JSON.parse(localStorage.getItem("notes")) || {
     userNotes: [],
     recycleBin: [],
 };
+
+// DEBUGGING;
+// note data for a day in the past, to test backfill functionality
+// timestamp string for NOV 30 2025, UTC midnight
+// {
+//     id: "1764460800000",
+//     title: "Debug Note",
+//     date: "Sun Nov 30 2025",
+//     moon: "WAXING CRESCENT",
+//     content: "This is a test note for debugging."
+// }
 
 
 
@@ -85,15 +97,11 @@ elements.noteForm.addEventListener("submit", (e) => captureUserEntry(e, elements
 elements.createNoteBtn.addEventListener("click", () => createNewNote(config, elements, notes));
 
 // DISPLAY SAVED NOTES TO USER
-elements.viewNotesBtn.addEventListener("click", () => viewAllNotes(elements, notes));
+elements.viewNotesBtn.addEventListener("click", () => viewAllNotes(elements, notes, state));
 
 
 // DISPLAY RECYCLE BIN TO USER
 elements.viewRecycleBtn.addEventListener("click", () => viewRecycleBin(elements, notes));
-
-
-// TOGGLE VISIBILITY OF MISSED JOURNALING DAYS
-elements.toggleRedMoons.addEventListener("click", () => toggleMissedDays(elements, state));
 
 
 // CLOSE NOTES MODAL

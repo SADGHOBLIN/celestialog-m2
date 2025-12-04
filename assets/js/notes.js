@@ -5,13 +5,14 @@ import { displayMoonData } from "./moon.js";
 
 
 // generates a unique timestamp at time of creation to be used as the unique Note ID
+// represents the number of milliseconds since midnight Jan 1 1970 (Unix epoch)
 function generateNoteId() {
     const timestamp = Date.now();
     return timestamp.toString();
 }
 
 /*  creates a timestamp for midnight UTC on that specific day,
-    this is taken from the unique NOTE ID,
+    this is taken from the unique NOTE ID (unix epoch)
     which can be used to calculate exactly how many days have occurred between user notes (in days)
 */
 function getDayOfNote(noteId) {
@@ -264,27 +265,25 @@ function openSavedNote(noteId, notes, elements) {
 
 
 //  displays a message, with buttons, in the DOM to check whether user wishes to overwrite their data
-function displayOverrideCheck(userEntry, notes, elements, message, nextAction) {
-    elements.notesContainer.innerHTML = "";
-    elements.modalTitle.innerText = message;
+function displayOverrideCheck(userEntry, notes, elements, modalTitle, nextAction) {
+    clearModalContent(elements);
+    elements.modalTitle.innerText = modalTitle;
     
     //  create save button
     const saveBtn = createModalBtn("Save note", () => {
         updateNotesObject(overrideNoteData(userEntry, notes));
         closeModal(elements);
         nextAction();
-        elements.modalTitle.innerText = "Select note";
     })
 
     //  create cancel button
     const cancelBtn = createModalBtn("Cancel", () => {
         closeModal(elements);
         nextAction();
-        elements.modalTitle.innerText = "Select note";
     })
 
-    elements.notesContainer.appendChild(saveBtn);
-    elements.notesContainer.appendChild(cancelBtn);
+    elements.modalBody.appendChild(saveBtn);
+    elements.modalBody.appendChild(cancelBtn);
     openModal(elements);
 }
 
@@ -335,7 +334,7 @@ function createNoteElement(note, elements, notes, arrayType) {
     }
 
     // attaches elements to DOM
-    elements.notesContainer.appendChild(noteElement);
+    elements.modalBody.appendChild(noteElement);
     noteElement.appendChild(mainBtn);
     noteElement.appendChild(deleteNoteBtn);
 }
@@ -350,7 +349,7 @@ function createEmptyNotesMessage(elements, message) {
             >${message}</h3>
         </div>`;
 
-    elements.notesContainer.appendChild(emptyMessage);
+    elements.modalBody.appendChild(emptyMessage);
 }
 
 
@@ -362,27 +361,40 @@ function deleteNoteElement(noteId) {
 
 
 // toggle display of missed journaling days when user tries to view all notes
-function toggleMissedDays(elements, state) {
+function toggleMissedDays(state) {
     const redMoons = document.querySelectorAll(".red-moon");
     state.showRedMoons = !state.showRedMoons;
     
-    elements.toggleRedMoons.innerText = state.showRedMoons
-    ? "Hide missed journaling days"
-    : "Show missed journaling days";
+    document.getElementById("toggle-missed-days").innerText = state.showRedMoons
+    ? "Hide Missed Journaling Days"
+    : "Show Missed Journaling Days";
 
     redMoons.forEach(note => {
         note.classList.toggle("hidden");
     })
 }
 
+// MODAL HELPERS
+
+
 // helper to open and close modal, displays saved notes to user
 function openModal(elements) {
     elements.notesContainerModal.classList.add("active");
 }
+
 function closeModal(elements) {
     elements.notesContainerModal.classList.remove("active");
 }
 
+function clearModalContent(elements) {
+    elements.modalTitle.innerText = "";
+    elements.modalBody.innerHTML = "";
+
+    let missedDaysBtn = document.getElementById("toggle-missed-days");
+    if (missedDaysBtn) {
+        missedDaysBtn.remove();
+    }
+}
 
 //  helper to create any buttons required for modal
 //  attaches event listeners that await for user input
@@ -451,8 +463,8 @@ function captureUserEntry(e, elements, notes) {
         return updateNotesObject(saveNewNote(userEntry, notes));
     }
     
-    let overridePrompt = "Do you wish to override changes?";
-    displayOverrideCheck(userEntry, notes, elements, overridePrompt, closeModal);
+    let overridePrompt = "Are you sure you want to overwrite your save?";
+    displayOverrideCheck(userEntry, notes, elements, overridePrompt, () => closeModal(elements));
 }
 
 
@@ -466,13 +478,14 @@ function captureUserEntry(e, elements, notes) {
     - view a specific note, which is opened in the UI
     - delete note(s), which are removed from localStorage, note array, and the DOM
 */
-function viewAllNotes(elements, notes) {
+function viewAllNotes(elements, notes, state) {
 
     // safeguard to ensure notes array is up to date and in descending order
     notes = sortNotes(notes);
 
     // clear modal container
-    elements.notesContainer.innerHTML = "";
+    clearModalContent(elements);
+    elements.modalTitle.innerText = "View Notes:";
 
     // show no notes if none saved
     if (notes.userNotes.length === 0) {
@@ -489,13 +502,22 @@ function viewAllNotes(elements, notes) {
     notes.userNotes.forEach( (note) => {
         createNoteElement(note, elements, notes, "userNotesArray");
     });
+
+    // add button that allows user to toggle display of missed journaling days
+    const missedDaysBtn = document.createElement("button");
+    missedDaysBtn.id = "toggle-missed-days";
+    missedDaysBtn.innerText = "Hide Missed Journaling Days";
+    missedDaysBtn.addEventListener("click", () => toggleMissedDays(state));
+    elements.modalFooter.appendChild(missedDaysBtn);
+
     openModal(elements);
 }
 
 function viewRecycleBin(elements, notes) {
     notes = sortNotes(notes);
 
-    elements.notesContainer.innerHTML = "";
+    clearModalContent(elements);
+    elements.modalTitle.innerText = "Recycle Bin:";
 
     if (notes.recycleBin.length === 0) {
         createEmptyNotesMessage(elements, "Your recycle bin is empty");
@@ -509,4 +531,4 @@ function viewRecycleBin(elements, notes) {
 }
 
 // export functions
-export { displayTodaysNote, captureUserEntry, createNewNote, viewAllNotes, viewRecycleBin, toggleHidden, toggleMissedDays, closeModal };
+export { displayTodaysNote, captureUserEntry, createNewNote, viewAllNotes, viewRecycleBin, toggleHidden, closeModal };
