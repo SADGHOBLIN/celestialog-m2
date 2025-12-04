@@ -52,7 +52,9 @@ const elements = {
 };
 const state = {
     isWaitingForReply: false,
-    showRedMoons: true
+    showRedMoons: true,
+    showMissedDays: true,
+
 }
 const getEngine = cacheEngine();
 let notes = JSON.parse(localStorage.getItem("notes")) || {
@@ -101,7 +103,7 @@ elements.viewNotesBtn.addEventListener("click", () => viewAllNotes(elements, not
 
 
 // DISPLAY RECYCLE BIN TO USER
-elements.viewRecycleBtn.addEventListener("click", () => viewRecycleBin(elements, notes));
+elements.viewRecycleBtn.addEventListener("click", () => viewRecycleBin(elements, notes, state));
 
 
 // CLOSE NOTES MODAL

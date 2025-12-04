@@ -289,7 +289,7 @@ function displayOverrideCheck(userEntry, notes, elements, modalTitle, nextAction
 
 
 // create modal DOM element to display a saved note
-function createNoteElement(note, elements, notes, arrayType) {
+function createNoteElement(note, elements, notes, state, arrayType) {
 
     const noteElement = document.createElement("div");
     noteElement.id = `${note.id}`;
@@ -331,6 +331,10 @@ function createNoteElement(note, elements, notes, arrayType) {
     // add .red-moon class to placeholder notes for styling and `display visibility` toggle
     if (note.moon === "RED MOON") {
         noteElement.classList.add("red-moon");
+
+        if (!state.showRedMoons) {
+            noteElement.classList.add("hidden");
+        }
     }
 
     // attaches elements to DOM
@@ -372,6 +376,7 @@ function toggleMissedDays(state) {
     redMoons.forEach(note => {
         note.classList.toggle("hidden");
     })
+    return state;
 }
 
 // MODAL HELPERS
@@ -500,20 +505,20 @@ function viewAllNotes(elements, notes, state) {
 
     // create a DOM element for each saved note
     notes.userNotes.forEach( (note) => {
-        createNoteElement(note, elements, notes, "userNotesArray");
+        createNoteElement(note, elements, notes, state, "userNotesArray");
     });
 
     // add button that allows user to toggle display of missed journaling days
     const missedDaysBtn = document.createElement("button");
     missedDaysBtn.id = "toggle-missed-days";
-    missedDaysBtn.innerText = "Hide Missed Journaling Days";
+    missedDaysBtn.innerText = state.showRedMoons ? "Hide Missed Journaling Days" : "Show Missed Journaling Days";
     missedDaysBtn.addEventListener("click", () => toggleMissedDays(state));
     elements.modalFooter.appendChild(missedDaysBtn);
 
     openModal(elements);
 }
 
-function viewRecycleBin(elements, notes) {
+function viewRecycleBin(elements, notes, state) {
     notes = sortNotes(notes);
 
     clearModalContent(elements);
@@ -525,7 +530,7 @@ function viewRecycleBin(elements, notes) {
     }
 
     notes.recycleBin.forEach( (note) => {
-        createNoteElement(note, elements, notes, "recycleBinArray");
+        createNoteElement(note, elements, notes, state, "recycleBinArray");
     });
     openModal(elements);
 }
