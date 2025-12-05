@@ -14,7 +14,7 @@
 
   <body>
     <!-- Navbar -->
-     <div id="nav" class="wireframe">
+     <div id="nav">
       <ul>
         <li>
             <a href="index.html">Home</a>
@@ -26,11 +26,11 @@
      </div>
 
     <!-- Journal section -->
-     <div class="section-wrapper journal-pg wireframe">
-      <div class="section-container journal-pg wireframe">
+     <div class="section-wrapper journal-pg">
+      <div class="section-container journal-pg">
 
         <!-- Persona Cards -->
-        <div class="personas wireframe">
+        <div class="personas">
           
             <div class="persona-title">
                 The Watcher
@@ -53,8 +53,8 @@
          <div class="journal-app">
 
           <div class="options-header">
-            <button id="use-journal">Use Journal</button>
-            <button id="use-advisor">Talk to Advisor</button>
+            <button id="use-journal" class="big-btn">Use Journal</button>
+            <button id="use-advisor" class="big-btn">Talk to Advisor</button>
           </div>
 
           <!-- Journal pages -->
@@ -65,12 +65,13 @@
                   <div class="note-header">
                       <div class="title-container">
 
-                      <label for="note-title"></label>
-                      <input id="note-title" type="text" placeholder="Journal Title" autocomplete="off">
-                      <p id="note-date"></p>
+                        <label for="note-title"></label>
+                        <input id="note-title" type="text" placeholder="Journal Title" autocomplete="off">
+                        <p id="note-date"></p>
                     </div>
 
                     <div class="moon-container">
+                      <img src="assets/images/moon-placeholder.png" alt="a full moon" class="moon-img-placeholder">
                       <p id="note-moon"></p>
                     </div>
                   </div>
@@ -83,21 +84,15 @@
                     ></textarea>
                   
                   <div class="note-footer">
-                    <button id="save-note" type="submit">Save note</button>
+                    <button id="save-note" type="submit" class="btn-cta">Save</button>
+                    <button id="create-note" class="btn-small">New</button>
+                    <button id="view-notes" class="btn-small">Load</button>
+                    <button id="view-recycle-bin" class="btn-small">Bin</button>
                   </div>
                 </form>
 
-                <!-- Create new note -->
-                <button id="create-note">Create new note</button>
-
-                <!-- View notes -->
-                <button id="view-notes">View notes</button>
-
-                <!-- View recycle bin -->
-                <button id="view-recycle-bin">View recycle bin</button>
-
                 <!-- Debugging - remove later -->
-                <button id="clear-notes">Delete all notes</button>
+                <!-- <button id="clear-notes">Delete all notes</button> -->
 
               </div>
             </div>
@@ -147,8 +142,8 @@
      </div>
 
      <!-- Narrative About section -->
-      <div class="section-wrapper wireframe">
-        <div class="section-container wireframe">
+      <div class="section-wrapper">
+        <div class="section-container">
           2nd section
         </div>
       </div>

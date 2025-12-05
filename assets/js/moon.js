@@ -82,7 +82,7 @@ async function displayMoonData(config, elements) {
 
     // display current moon phase
     elements.moonPhase.innerText = moonPhase;
-    elements.noteMoon.innerText= `Moon: ${moonPhase.toUpperCase()}`;
+    elements.noteMoon.innerText= `${moonPhase.toUpperCase()}`;
 
     // display current date
     elements.date.innerText = today.toDateString();
