@@ -198,5 +198,21 @@ To follow best practice, wireframes were constructed for mobile, tablet, and des
 > [!NOTE]
 > TODO: Under development
 - ### Content:
+
+| Source | Notes |
+| --- | --- |
+| [IPGeolocation.io](https://ipgeolocation.io/astronomy-api.html) | Astronomy API used to import data about moon phases and times. The [documentation](https://ipgeolocation.io/astronomy-api.html#documentation-overview) helped with setting up the API. |
+| [WebLLM](https://webllm.mlc.ai/docs/) | WebLLM's In-browser language models were used to set up the advisor chat system. Their [github](https://github.com/mlc-ai/web-llm) helped with the set up and implementation of the engine, and the website primarily utilises `Llama 3.2 3B`. |
+| [OpenAI Documentation](https://platform.openai.com/docs/api-reference/chat/create) | Documentation from Open AI helped improve understanding of how to 'talk' to the language models. |
+| [ChatGPT](https://chatgpt.com/) | Used for debugging, help with code logic, and understanding of concepts. |
+| [ITower's YouTube Video](https://www.youtube.com/watch?v=TNM2nHnCyCg) | '*Build a notes app with HTML CSS JavaScript*' video from ITower was used as the primary building block and inspiration for this website. This provided a structural foundation for the website's primary note-taking feature.
+| [w3schools - JavaScript Dates](https://www.w3schools.com/js/js_dates.asp) | Helped build understanding of JS date objects, which are used as a method of identifying user notes through a unqiue timestamp ID. |
+| [Mozilla JavaScript docs - Array Methods](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/find) | Provided useful reference to various array methods that were used to access, manipulate, and transform array data. Great for handling the user notes data. |
+| [Sentry.io - JavaScript Answers](https://sentry.io/answers/remove-specific-item-from-array/) | More help on understanding use cases for various array methods, contributing to the finding of the solution for 'back-filling missed journaling days, as seen in my code. |
+| [Mozilla JavaScript docs - Modules](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Modules) | Again, useful documentation. Used when realising that my code was getting too complicated for a single file, and helped with rebuilding the codebase into a more organised structure. |
+| [Realtime Colors](https://www.realtimecolors.com/?colors=dcd4ee-161519-9924dd-63519f-c4cd26&fonts=DM%20Sans-DM%20Sans) | Visualises colour palettes and fonts on a website, to check how colour choices look in realtime on different devices. |
+
+
+
 - ### Media:
 - ### Acknowledgements:
