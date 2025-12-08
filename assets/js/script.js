@@ -148,15 +148,15 @@ displayTodaysNote(elements, notes);
 // ------------------------------------------------------------------------------------------------------
 
 // debugging - delete all notes from local storage
-window.notes = notes;
+// window.notes = notes;
 
-document.getElementById("clear-notes").addEventListener("click", () => {
-    localStorage.removeItem("notes");
-    notes = {
-        userNotes: [],
-        recycleBin: [],
-    }
-    window.notes = notes;
-    displayTodaysNote(elements, notes);
-    console.log("notes cleared");
-});
+// document.getElementById("clear-notes").addEventListener("click", () => {
+//     localStorage.removeItem("notes");
+//     notes = {
+//         userNotes: [],
+//         recycleBin: [],
+//     }
+//     window.notes = notes;
+//     displayTodaysNote(elements, notes);
+//     console.log("notes cleared");
+// });

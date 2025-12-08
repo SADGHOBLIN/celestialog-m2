@@ -9,7 +9,8 @@
     <title>Journal | Celestialog</title>
     <!-- favicon -->
     <!-- CSS: bootstrap / custom -->
-    <link rel="stylesheet" href="assets/css/style.css" />
+     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" />
+     <link rel="stylesheet" href="assets/css/style.css" />
   </head>
 
   <body>
@@ -29,73 +30,57 @@
      <div class="section-wrapper journal-pg">
       <div class="section-container journal-pg">
 
-        <!-- Persona Cards -->
-        <div class="personas">
-          
-            <div class="persona-title">
-                The Watcher
-            </div>
-            <div class="persona-cards">
-                <!-- TODO: ability to swipe through personas to "select" -->
-                advisor image
-            </div>
-            <div class="moon-info">
-                <!-- TODO: store moon info to be injected as custom data -->
-                 <p>moon illustration</p>
-                 <p id="moon-phase-data"></p>
-                 <p id="current-date-data"></p>
-                 <p id="moon-visibility-data"></p>
-            </div>
-
-        </div>
-
         <!-- Note entries -->
          <div class="journal-app">
-
-          <div class="options-header">
-            <button id="use-journal" class="big-btn">Use Journal</button>
-            <button id="use-advisor" class="big-btn">Talk to Advisor</button>
-          </div>
 
           <!-- Journal pages -->
             <div id="journal" class="journal-container">
               <div class="journal-wrapper">
 
-                <form id="note-form" data-note-id="">
-                  <div class="note-header">
-                      <div class="title-container">
+                  <form id="note-form" data-note-id="">
+                    <div class="note-header">
+                        <div class="title-container">
 
-                        <label for="note-title"></label>
-                        <input id="note-title" type="text" placeholder="Journal Title" autocomplete="off">
-                        <p id="note-date"></p>
+                          <label for="note-title"></label>
+                          <input id="note-title" type="text" placeholder="Journal Title" autocomplete="off">
+                          <p id="note-date"></p>
+                      </div>
+
+                      <div class="moon-container">
+                        <img src="assets/images/moon-placeholder.png" alt="a full moon" class="moon-img-placeholder">
+                        <p id="note-moon"></p>
+                      </div>
                     </div>
 
-                    <div class="moon-container">
-                      <img src="assets/images/moon-placeholder.png" alt="a full moon" class="moon-img-placeholder">
-                      <p id="note-moon"></p>
-                    </div>
-                  </div>
-
-                  <textarea 
-                    name="note-content" 
-                    id="note-content"
-                    placeholder="Begin your writing..."
-                    required
-                    ></textarea>
-                  
-                  <div class="note-footer">
-                    <button id="save-note" type="submit" class="btn-cta">Save</button>
-                    <button id="create-note" class="btn-small">New</button>
-                    <button id="view-notes" class="btn-small">Load</button>
-                    <button id="view-recycle-bin" class="btn-small">Bin</button>
-                  </div>
-                </form>
-
-                <!-- Debugging - remove later -->
-                <!-- <button id="clear-notes">Delete all notes</button> -->
+                    <textarea 
+                      name="note-content" 
+                      id="note-content"
+                      placeholder="Begin your writing..."
+                      required
+                      ></textarea>
 
               </div>
-            </div>
+
+              <div class="note-buttons-container">
+                <div class="note-footer">
+                      <button id="save-note" type="submit" class="btn-cta">
+                        <span class="material-symbols-outlined">save_as</span>
+                      </button>
+                      <button id="create-note" class="btn-small">
+                        <span class="material-symbols-outlined">new_window</span>
+                      </button>
+                      <button id="view-notes" class="btn-small">
+                        <span class="material-symbols-outlined">folder_open</span>
+                      </button>
+                      <button id="view-recycle-bin" class="btn-small">
+                        <span class="material-symbols-outlined">delete</span>
+                      </button>
+                      <!-- Debugging - remove later -->
+                      <!-- <button id="clear-notes">Delete all notes</button> -->
+                    </div>
+                  </form>
+              </div>
+          </div>
 
             <!-- Advisor chat -->
             <div id="advisor" class="advisor-container hidden">
@@ -115,6 +100,12 @@
                 </div>
               </div>
 
+            </div>
+
+            <!-- Toggle windows -->
+            <div class="options-header">
+              <button id="use-journal" class="big-btn">Use Journal</button>
+              <button id="use-advisor" class="big-btn">Talk to Advisor</button>
             </div>
 
          </div>
@@ -137,6 +128,27 @@
           </div>
 
 
+          <!-- Persona Cards -->
+        <div class="personas">
+          
+            <div class="persona-title">
+                The Watcher
+            </div>
+            <div class="persona-cards">
+                <!-- TODO: ability to swipe through personas to "select" -->
+                advisor image
+            </div>
+            <div class="moon-info">
+                <!-- TODO: store moon info to be injected as custom data -->
+                 <p>moon illustration</p>
+                 <p id="moon-phase-data"></p>
+                 <p id="current-date-data"></p>
+                 <p id="moon-visibility-data"></p>
+            </div>
+
+        </div>
+
+
         
       </div>
      </div>
@@ -148,6 +160,8 @@
         </div>
       </div>
 
+    <!-- FontAwesome icons -->
+    <script src="https://kit.fontawesome.com/3362ba5870.js" crossorigin="anonymous"></script>
     <!-- Custom JavaScript -->
     <script src="assets/js/script.js" type="module"></script>
   </body>
