@@ -32,6 +32,7 @@ const elements = {
 
     // journal notes form data
     noteForm: document.getElementById("note-form"),
+    
     noteTitle: document.getElementById("note-title"),
     noteDate: document.getElementById("note-date"),
     noteMoon: document.getElementById("note-moon"),
@@ -92,7 +93,7 @@ elements.useJournal.addEventListener("click", () => {
 
 
 // SAVE NEW NOTE
-elements.noteForm.addEventListener("submit", (e) => captureUserEntry(e, elements, notes));
+elements.saveNoteBtn.addEventListener("click", () => captureUserEntry(elements, notes));
 
 
 // CREATE NEW NOTE

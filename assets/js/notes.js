@@ -58,7 +58,7 @@ function createPlaceholderNoteData(missingId) {
 
 
 // ensures notes object is up to date, and saved in localStorage
-function updateNotesObject(newNotes) {
+function updateNotesObject(newNotes, notes) {
     notes.userNotes = newNotes.userNotes;
     notes.recycleBin = newNotes.recycleBin;
     localStorage.setItem("notes", JSON.stringify(notes));
@@ -271,7 +271,7 @@ function displayOverrideCheck(userEntry, notes, elements, modalTitle, nextAction
     
     //  create save button
     const saveBtn = createModalBtn("Save note", () => {
-        updateNotesObject(overrideNoteData(userEntry, notes));
+        updateNotesObject(overrideNoteData(userEntry, notes), notes);
         closeModal(elements);
         nextAction();
     })
@@ -317,7 +317,7 @@ function createNoteElement(note, elements, notes, state, arrayType) {
     if (arrayType === "recycleBinArray") {
         mainBtn = createModalBtn("Restore note", () => {
             deleteNoteElement(note.id, elements);
-            return updateNotesObject(restoreDeletedNote(note.id, notes));
+            return updateNotesObject(restoreDeletedNote(note.id, notes), notes);
         })
     }
 
@@ -325,7 +325,7 @@ function createNoteElement(note, elements, notes, state, arrayType) {
     // or remove the note from the main array and add to recycle bin
     const deleteNoteBtn = createModalBtn("Delete note", () => {
         deleteNoteElement(note.id, elements);
-        return updateNotesObject(deleteNoteData(note.id, notes));
+        return updateNotesObject(deleteNoteData(note.id, notes), notes);
     })
 
     // add .red-moon class to placeholder notes for styling and `display visibility` toggle
@@ -444,8 +444,7 @@ function displayTodaysNote(elements, notes) {
     - format data, ready to be saved
     - check whether user is saving a new note, or overwriting an existing note
 */
-function captureUserEntry(e, elements, notes) {
-    e.preventDefault();
+function captureUserEntry(elements, notes) {
     notes = sortNotes(notes);
 
     let noteId = elements.noteForm.dataset.noteId;
@@ -465,7 +464,7 @@ function captureUserEntry(e, elements, notes) {
     const userEntry = formatNoteData(noteId, title, date, moon, content);
 
     if (isNewNote) {
-        return updateNotesObject(saveNewNote(userEntry, notes));
+        return updateNotesObject(saveNewNote(userEntry, notes), notes);
     }
     
     let overridePrompt = "Are you sure you want to overwrite your save?";
