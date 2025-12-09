@@ -23,9 +23,18 @@ async function saveAstronomyData(config) {
     const data = await response.json();
     
     if (response.ok) {
+
+        const apiDate = data.astronomy.date;
+        const apiTime = data.astronomy.current_time;
+
+        // credit to ChatGPT for help converting the API date and time data to milliseconds since unix epoch (UTC)
+        const dateTime = `${apiDate}T${apiTime}`;
+        const timestamp = new Date(dateTime).getTime();
+        // end
+        
         const payload = {
             moonData: data,
-            timestamp: Date.now()
+            timestamp: timestamp,
         };
         localStorage.setItem("astronomyData", JSON.stringify(payload));
         return payload;
