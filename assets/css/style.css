@@ -138,6 +138,7 @@ button {
     height: 100%;
     width: 50%;
     max-width: 600px;
+    min-width: 320px;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -212,9 +213,12 @@ button {
     font-size: 14px;
     /* background-color: var(--p-surface);
     border-radius: 1rem; */
+    min-width: 0;
+    white-space: nowrap;
 }
 
 #note-moon {
+    text-align: center;
     margin-bottom: 0.5rem;
     order: -1;
 }
