@@ -1,6 +1,5 @@
 /* DM Sans from Google Fonts */
 @import url('https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&display=swap'); 
-
 :root {
     --primary-font: "DM Sans";
 
@@ -16,7 +15,6 @@
     --p-transparent: rgba(131, 79, 235, 0.4);
     --p-light: #A9A6E5;
 }
-
 *,
 *::before,
 *::after {
@@ -42,6 +40,7 @@ button {
     padding: .5rem;
     background-color: var(--p-transparent);
     color: var(--text);
+    font-size: 14px;
 }
 .big-btn {
     padding: 1rem;
@@ -52,12 +51,17 @@ button {
 .btn-cta {
     background-color: var(--accent);
     color: black;
-    flex-grow: 1;
+    width: 60px;
+    height: 80px;
+    /* flex-grow: 1; */
 }
 
-/* .btn-small {
+.btn-small {
     color: var(--text);
-} */
+    width: 60px;
+    height: 60px;
+    font-weight: 200;
+}
 /* ---------------------------------------------------------------------------- */
 /* Site-wide content */
 #nav {
@@ -87,7 +91,6 @@ button {
     width: 80vw;
 }
 
-
 /* ---------------------------------------------------------------------------- */
 /* INDEX.html */
 .landing-img {
@@ -99,90 +102,86 @@ button {
     z-index: 999;
 }
 
-
 /* ---------------------------------------------------------------------------- */
 /* JOURNAL SECTION - IN DEVELOPMENT */
 
 /* Spans entire journal.html page */
 .section-wrapper.journal-pg {
-    height: 90vh;
+    height: 94vh;
 }
 .section-container.journal-pg {
     display: flex;
     flex-direction: row;
-    justify-content: flex-end;
+    justify-content: center;
 }
 
-/* Journal app - shared across both NOTES and CHAT windows  */
-.journal-app {
-    width: 60%;
-    max-width: 600px;
+/* .col-1, .col-2, .col-3 {
+    outline: 1px solid orange !important;
+} */
+
+/* note editor buttons, col-1 */
+.col-1 {
     height: 100%;
+    width: 10%;
     display: flex;
     flex-direction: column;
+    justify-content: flex-end;
+    align-items: flex-end;
+    gap: 0.25rem;
+    order: -1;
+    margin-bottom: 2rem;
+    margin-right: 0.5rem;
 }
+
+/* main note editor, col-2 */
+.col-2 {
+    height: 100%;
+    width: 50%;
+    max-width: 600px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+/* persona cards, col-3 */
+.col-3 {
+    height: 100%;
+    width: 20%
+}
+
+
 /* options header, present in both NOTES and CHAT */
 .options-header {
     display: flex;
     justify-content: space-evenly;
     align-items: center;
-    width: 100%;
+    width: 20%;
     height: 5%;
 
     background-color: transparent;
     border-radius: 2rem;
     margin: 2rem 0;
 }
-/* equivalent to #journal, #advisor */
-.journal-container,
-.advisor-container {
-    width: 100%;
-    height: 100%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-.journal-wrapper,
-.chat-wrapper {
-    width: 98%;
-    height: 98%;
-    display: flex;
-    flex-direction: column;
-    padding: 0.5rem 1rem;
-}
 
-/* NOTES ONLY section */
-
-/* journal-app > options --- journal > wrapper > form > buttons */
-#journal {
-    /* background-color: var(--p-surface); */
-    border-radius: 1rem;
-    margin-top: 0.5rem;
-}
-
-.journal-wrapper {
-    background-color: var(--p-surface);
-    border-radius: 1rem;
-    margin: 0;
-}
 
 /* notes entry UI */
-#note-form {
-    width: 100%;
+.note-editor-container {
     height: 100%;
+    width: 100%;
     display: flex;
     flex-direction: column;
-    
+    background-color: var(--p-surface);
+    border-radius: 1rem;
+    padding: 0 1rem;
 }
 
 .note-header {
+    height: 10%;
+    width: 100%;
     display: flex;
     flex-direction: row;
     justify-content: space-between;
-
-    width: 100%;
-    height: 15%;
-    
+    margin-top: 0.5rem;
 }
 
 .title-container {
@@ -252,53 +251,10 @@ textarea, input {
     color: var(--text);
 }
 
-.note-buttons-container {
-    display: flex;
-    width: 10%;
-    height: 100%;
-    order: -1;
-}
-
-.note-footer {
-    width: 100%;
-    height: 10%;
-    display: flex;
-    flex-direction: column-reverse;
-    align-self: flex-end;
-    gap: 0.25rem;
-}
-
-.note-footer button {
-    align-self: center;
-}
 
 /* ---------------------------------------------------------------------------- */
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-/* JOURNAL.html */
-
 /* tarot card section */
-.personas {
-    width: 20%;
-    height: 100%;
-    display: flex;
-    flex-direction: column;
-}
-
 .persona-title,
 .persona-cards,
 .moon-info {
@@ -412,6 +368,9 @@ textarea, input {
     margin-top: auto;
 }
 
+.hidden {
+    display: none;
+}
 
 /* DEBUGGING */
 .journal-wrapper > p,
@@ -421,12 +380,9 @@ textarea, input {
 #chat-body > div {
     outline: 2px solid blue;
 }
-.hidden {
-    display: none;
-}
 
 /* Wireframe boxes */
 .wireframe {
     /* background: rgb(100 0 0 / 0.1) !important; */
-    outline: 1px solid green !important;
+    outline: 1px solid green;
 }

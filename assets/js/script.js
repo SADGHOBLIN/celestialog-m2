@@ -31,8 +31,7 @@ const elements = {
     sendMsgBtn: document.getElementById("send-msg-btn"),
 
     // journal notes form data
-    noteForm: document.getElementById("note-form"),
-    
+    noteEditor: document.getElementById("note-editor"),
     noteTitle: document.getElementById("note-title"),
     noteDate: document.getElementById("note-date"),
     noteMoon: document.getElementById("note-moon"),
@@ -57,11 +56,11 @@ const state = {
     showMissedDays: true,
 
 }
-const getEngine = cacheEngine();
 let notes = JSON.parse(localStorage.getItem("notes")) || {
     userNotes: [],
     recycleBin: [],
 };
+const getEngine = cacheEngine();
 
 // DEBUGGING;
 // note data for a day in the past, to test backfill functionality
@@ -82,12 +81,12 @@ let notes = JSON.parse(localStorage.getItem("notes")) || {
 
 // TOGGLE BETWEEN NOTES AND ADVISOR WINDOWS
 elements.useAdvisor.addEventListener("click", () => {
-    toggleHidden(elements, "advisor", "journal");
+    toggleHidden(elements, "advisor", "noteEditor");
     elements.userMsgInput.focus();
 });
 
 elements.useJournal.addEventListener("click", () => {
-    toggleHidden(elements, "journal", "advisor");
+    toggleHidden(elements, "noteEditor", "advisor");
     elements.noteTitle.focus();
 });
 

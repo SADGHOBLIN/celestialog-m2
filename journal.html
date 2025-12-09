@@ -9,159 +9,164 @@
     <title>Journal | Celestialog</title>
     <!-- favicon -->
     <!-- CSS: bootstrap / custom -->
-     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" />
-     <link rel="stylesheet" href="assets/css/style.css" />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined"
+    />
+    <link rel="stylesheet" href="assets/css/style.css" />
   </head>
 
   <body>
     <!-- Navbar -->
-     <div id="nav">
+    <div id="nav">
       <ul>
         <li>
-            <a href="index.html">Home</a>
+          <a href="index.html">Home</a>
         </li>
         <li>
-            <a href="journal.html">Journal</a>
+          <a href="journal.html">Journal</a>
         </li>
       </ul>
-     </div>
+    </div>
 
-    <!-- Journal section -->
-     <div class="section-wrapper journal-pg">
-      <div class="section-container journal-pg">
+    <!-- Journal app window -->
+     <div class="section-wrapper journal-pg wireframe">
+      <div class="section-container journal-pg wireframe">
 
-        <!-- Note entries -->
-         <div class="journal-app">
-
-          <!-- Journal pages -->
-            <div id="journal" class="journal-container">
-              <div class="journal-wrapper">
-
-                  <form id="note-form" data-note-id="">
-                    <div class="note-header">
-                        <div class="title-container">
-
-                          <label for="note-title"></label>
-                          <input id="note-title" type="text" placeholder="Journal Title" autocomplete="off">
-                          <p id="note-date"></p>
-                      </div>
-
-                      <div class="moon-container">
-                        <img src="assets/images/moon-placeholder.png" alt="a full moon" class="moon-img-placeholder">
-                        <p id="note-moon"></p>
-                      </div>
-                    </div>
-
-                    <textarea 
-                      name="note-content" 
-                      id="note-content"
-                      placeholder="Begin your writing..."
-                      required
-                      ></textarea>
-
+        <div id="note-editor" data-note-id="" class="col-2">
+          <!-- note editor heading section -->
+          <div class="note-editor-container">
+            <div class="note-header">
+              <div class="title-container">
+                <label for="note-title"></label>
+                <input id="note-title" type="text" placeholder="Journal Title" autocomplete="off">
+                <p id="note-date"></p>
               </div>
 
-              <div class="note-buttons-container">
-                <div class="note-footer">
-                      <button id="save-note" type="submit" class="btn-cta">
-                        <span class="material-symbols-outlined">save_as</span>
-                      </button>
-                      <button id="create-note" class="btn-small">
-                        <span class="material-symbols-outlined">new_window</span>
-                      </button>
-                      <button id="view-notes" class="btn-small">
-                        <span class="material-symbols-outlined">folder_open</span>
-                      </button>
-                      <button id="view-recycle-bin" class="btn-small">
-                        <span class="material-symbols-outlined">delete</span>
-                      </button>
-                      <!-- Debugging - remove later -->
-                      <!-- <button id="clear-notes">Delete all notes</button> -->
-                    </div>
-                  </form>
+              <div class="moon-container">
+                <img
+                  src="assets/images/moon-placeholder.png"
+                  alt="a full moon"
+                  class="moon-img-placeholder"
+                />
+                <p id="note-moon"></p>
               </div>
+            </div>
+            <!-- note editor input section -->
+            <textarea
+              name="note-content"
+              id="note-content"
+              placeholder="Begin your writing..."
+              required
+            ></textarea>
+          </div>
+        </div>
+
+        <!-- note editor buttons, col-1 -->
+        <div class="note-buttons col-1">
+          <button id="save-note" type="submit" class="btn-cta">
+            <span class="material-symbols-outlined">save_as</span><br>
+            save
+          </button>
+
+          <button id="create-note" class="btn-small">
+            <span class="material-symbols-outlined">new_window</span><br>
+            new
+          </button>
+
+          <button id="view-notes" class="btn-small">
+            <span class="material-symbols-outlined">folder_open</span><br>
+            open
+          </button>
+
+          <button id="view-recycle-bin" class="btn-small">
+            <span class="material-symbols-outlined">delete</span><br>
+            bin
+          </button>
+          <!-- Debugging - remove later -->
+          <!-- <button id="clear-notes">Delete all notes</button> -->
+        </div>
+
+        <!-- advisor personas section, col-3 -->
+         <div id="personas" class="col-3">
+
+          <div class="persona-title">
+            The Watcher
           </div>
 
-            <!-- Advisor chat -->
-            <div id="advisor" class="advisor-container hidden">
-              <div class="chat-wrapper">
+          <div class="persona-cards">
+            <!-- TODO: ability to swipe through personas to "select" -->
+            advisor image
+          </div>
 
-                <div class="chat-header">
-                  <p>Advisor Name</p>
-                </div>
-
-                <div id="chat-body">
-                  <div class="advisor-msg first-msg">Hello, I will await your presence. Please consult me when you are ready...</div>
-                </div>
-
-                <div class="user-input-box">
-                  <input id="user-msg-input" type="text" placeholder="Input message..." autocomplete="off">
-                  <button id="send-msg-btn">Send</button>
-                </div>
-              </div>
-
-            </div>
-
-            <!-- Toggle windows -->
-            <div class="options-header">
-              <button id="use-journal" class="big-btn">Use Journal</button>
-              <button id="use-advisor" class="big-btn">Talk to Advisor</button>
-            </div>
+          <div class="moon-info">
+            <!-- TODO: store moon info to be injected as custom data -->
+            <p>moon illustration</p>
+            <p id="moon-phase-data"></p>
+            <p id="current-date-data"></p>
+            <p id="moon-visibility-data"></p>
+          </div>
 
          </div>
 
-         <!-- View notes modal -->
-          <div id="notes-container-modal" class="modal-overlay">
-            <div id="modal-element" class="modal">
+      </div>
+    </div>
 
-              <div class="modal-header">
-                  <h3 id="modal-title">Title</h3>
-              </div>
+    <!-- TODO: advisor chat window -->
+    <div id="advisor" class="advisor-container hidden">
+      <div class="chat-wrapper">
 
-              <div id="modal-body"></div>
+        <div class="chat-header">
+          <p>Advisor Name</p>
+        </div>
 
-              <div id="modal-footer">
-                <button id="close-modal">Close Modal</button>
-              </div>
-
-            </div>
+        <div id="chat-body">
+          <div class="advisor-msg first-msg">
+            Hello, I will await your presence. Please consult me when you are ready...
           </div>
-
-
-          <!-- Persona Cards -->
-        <div class="personas">
-          
-            <div class="persona-title">
-                The Watcher
-            </div>
-            <div class="persona-cards">
-                <!-- TODO: ability to swipe through personas to "select" -->
-                advisor image
-            </div>
-            <div class="moon-info">
-                <!-- TODO: store moon info to be injected as custom data -->
-                 <p>moon illustration</p>
-                 <p id="moon-phase-data"></p>
-                 <p id="current-date-data"></p>
-                 <p id="moon-visibility-data"></p>
-            </div>
-
         </div>
 
-
-        
-      </div>
-     </div>
-
-     <!-- Narrative About section -->
-      <div class="section-wrapper">
-        <div class="section-container">
-          2nd section
+        <div class="user-input-box">
+          <input
+            id="user-msg-input"
+            type="text"
+            placeholder="Input message..."
+            autocomplete="off"
+          />
+          <button id="send-msg-btn">Send</button>
         </div>
-      </div>
 
-    <!-- FontAwesome icons -->
-    <script src="https://kit.fontawesome.com/3362ba5870.js" crossorigin="anonymous"></script>
+      </div>
+    </div>
+
+    <!-- Toggle windows -->
+    <div class="options-header wireframe">
+      <button id="use-journal" class="big-btn">Use Journal</button>
+      <button id="use-advisor" class="big-btn">Talk to Advisor</button>
+    </div>
+
+    <!-- Narrative About section -->
+    <div class="section-wrapper">
+      <div class="section-container">2nd section</div>
+    </div>
+
+    <!-- View notes modal -->
+    <div id="notes-container-modal" class="modal-overlay">
+      <div id="modal-element" class="modal">
+
+        <div class="modal-header">
+          <h3 id="modal-title">Title</h3>
+        </div>
+
+        <div id="modal-body"></div>
+
+        <div id="modal-footer">
+          <button id="close-modal">Close Modal</button>
+        </div>
+
+      </div>
+    </div>
+
     <!-- Custom JavaScript -->
     <script src="assets/js/script.js" type="module"></script>
   </body>

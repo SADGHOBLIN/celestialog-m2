@@ -84,7 +84,7 @@ function saveNewNote(newNote, notes) {
 function createNewNote(config, elements, notes) {
 
     // safeguard against trying to create multiple new notes when UI is already empty
-    if (!elements.noteForm.dataset.noteId) {
+    if (!elements.noteEditor.dataset.noteId) {
         return;
     }
 
@@ -98,7 +98,7 @@ function createNewNote(config, elements, notes) {
 // only runs the check if they have ammended a saved note and not saved
 function checkSaveChanges(elements, notes, nextAction) {
 
-    const currentNoteId = elements.noteForm.dataset.noteId;
+    const currentNoteId = elements.noteEditor.dataset.noteId;
     const currentTitle = elements.noteTitle.value;
     const currentMessage =  elements.noteContent.value;
 
@@ -242,7 +242,7 @@ function insertMissingDays(filledDays, currentDay, nextDay) {
 // empty UI to allow for new note creation
 // run displayMoonData to get up to date Date and Moon info
 function clearNoteUI(config, elements) {
-    elements.noteForm.dataset.noteId = "";
+    elements.noteEditor.dataset.noteId = "";
     elements.noteTitle.value = "";
     elements.noteDate.innerText = "";
     elements.noteMoon.innerText = "";
@@ -255,7 +255,7 @@ function clearNoteUI(config, elements) {
 function openSavedNote(noteId, notes, elements) {
     const noteToOpen = notes.userNotes.find((note) => note.id === noteId);
 
-    elements.noteForm.dataset.noteId = noteToOpen.id;
+    elements.noteEditor.dataset.noteId = noteToOpen.id;
     elements.noteTitle.value = noteToOpen.title;
     elements.noteDate.innerText = noteToOpen.date;
     elements.noteMoon.innerText = noteToOpen.moon;
@@ -431,7 +431,7 @@ function displayTodaysNote(elements, notes) {
     const today = elements.date.innerText;
 
     if (mostRecentNote.date === today) {
-        elements.noteForm.setAttribute("data-note-id", mostRecentNote.id);
+        elements.noteEditor.setAttribute("data-note-id", mostRecentNote.id);
         elements.noteTitle.value = mostRecentNote.title;
         elements.noteContent.value = mostRecentNote.content;
     }
@@ -447,14 +447,14 @@ function displayTodaysNote(elements, notes) {
 function captureUserEntry(elements, notes) {
     notes = sortNotes(notes);
 
-    let noteId = elements.noteForm.dataset.noteId;
+    let noteId = elements.noteEditor.dataset.noteId;
     const isInRecycleBin = notes.recycleBin.find ( (note) => note.id === noteId);
     let isNewNote = false;
     
     if (!noteId || isInRecycleBin) {
         isNewNote = true;
         noteId = generateNoteId();
-        elements.noteForm.setAttribute("data-note-id", noteId);
+        elements.noteEditor.setAttribute("data-note-id", noteId);
     }
     const title = elements.noteTitle.value;
     const date = elements.noteDate.textContent;
