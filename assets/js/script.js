@@ -115,6 +115,11 @@ elements.notesContainerModal.addEventListener("click", (e) => {
     }
 });
 
+// CARD ANIMATION ON LOAD
+window.addEventListener("load", () => {
+    document.querySelectorAll(".card").forEach(card => card.classList.add("is-loaded"));
+});
+
 
 // ADVISOR FUNCTIONALITY
 
