@@ -166,24 +166,29 @@ button {
     align-items: center;
 }
 .deck__instruction {
-    margin-bottom: 6.5rem;
+    margin-bottom: 2rem;
 }
-
 /* PERSONA CARDS */
+
+/* deck state */
 .deck--idle { 
     position: relative;
     align-self: center;
+    margin-bottom: 1rem;
     height: 200px;
     width: 150px;
     outline: 2px solid red;
 }
 .deck--selected {
     position: relative;
-    align-self: flex-end;
+    margin-top: auto;
+    margin-bottom: 1rem;
     height: 250px;
     width: 150px;
     outline: 2px solid orange;
 }
+
+/* card base values */
 .card {
     height: 240px;
     width: 140px;
@@ -210,34 +215,48 @@ button {
         transform 1.3s cubic-bezier(0.075, 0.82, 0.165, 1),
         opacity 0.2s ease;
 }
-.card-left--idle.is-loaded {
+.card-left.is-loaded {
     background-color: blue;
-    opacity: 1;
     --x: -50px;
     --r: -5deg;
-    --s: 0.7;
 }
-.card-center--idle.is-loaded {
+.card-center.is-loaded {
     background-color: red;
-    opacity: 1;
-    z-index: 1;
     --x: 10px;
-    --s: 0.8;
+    --s: 0.5;
+    z-index: 1;
 }
-.card-right--idle.is-loaded {
+.card-right.is-loaded {
     background-color: green;
-    opacity: 1;
     --x: 60px;
     --r: 7deg;
-    --s: 0.7;
 }
-.card:hover {
+
+/* initial card animation on page load */
+.card.is-loaded {
+    opacity: 1;
+    --s: 0.5;
+}
+
+/* card placement offset, dependent on deck state */
+.deck--idle .card-in-deck {
+    --y: 0px;
+}
+.deck--selected .card-in-deck {
+    --y: 80px;
+    --s: 0.4;
+}
+
+/* card hover transitions, won't affect selected card */
+.card:not(.card-selected):hover {
     transition: 0.9s cubic-bezier(0.075, 0.82, 0.165, 1);
     z-index: 2;
     --y: -40px;
     --r: 0deg;
     --s: 0.95;
 }
+
+
 
 
 
