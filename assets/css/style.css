@@ -178,6 +178,10 @@ button {
     height: 200px;
     width: 150px;
     outline: 2px solid red;
+
+    --hover-y: -40px;
+    --hover-r: 0deg;
+    --hover-s: 0.6;
 }
 .deck--selected {
     position: relative;
@@ -186,6 +190,10 @@ button {
     height: 250px;
     width: 150px;
     outline: 2px solid orange;
+
+    --hover-y: 60px;
+    --hover-r: 0deg;
+    --hover-s: 0.4;
 }
 
 /* card base values */
@@ -199,62 +207,92 @@ button {
     left: 0;
 
     cursor: pointer;
-    --x: 0px;
-    --y: 0px;
-    --r: 0deg;
-    --s: 0.4;
+    --base-x: 0px;
+    --base-y: 0px;
+    --base-r: 0deg;
+    --base-s: 0.4;
+
+    --offset-x: 0px;
+    --offset-y: 0px;
+    --offset-r: 0deg;
+    --offset-s: 0.4;
+
+    --on-load-x: 0px;
+    --on-load-y: 0px;
+    --on-load-r: 0deg;
+    --on-load-s: 0;
+
     opacity: 0;
     transform-origin: center;
     transform:
-        translateX(var(--x))
-        translateY(var(--y))
-        rotate(var(--r))
-        scale(var(--s));
+        translateX(calc(var(--base-x) + var(--offset-x) + var(--on-load-x)))
+        translateY(calc(var(--base-y) + var(--offset-y) + var(--on-load-y)))
+        rotate(calc(var(--base-r) + var(--offset-r) + var(--on-load-r)))
+        scale(calc(var(--base-s) + var(--offset-s) + var(--on-load-s)));
 
     transition: 
         transform 1.3s cubic-bezier(0.075, 0.82, 0.165, 1),
         opacity 0.2s ease;
 }
-.card-left.is-loaded {
+.card-left {
     background-color: blue;
-    --x: -50px;
-    --r: -5deg;
+    --base-x: -50px;
+    --base-r: -5deg;
 }
-.card-center.is-loaded {
+.card-center {
     background-color: red;
-    --x: 10px;
-    --s: 0.5;
+    --base-x: 8px;
+    --base-y: -5px;
+    --base-s: 0.5;
     z-index: 1;
 }
-.card-right.is-loaded {
+.card-right {
     background-color: green;
-    --x: 60px;
-    --r: 7deg;
+    --base-x: 60px;
+    --base-r: 7deg;
 }
 
 /* initial card animation on page load */
+.card:not(.is-loaded) {
+    --on-load-x: calc(var(--base-x) * -1);
+    --on-load-y: calc(var(--base-y) * -1);
+    --on-load-r: calc(var(--base-r) * -1);
+    --on-load-s: calc(var(--base-s) * -1);
+}
 .card.is-loaded {
     opacity: 1;
-    --s: 0.5;
+    --on-load-x: 0px;
+    --on-load-y: 0px;
+    --on-load-r: 0deg;
+    --on-load-s: 0; 
 }
 
-/* card placement offset, dependent on deck state */
+/* card placement Y offset, dependent on deck state */
 .deck--idle .card-in-deck {
-    --y: 0px;
+    --offset-s: 0.4;
 }
 .deck--selected .card-in-deck {
-    --y: 80px;
-    --s: 0.4;
+    --offset-y: 80px;
+    --offset-s: 0.2;
+}
+
+/* move user selected card out of the deck */
+.card-selected {
+    --base-x: 10px;
+    --base-y: -150px;
+    --base-r: 0deg;
+    --base-s: 1;
 }
 
 /* card hover transitions, won't affect selected card */
 .card:not(.card-selected):hover {
     transition: 0.9s cubic-bezier(0.075, 0.82, 0.165, 1);
     z-index: 2;
-    --y: -40px;
-    --r: 0deg;
-    --s: 0.95;
+    --offset-y: var(--hover-y);
+    --base-r: var(--hover-r);
+    --offset-s: var(--hover-s);
 }
+
 
 
 
