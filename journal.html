@@ -97,9 +97,18 @@
           <div class="persona-cards wireframe">
             <!-- TODO: ability to swipe through personas to "select" -->
              <div class="deck--idle">
-              <img src="assets/images/moon-placeholder.png" alt="" class="card card-left card-in-deck">
-              <img src="assets/images/moon-placeholder.png" alt="" class="card card-center card-in-deck">
-              <img src="assets/images/moon-placeholder.png" alt="" class="card card-right card-in-deck">
+              <div class="card card-left card-in-deck">
+                <button class="card-hitbox" aria-label="Select left card"></button>
+                <img src="assets/images/moon-placeholder.png" alt="" class="card-visual">
+              </div>
+              <div class="card card-center card-in-deck">
+                <button class="card-hitbox" aria-label="Select center card"></button>
+                <img src="assets/images/moon-placeholder.png" alt="" class="card-visual">
+              </div>
+              <div class="card card-right card-in-deck">
+                <button class="card-hitbox" aria-label="Select right card"></button>
+                <img src="assets/images/moon-placeholder.png" alt="" class="card-visual">
+              </div>
             </div>
             <p class="deck__instruction">Select an advisor</p>
           </div>

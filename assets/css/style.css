@@ -170,7 +170,7 @@ button {
 }
 /* PERSONA CARDS */
 
-/* deck state */
+/* Deck States - change depending on whether user has selected a particular card from the deck */
 .deck--idle { 
     position: relative;
     align-self: center;
@@ -181,7 +181,7 @@ button {
 
     --hover-y: -40px;
     --hover-r: 0deg;
-    --hover-s: 0.6;
+    --hover-scale-mult: 1.75;
 }
 .deck--selected {
     position: relative;
@@ -193,17 +193,15 @@ button {
 
     --hover-y: 60px;
     --hover-r: 0deg;
-    --hover-s: 0.4;
+    --hover-scale-mult: 1.1;
 }
 
-/* card base values */
+/* Card values - .card handles variables related to geometry, state, motion */
 .card {
     height: 240px;
     width: 140px;
-    border-radius: .5rem;
-    object-fit: scale-down;
     position: absolute;
-    bottom: 10%;
+    bottom: 0;
     left: 0;
 
     cursor: pointer;
@@ -215,20 +213,21 @@ button {
     --offset-x: 0px;
     --offset-y: 0px;
     --offset-r: 0deg;
-    --offset-s: 0.4;
+    --scale-mult: 1;
 
     --on-load-x: 0px;
     --on-load-y: 0px;
     --on-load-r: 0deg;
-    --on-load-s: 0;
+    --on-load-scale-mult: 1;
 
     opacity: 0;
+    border-radius: 1rem;
     transform-origin: center;
     transform:
         translateX(calc(var(--base-x) + var(--offset-x) + var(--on-load-x)))
         translateY(calc(var(--base-y) + var(--offset-y) + var(--on-load-y)))
         rotate(calc(var(--base-r) + var(--offset-r) + var(--on-load-r)))
-        scale(calc(var(--base-s) + var(--offset-s) + var(--on-load-s)));
+        scale(calc(var(--base-s) * var(--scale-mult) * var(--on-load-scale-mult)));
 
     transition: 
         transform 1.3s cubic-bezier(0.075, 0.82, 0.165, 1),
@@ -236,61 +235,85 @@ button {
 }
 .card-left {
     background-color: blue;
-    --base-x: -50px;
+    --base-x: -80px;
     --base-r: -5deg;
 }
 .card-center {
     background-color: red;
     --base-x: 8px;
-    --base-y: -5px;
-    --base-s: 0.5;
     z-index: 1;
 }
 .card-right {
     background-color: green;
-    --base-x: 60px;
+    --base-x: 80px;
     --base-r: 7deg;
 }
+/* handles interactivity trigger */
+.card-hitbox {
+    position: absolute;
+    inset: -25px -15px -50px -15px;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    z-index: 5;
+    /* outline: 3px solid orange; */
+}
+/* contains the card images */
+.card-visual {
+    width: 100%;
+    height: 100%;
+    object-fit: scale-down;
+    border-radius: inherit;
+    pointer-events: none;
+}
 
+/* Card offsets - change cards dependent on current state */
+/* deck size */
+.deck--idle .card-in-deck {
+    --scale-mult: 1.6;
+}
+.deck--selected .card-in-deck {
+    --offset-y: 80px;
+    --scale-mult: 1;
+}
+/* when deck is smaller, tighten gap between card elements */
+.deck--selected .card-left {
+    --base-x: -45px;
+}
+.deck--selected .card-right {
+    --base-x: 60px;
+}
+/* user selected card takes main focus of container */
+.deck--selected .card-selected {
+    --base-r: 0deg;
+    --base-x: 8px;
+    --offset-y: -150px;
+    --scale-mult: 2.5;
+}
+
+/* Card transitions */
 /* initial card animation on page load */
 .card:not(.is-loaded) {
     --on-load-x: calc(var(--base-x) * -1);
     --on-load-y: calc(var(--base-y) * -1);
     --on-load-r: calc(var(--base-r) * -1);
-    --on-load-s: calc(var(--base-s) * -1);
+    --on-load-scale-mult: 0.01;
 }
 .card.is-loaded {
     opacity: 1;
     --on-load-x: 0px;
     --on-load-y: 0px;
     --on-load-r: 0deg;
-    --on-load-s: 0; 
+    --on-load-scale-mult: 1; 
 }
 
-/* card placement Y offset, dependent on deck state */
-.deck--idle .card-in-deck {
-    --offset-s: 0.4;
-}
-.deck--selected .card-in-deck {
-    --offset-y: 80px;
-    --offset-s: 0.2;
-}
-
-/* move user selected card out of the deck */
-.card-selected {
-    --base-x: 10px;
-    --base-y: -150px;
-    --base-r: 0deg;
-    --base-s: 1;
-}
-
-/* card hover transitions, won't affect selected card */
-.card:not(.card-selected):hover {
+/* card hover transitions, only targets "idle" cards */
+.card:not(.card-selected):has(.card-hitbox:hover) {
     transition: 0.9s cubic-bezier(0.075, 0.82, 0.165, 1);
-    z-index: 2;
-    --offset-y: var(--hover-y);
     --base-r: var(--hover-r);
-    --offset-s: var(--hover-s);
+    --offset-y: var(--hover-y);
+    --scale-mult: var(--hover-scale-mult);
+    z-index: 2;
 }
 
 
