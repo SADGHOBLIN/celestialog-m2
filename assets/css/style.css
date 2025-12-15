@@ -166,6 +166,7 @@ button {
     align-items: center;
 }
 .deck__instruction {
+    margin-top: auto;
     margin-bottom: 2rem;
 }
 /* PERSONA CARDS */
@@ -175,8 +176,9 @@ button {
     position: relative;
     align-self: center;
     margin-bottom: 1rem;
-    height: 200px;
+    height: 300px;
     width: 150px;
+
     outline: 2px solid red;
 
     --hover-y: -40px;
@@ -187,8 +189,9 @@ button {
     position: relative;
     margin-top: auto;
     margin-bottom: 1rem;
-    height: 250px;
+    height: 300px;
     width: 150px;
+   
     outline: 2px solid orange;
 
     --hover-y: 60px;
@@ -256,7 +259,8 @@ button {
     border: none;
     cursor: pointer;
     z-index: 5;
-    outline: 3px solid orange;
+
+    /* outline: 3px solid orange; */
 }
 /* contains the card images */
 .card-visual {

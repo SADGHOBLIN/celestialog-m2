@@ -121,16 +121,39 @@ function chooseAdvisorCard(card, elements, state) {
         // use for ADVISOR CHAT
         // use for CARD NAME TITLE
 
-    if (state.isDeckIdle) {
-        elements.deck.classList.replace("deck--idle", "deck--selected");
-        card.classList.replace("card-in-deck", "card-selected");
 
-        state.currentAdvisor = card.dataset.advisorName;
-        state.currentCard = card;
-        console.log(card.dataset.advisorName);
-        console.log(card);
+    // if de-selecting the current card, return the deck to idle
+    // TODO: convert to own function, called by .card-placeholder and .card-selected
+    if (state.currentCard === card) {
+        elements.deck.classList.replace("deck--selected", "deck--idle");
+        state.currentCard.classList.replace("card-selected", "card-in-deck");
+        state.isDeckIdle = true;
+        state.currentAdvisor = "";
+        state.currentCard = null;
+        return state;
     }
+
+    // if user clicked a non-selected card, de-select the current card
+    if (state.currentCard) {
+        state.currentCard.classList.replace("card-selected", "card-in-deck");
+    }
+    
+    // select the card the user clicked and update state: isDeckIdle, currentAdvisor, currentCard
+    elements.deck.classList.replace("deck--idle", "deck--selected");
+    card.classList.replace("card-in-deck", "card-selected");
+
+    state.isDeckIdle = false;
+    state.currentAdvisor = card.dataset.advisorName;
+    state.currentCard = card;
+
+    // create CARD PLACEHOLDER function (replace empty space in card deck with a 'blank card' that can cancel the currently selected card) - removeSelectedCard function
+    return state;
+}
+
+function updateDeckName(state, elements) {
+    const advisorName = state.currentAdvisor || "The Self";
+    elements.deckTitle.innerText = advisorName;
 }
 
 // export functions
-export { sendMessage, cacheEngine, chooseAdvisorCard };
+export { sendMessage, cacheEngine, chooseAdvisorCard, updateDeckName };
