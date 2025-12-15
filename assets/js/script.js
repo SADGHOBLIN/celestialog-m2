@@ -1,6 +1,6 @@
 // Import custom functions from other modules
 import { displayMoonData } from "./moon.js";
-import { sendMessage, cacheEngine } from "./advisor.js";
+import { sendMessage, cacheEngine, chooseAdvisorCard } from "./advisor.js";
 import { displayTodaysNote, captureUserEntry, createNewNote, viewAllNotes, viewRecycleBin, toggleHidden, closeModal } from "./notes.js";
 
 // CONFIG
@@ -49,11 +49,16 @@ const elements = {
     advisor: document.getElementById("advisor"),
     chatWindow: document.getElementById("chat-body"),
     userMsgInput: document.getElementById("user-msg-input"),
+
+    deck: document.getElementById("deck"),
 };
 const state = {
     isWaitingForReply: false,
     showRedMoons: true,
     showMissedDays: true,
+    isDeckIdle: true,
+    currentAdvisor: "",
+    currentCard: null,
 
 }
 let notes = JSON.parse(localStorage.getItem("notes")) || {
@@ -117,7 +122,12 @@ elements.notesContainerModal.addEventListener("click", (e) => {
 
 // CARD ANIMATION ON LOAD
 window.addEventListener("load", () => {
-    document.querySelectorAll(".card").forEach(card => card.classList.add("is-loaded"));
+    document.querySelectorAll(".card").forEach(card => {
+        card.classList.add("is-loaded");
+
+        const hitbox = card.querySelector(".card-hitbox");
+        hitbox.addEventListener("click", () => chooseAdvisorCard(card, elements, state));
+    });
 });
 
 

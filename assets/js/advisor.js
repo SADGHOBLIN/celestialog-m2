@@ -108,5 +108,29 @@ async function sendMessage(getEngine, config, elements, state) {
     }
 }
 
+// Advisor selector
+function chooseAdvisorCard(card, elements, state) {
+    // card is selected: ((IS DECK IDLE? IF YES:))
+    //      change deck--idle -> deck--selected
+    //      change card-in-deck -> card-selected
+                        // (IF DECK IDLE? IF NO:))
+                        // change card-selected -> card-in-deck
+                        // change card-in-deck -> card-selected
+
+    // get DATA-ADVISOR from selected card:
+        // use for ADVISOR CHAT
+        // use for CARD NAME TITLE
+
+    if (state.isDeckIdle) {
+        elements.deck.classList.replace("deck--idle", "deck--selected");
+        card.classList.replace("card-in-deck", "card-selected");
+
+        state.currentAdvisor = card.dataset.advisorName;
+        state.currentCard = card;
+        console.log(card.dataset.advisorName);
+        console.log(card);
+    }
+}
+
 // export functions
-export { sendMessage, cacheEngine };
+export { sendMessage, cacheEngine, chooseAdvisorCard };

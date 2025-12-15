@@ -256,7 +256,7 @@ button {
     border: none;
     cursor: pointer;
     z-index: 5;
-    /* outline: 3px solid orange; */
+    outline: 3px solid orange;
 }
 /* contains the card images */
 .card-visual {
