@@ -169,8 +169,8 @@ button {
     margin-top: auto;
     margin-bottom: 2rem;
 }
-/* PERSONA CARDS */
 
+/* PERSONA CARDS */
 /* Deck States - change depending on whether user has selected a particular card from the deck */
 .deck--idle { 
     position: relative;
@@ -178,25 +178,18 @@ button {
     margin-bottom: 1rem;
     height: 300px;
     width: 150px;
-
-    outline: 2px solid red;
-
-    --hover-y: -40px;
+    --hover-y: -25px;
     --hover-r: 0deg;
-    --hover-scale-mult: 1.75;
+    --hover-scale-mult: 1.6;
 }
 .deck--selected {
     position: relative;
-    margin-top: auto;
     margin-bottom: 1rem;
     height: 300px;
     width: 150px;
-   
-    outline: 2px solid orange;
-
-    --hover-y: 60px;
+    --hover-y: 175px;
     --hover-r: 0deg;
-    --hover-scale-mult: 1.1;
+    --hover-scale-mult: 1.15;
 }
 
 /* Card values - .card handles variables related to geometry, state, motion */
@@ -206,12 +199,13 @@ button {
     position: absolute;
     bottom: 0;
     left: 0;
-
+    border-radius: 1rem;
+    transform-origin: center;
     cursor: pointer;
     --base-x: 0px;
     --base-y: 0px;
     --base-r: 0deg;
-    --base-s: 0.4;
+    --base-s: 0.5;
 
     --offset-x: 0px;
     --offset-y: 0px;
@@ -222,32 +216,27 @@ button {
     --on-load-y: 0px;
     --on-load-r: 0deg;
     --on-load-scale-mult: 1;
-
-    opacity: 0;
-    border-radius: 1rem;
-    transform-origin: center;
-    transform:
-        translateX(calc(var(--base-x) + var(--offset-x) + var(--on-load-x)))
-        translateY(calc(var(--base-y) + var(--offset-y) + var(--on-load-y)))
-        rotate(calc(var(--base-r) + var(--offset-r) + var(--on-load-r)))
-        scale(calc(var(--base-s) * var(--scale-mult) * var(--on-load-scale-mult)));
-
-    transition: 
-        transform 1.3s cubic-bezier(0.075, 0.82, 0.165, 1),
-        opacity 0.2s ease;
+    translate:
+        calc(var(--base-x) + var(--offset-x) + var(--on-load-x))
+        calc(var(--base-y) + var(--offset-y) + var(--on-load-y));
+    rotate: calc(var(--base-r) + var(--offset-r) + var(--on-load-r));
+    scale: calc(var(--base-s) * var(--scale-mult) * var(--on-load-scale-mult));
 }
 .card-left {
     background-color: blue;
+    transition-delay: 0.09s;
     --base-x: -80px;
     --base-r: -5deg;
 }
 .card-center {
     background-color: red;
+    transition-delay: 0.03s;
     --base-x: 8px;
     z-index: 1;
 }
 .card-right {
     background-color: green;
+    transition-delay: 0.07s;
     --base-x: 80px;
     --base-r: 7deg;
 }
@@ -259,8 +248,6 @@ button {
     border: none;
     cursor: pointer;
     z-index: 5;
-
-    /* outline: 3px solid orange; */
 }
 /* contains the card images */
 .card-visual {
@@ -277,7 +264,7 @@ button {
     --scale-mult: 1.6;
 }
 .deck--selected .card-in-deck {
-    --offset-y: 80px;
+    --offset-y: 180px;
     --scale-mult: 1;
 }
 /* when deck is smaller, tighten gap between card elements */
@@ -291,8 +278,9 @@ button {
 .deck--selected .card-selected {
     --base-r: 0deg;
     --base-x: 8px;
-    --offset-y: -150px;
-    --scale-mult: 2.5;
+    --offset-y: -50px;
+    --scale-mult: 2;
+    z-index: 3;
 }
 
 /* Card transitions */
@@ -300,11 +288,10 @@ button {
 .card:not(.is-loaded) {
     --on-load-x: calc(var(--base-x) * -1);
     --on-load-y: calc(var(--base-y) * -1);
-    --on-load-r: calc(var(--base-r) * -1);
-    --on-load-scale-mult: 0.01;
+    --on-load-r: calc(var(--base-r) * -1.4);
+    --on-load-scale-mult: 1.4;
 }
 .card.is-loaded {
-    opacity: 1;
     --on-load-x: 0px;
     --on-load-y: 0px;
     --on-load-r: 0deg;
@@ -313,11 +300,38 @@ button {
 
 /* card hover transitions, only targets "idle" cards */
 .card:not(.card-selected):has(.card-hitbox:hover) {
-    transition: 0.9s cubic-bezier(0.075, 0.82, 0.165, 1);
-    --base-r: var(--hover-r);
+    --offset-r: var(--hover-r);
     --offset-y: var(--hover-y);
     --scale-mult: var(--hover-scale-mult);
+    transition: 
+        translate 0.8s cubic-bezier(0.22, 1, 0.36, 1),
+        rotate 0.3s ease-out,
+        scale 0.6s cubic-bezier(0.22, 1, 0.36, 1);
     z-index: 2;
+}
+.deck--selected .card-in-deck.card-left:hover,
+.deck--idle .card-in-deck.card-left:hover{
+    --offset-r: -4deg;
+}
+.deck--selected .card-in-deck.card-right:hover,
+.deck--idle .card-in-deck.card-right:hover {
+    --offset-r: 3deg;
+}
+
+/* card main transition timings */
+.deck--idle .card-selected,
+.deck--idle .card-in-deck,
+.deck--selected .card-selected {
+    transition:
+        translate 1.3s cubic-bezier(0.22, 1, 0.36, 1),
+        rotate 0.2s ease-in-out,
+        scale 0.9s cubic-bezier(0.22, 1, 0.36, 1);
+}
+.deck--selected .card-in-deck {
+    transition:
+        translate 0.6s cubic-bezier(0.22, 1, 0.36, 1),
+        rotate 0.4s ease-out,
+        scale 0.5s cubic-bezier(0.22, 1, 0.36, 1);
 }
 
 

@@ -110,20 +110,7 @@ async function sendMessage(getEngine, config, elements, state) {
 
 // Advisor selector
 function chooseAdvisorCard(card, elements, state) {
-    // card is selected: ((IS DECK IDLE? IF YES:))
-    //      change deck--idle -> deck--selected
-    //      change card-in-deck -> card-selected
-                        // (IF DECK IDLE? IF NO:))
-                        // change card-selected -> card-in-deck
-                        // change card-in-deck -> card-selected
-
-    // get DATA-ADVISOR from selected card:
-        // use for ADVISOR CHAT
-        // use for CARD NAME TITLE
-
-
     // if de-selecting the current card, return the deck to idle
-    // TODO: convert to own function, called by .card-placeholder and .card-selected
     if (state.currentCard === card) {
         elements.deck.classList.replace("deck--selected", "deck--idle");
         state.currentCard.classList.replace("card-selected", "card-in-deck");
@@ -145,11 +132,8 @@ function chooseAdvisorCard(card, elements, state) {
     state.isDeckIdle = false;
     state.currentAdvisor = card.dataset.advisorName;
     state.currentCard = card;
-
-    // create CARD PLACEHOLDER function (replace empty space in card deck with a 'blank card' that can cancel the currently selected card) - removeSelectedCard function
     return state;
 }
-
 function updateDeckName(state, elements) {
     const advisorName = state.currentAdvisor || "The Self";
     elements.deckTitle.innerText = advisorName;
