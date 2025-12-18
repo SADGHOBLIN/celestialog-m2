@@ -43,7 +43,7 @@ button {
 }
 .big-btn {
     padding: 1rem;
-    width: 50%;
+    width: 80%;
     background-color: var(--p-transparent);
 }
 
@@ -149,15 +149,20 @@ button {
     margin-left: 4rem;
 }
 /* ---------------------------------------------------------------------------- */
-/* tarot card section */
+/* ADVSISOR SELECTION - TAROT CARDS*/
 .persona-title,
 .persona-cards,
-.moon-info {
+.toggle-windows {
     width: 100%;
     height: 20%;
     text-align: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
-/* specific cards css */
+
+/* PERSONA CARDS */
+/* card deck container*/
 .persona-cards {
     flex-grow: 1;
     display: flex;
@@ -170,7 +175,6 @@ button {
     margin-bottom: 2rem;
 }
 
-/* PERSONA CARDS */
 /* Deck States - change depending on whether user has selected a particular card from the deck */
 .deck--idle { 
     position: relative;
@@ -334,20 +338,16 @@ button {
         scale 0.5s cubic-bezier(0.22, 1, 0.36, 1);
 }
 
-
-
-
-
-
-
 /* ---------------------------------------------------------------------------- */
-/* options header, present in both NOTES and CHAT */
+/* button to toggle between NOTES UI & ADVISOR CHAT UI */
 .options-header {
     display: flex;
-    justify-content: space-evenly;
+    flex-direction: column;
+    justify-content: center;
     align-items: center;
-    width: 20%;
-    height: 5%;
+    gap: 0.5rem;
+    width: 100%;
+    height: 100%;
 
     background-color: transparent;
     border-radius: 2rem;
@@ -355,6 +355,8 @@ button {
 }
 
 
+/* ---------------------------------------------------------------------------- */
+/* NOTE TAKING UI */
 /* notes entry UI */
 .note-editor-container {
     height: 100%;
@@ -446,7 +448,7 @@ textarea, input {
 
 
 /* ---------------------------------------------------------------------------- */
-
+/* SAVED NOTES DATA MODAL */
 /* View notes modal */
 .modal-overlay {
     position: fixed;
@@ -510,7 +512,29 @@ textarea, input {
     visibility: none;
 }
 
-/* ADVISOR CHAT */
+/* ---------------------------------------------------------------------------- */
+/* ADVISOR CHAT UI */
+#advisor {
+    opacity: 1;
+    transition: opacity 2s ease-in-out;
+}
+
+.chat-header {
+    padding: 1rem;
+    background-color: var(--p-surface);
+    border-radius: 1rem;
+
+}
+
+.chat-wrapper {
+    height: 100%;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    background-color: var(--p-surface);
+    border-radius: 1rem;
+    padding: 1rem;
+}
 
 #chat-body {
     width: 100%;
@@ -521,23 +545,33 @@ textarea, input {
     gap: 16px;
 }
 
+.user-input-box {
+    display: flex;
+    width: 100%;
+    gap: 0.5rem;
+    padding: 1rem 0.75rem;
+}
+
+#user-msg-input {
+    flex-grow: 1;
+}
+
 .user-msg,
 .advisor-msg {
     max-width: 85%;
     word-wrap: break-word;
     padding: 0.75rem;
+    border-radius: 1rem;
+    color: var(--text);
 }
 
 .advisor-msg {
     align-self: flex-start;
-
-    background-color: red;
-    color: white;
+    background-color: var(--p-color);
 }
 .user-msg {
     align-self: flex-end;
-
-    background-color: white;
+    background-color: var(--p-transparent);
 }
 
 .first-msg {
@@ -546,17 +580,12 @@ textarea, input {
 
 .hidden {
     display: none;
+    opacity: 0;
+    transition: opacity 2s ease-in-out;
 }
 
+/* ---------------------------------------------------------------------------- */
 /* DEBUGGING */
-.journal-wrapper > p,
-.chat-wrapper > div {
-    outline: 2px solid green;
-}
-#chat-body > div {
-    outline: 2px solid blue;
-}
-
 /* Wireframe boxes */
 .wireframe {
     /* background: rgb(100 0 0 / 0.1) !important; */
