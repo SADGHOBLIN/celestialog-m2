@@ -64,7 +64,8 @@ function formatMoonData(currentPhase) {
 }
 
 // check moon visibility based on moonrise and moonset data (HHMM format)
-function checkMoonVisibility(today, moonrise, moonset) {
+function checkMoonVisibility(moonrise, moonset) {
+    const today = new Date();
     const now = today.getHours() * 100 + today.getMinutes();
     const [rh, rm] = moonrise.split(":").map(Number);
     const [sh, sm] = moonset.split(":").map(Number);
@@ -98,11 +99,11 @@ async function displayMoonData(config, elements) {
     elements.noteDate.innerText = today.toDateString();
 
     // display moon visibility
-    const isVisible = checkMoonVisibility(today, moonrise, moonset);
+    const isVisible = checkMoonVisibility(moonrise, moonset);
 
     elements.moonVisibility.textContent = isVisible
         ? `Visibility: ${moonrise} - ${moonset}`
-        : `Next Moonrise: ${moonrise}`;
+        : `Next moonrise: ${moonrise}`;
     
 
     // DEBUGGING:
