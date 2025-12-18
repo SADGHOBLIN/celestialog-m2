@@ -4,6 +4,7 @@
     --primary-font: "DM Sans";
 
     --text: #dcd4ee;
+    --text-light: #dcd4ee80;
     --bg: #161519;
     --primary: #9924dd;
     --secondary: #5f4a80;
@@ -59,7 +60,7 @@ button {
 }
 .big-btn {
     padding: 1rem;
-    width: 80%;
+    width: 90%;
     background-color: var(--p-transparent);
 }
 
@@ -163,6 +164,10 @@ button {
     justify-content: center;
     align-items: center;
     margin-left: 4rem;
+
+    padding: 1rem;
+    border-radius: 1rem 1rem 0 0;
+    border: 6px solid var(--p-surface);
 }
 /* ---------------------------------------------------------------------------- */
 /* ADVSISOR SELECTION - TAROT CARDS*/
@@ -457,7 +462,7 @@ textarea, input {
 }
 
 ::placeholder {
-    color: var(--text);
+    color: var(--text-light);
 }
 
 
@@ -528,11 +533,6 @@ textarea, input {
 
 /* ---------------------------------------------------------------------------- */
 /* ADVISOR CHAT UI */
-#advisor {
-    opacity: 1;
-    transition: opacity 2s ease-in-out;
-}
-
 .chat-header {
     padding: 1rem;
     background-color: var(--p-surface);
@@ -595,8 +595,6 @@ textarea, input {
 
 .hidden {
     display: none;
-    opacity: 0;
-    transition: opacity 2s ease-in-out;
 }
 
 /* ---------------------------------------------------------------------------- */
