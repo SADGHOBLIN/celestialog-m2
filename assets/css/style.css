@@ -370,7 +370,6 @@ button {
     margin: 2rem 0;
 }
 
-
 /* ---------------------------------------------------------------------------- */
 /* NOTE TAKING UI */
 /* notes entry UI */
@@ -438,7 +437,6 @@ button {
     background-color: var(--p-surface);
     border-radius: 1rem;
 }
-
 
 textarea, input {
     border: none;
@@ -539,7 +537,7 @@ textarea, input {
     padding: 1rem;
     background-color: var(--p-surface);
     border-radius: 1rem;
-
+    margin: 1rem 0.75rem;
 }
 
 .chat-wrapper {
@@ -570,6 +568,7 @@ textarea, input {
 
 #user-msg-input {
     flex-grow: 1;
+    padding: 14px 0 0 14px;
 }
 
 .user-msg,
@@ -600,7 +599,7 @@ textarea, input {
     transition: opacity 2s ease-in-out;
 }
 
-
+/* ---------------------------------------------------------------------------- */
 /* ---------------------------------------------------------------------------- */
 /* DEBUGGING */
 /* Wireframe boxes */
