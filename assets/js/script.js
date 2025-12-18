@@ -51,7 +51,7 @@ const elements = {
     userMsgInput: document.getElementById("user-msg-input"),
 
     deck: document.getElementById("deck"),
-    deckTitle: document.getElementById("deck__title"),
+    deckInstruction: document.querySelector(".deck__instruction"),
 };
 const state = {
     isWaitingForReply: false,
