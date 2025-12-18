@@ -135,7 +135,7 @@ function chooseAdvisorCard(card, elements, state) {
     return state;
 }
 function updateDeckName(state, elements) {
-    const advisorName = state.currentAdvisor || "Select an Advisor";
+    const advisorName = state.currentAdvisor || "Select advisor";
     elements.deckInstruction.innerText = advisorName;
 }
 

@@ -100,9 +100,9 @@ async function displayMoonData(config, elements) {
     // display moon visibility
     const isVisible = checkMoonVisibility(today, moonrise, moonset);
 
-    elements.moonVisibility.innerHTML = isVisible
-        ? `<p id="moon-visibility">VISIBLE<br>${moonrise} - ${moonset}</p>`
-        : `<p id="moon-visibility">Moonrise:<br>${moonrise}</p>`;
+    elements.moonVisibility.textContent = isVisible
+        ? `Visibility: ${moonrise} - ${moonset}`
+        : `Next Moonrise: ${moonrise}`;
     
 
     // DEBUGGING:
