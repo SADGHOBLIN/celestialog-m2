@@ -52,6 +52,7 @@ const elements = {
 
     deck: document.getElementById("deck"),
     deckInstruction: document.querySelector(".deck__instruction"),
+    advisorName: document.getElementById("advisor-name"),
 };
 const state = {
     isWaitingForReply: false,
