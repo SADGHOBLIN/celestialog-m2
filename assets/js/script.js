@@ -144,8 +144,8 @@ elements.sendMsgBtn.addEventListener("click", () => {
 
 elements.userMsgInput.addEventListener("keypress", event => {
     if (event.key === "Enter") {
+        event.preventDefault();
         if (state.isWaitingForReply) {
-            event.preventDefault();
             return;
         }
         sendMessage(getEngine, config, elements, state);
