@@ -61,8 +61,7 @@ const state = {
     isDeckIdle: true,
     currentAdvisor: "",
     currentCard: null,
-
-}
+};
 let notes = JSON.parse(localStorage.getItem("notes")) || {
     userNotes: [],
     recycleBin: [],

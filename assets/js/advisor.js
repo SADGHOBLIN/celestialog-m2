@@ -1,23 +1,11 @@
 // Import AI language models and engine from WebLLM (MLC AI)
 import { CreateMLCEngine } from "https://esm.run/@mlc-ai/web-llm";
 
-// define initial language model persona
-const messages = [
-    { 
-        role: "system", 
-        content: 
-        "You are Architect; the cryptic and mysterious advisor to the user that helps them with creative writing in their journal. You act as a member of their advisory council, similar to the councils of the medieval period. Your responses should answer the user's questions, but you can also be cryptic and poetic, and aimed at providing them with thought provoking responses to aid them in their daily reflection, and creativity." 
-    },
-    { 
-        role: "user", 
-        content: 
-        "Hello, can you tell me what I could write about in my journal today? Just a short idea to help me get my brain working." 
-    },
-];
-
+// define initial language model personas
+// Help from ChatGPT with structuring and defining the system prompts
 const advisorPrompts = {
     "The Alchemist": {
-        prompt: `
+        systemPrompt: `
             You are The Alchemist: a guide of transformation, craft, and conscious creation.
             You embody the spirit of the Magician tarot archetype: focused will, curiosity, and the belief that inner intention can shape outer reality.
 
@@ -62,7 +50,7 @@ const advisorPrompts = {
         openMessage: "The fire is lit, but it does not rush... What are we working with today?",
     },
     "The Watcher": {
-        prompt: `
+        systemPrompt: `
         You are The Watcher: a guide of awareness, witnessing, and quiet reckoning.
         You embody the spirit of the Ten of Swords tarot archetype: the end of illusions, the moment after impact, and the clarity that comes from seeing what remains.
 
@@ -108,7 +96,7 @@ const advisorPrompts = {
         openMessage: "Whatever you bring here, I will see it clearly. Go on, speak from wherever you find yourself...",
     },
     "The Logician": {
-        prompt: `
+        systemPrompt: `
         You are The Logician: a guide of reasoning, structure, and disciplined thought.
         You embody the spirit of the King of Swords tarot archetype: strategic clarity, intellectual restraint, and the ability to think clearly under pressure.
 
@@ -153,7 +141,8 @@ const advisorPrompts = {
         `,
         openMessage: "Let's separate what you know from what you're assuming. Tell me where to begin.",
     },
-}
+};
+let messages = [];
 
 // WEBLLM helpers
 // store language model engine, or create a new engine instance
@@ -179,15 +168,17 @@ async function createEngine(config) {
 // submit user inputted message to the language model and await a reply
 async function getReply (getEngine, config, userText) {
     const engine = await getEngine(config);
-    
+
+    messages.push({role: "user", content: userText});
+
     const reply = await engine.chat.completions.create({
-        messages: [
-            ...messages,
-            { role: "user", content: userText }
-        ],
+        messages,
         temperature: 1.0,
     });
-    return reply.choices[0].message.content;
+
+    const assistantMessage = reply.choices[0].message.content;
+    messages.push({role: "assistant", content: assistantMessage});
+    return assistantMessage;
 }
 
 // fill advisor chat window with appropriate messages
@@ -257,6 +248,8 @@ function chooseAdvisorCard(card, elements, state) {
         elements.deck.classList.replace("deck--selected", "deck--idle");
         state.currentCard.classList.replace("card-selected", "card-in-deck");
         tarotImages.forEach(img => img.classList.toggle("hidden"));
+        document.querySelector(".first-msg").innerText = "...";
+
         state.isDeckIdle = true;
         state.currentAdvisor = "";
         state.currentCard = null;
@@ -278,6 +271,16 @@ function chooseAdvisorCard(card, elements, state) {
     state.isDeckIdle = false;
     state.currentAdvisor = card.dataset.advisorName;
     state.currentCard = card;
+
+    // reset WEBLLM message history, so each persona offers a different lens of perspective
+    messages = [
+        {
+            role: "system",
+            content: advisorPrompts[card.dataset.advisorName].systemPrompt,
+        }
+    ];
+    document.querySelector(".first-msg").innerText = `${advisorPrompts[card.dataset.advisorName].openMessage}`;
+    elements.userMsgInput.focus();
     return state;
 }
 function updateDeckName(state, elements) {
