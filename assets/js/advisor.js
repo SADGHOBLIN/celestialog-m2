@@ -110,10 +110,13 @@ async function sendMessage(getEngine, config, elements, state) {
 
 // Advisor selector
 function chooseAdvisorCard(card, elements, state) {
+    const tarotImages = card.querySelectorAll(".card-visual");
+
     // if de-selecting the current card, return the deck to idle
     if (state.currentCard === card) {
         elements.deck.classList.replace("deck--selected", "deck--idle");
         state.currentCard.classList.replace("card-selected", "card-in-deck");
+        tarotImages.forEach(img => img.classList.toggle("hidden"));
         state.isDeckIdle = true;
         state.currentAdvisor = "";
         state.currentCard = null;
@@ -123,11 +126,14 @@ function chooseAdvisorCard(card, elements, state) {
     // if user clicked a non-selected card, de-select the current card
     if (state.currentCard) {
         state.currentCard.classList.replace("card-selected", "card-in-deck");
+        const stateImages = state.currentCard.querySelectorAll(".card-visual");
+        stateImages.forEach(img => img.classList.toggle("hidden"));
     }
     
     // select the card the user clicked and update state: isDeckIdle, currentAdvisor, currentCard
     elements.deck.classList.replace("deck--idle", "deck--selected");
     card.classList.replace("card-in-deck", "card-selected");
+    tarotImages.forEach(img => img.classList.toggle("hidden"));
 
     state.isDeckIdle = false;
     state.currentAdvisor = card.dataset.advisorName;
