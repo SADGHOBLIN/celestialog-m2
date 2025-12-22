@@ -214,9 +214,12 @@ button {
     justify-content: flex-start;
 }
 .moon-info-img-placeholder {
-    width: 120px;
-    height: 120px;
+    width: 150px;
+    height: 150px;
+    object-fit: cover;
+    margin: 0.75rem;
 }
+
 
 /* PERSONA CARDS */
 /* card deck container*/
@@ -489,6 +492,7 @@ button {
 
     background-color: var(--p-surface);
     border-radius: 1rem;
+    padding: 0.5rem;
 }
 
 textarea, input {
