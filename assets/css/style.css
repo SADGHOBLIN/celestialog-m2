@@ -349,7 +349,12 @@ button {
     --offset-y: -48px;
     --scale-mult: 2;
     z-index: 3;
+    filter: saturate(1.05);
 }
+.deck--idle .card:not(:has(.card-hitbox:hover)) {
+    filter: brightness(0.65) saturate(0.7);
+}
+
 
 /* Card transitions */
 /* initial card animation on page load */
@@ -377,6 +382,7 @@ button {
         rotate 0.3s ease-out,
         scale 0.6s cubic-bezier(0.22, 1, 0.36, 1);
     z-index: 2;
+    filter: saturate(1.05);
 }
 .deck--selected .card-in-deck.card-left:hover,
 .deck--idle .card-in-deck.card-left:hover{
