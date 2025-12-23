@@ -77,6 +77,17 @@ function sortNotes(notes) {
 // creates a new formatted note and saves to localStorage, add new note to start of array
 function saveNewNote(newNote, notes) {
     notes.userNotes.unshift(newNote);
+
+    const savedMessage = document.createElement("p");
+    const buttonsDiv = document.querySelector(".note-buttons");
+
+    savedMessage.innerText = "Note saved!";
+    savedMessage.classList.add("saved-notification");
+    buttonsDiv.prepend(savedMessage);
+    setTimeout(() => {
+        savedMessage.remove();
+    }, 2500);
+
     return sortNotes(notes);
 }
 
@@ -146,6 +157,17 @@ function overrideNoteData(userEntry, notes) {
     // override data
     notes.userNotes[index].title = userEntry.title;
     notes.userNotes[index].content = userEntry.content;
+
+    const savedMessage = document.createElement("p");
+    const buttonsDiv = document.querySelector(".note-buttons");
+
+    savedMessage.innerText = "Note saved!";
+    savedMessage.classList.add("saved-notification");
+    buttonsDiv.prepend(savedMessage);
+    setTimeout(() => {
+        savedMessage.remove();
+    }, 2500);
+
     return sortNotes(notes);
 }
 

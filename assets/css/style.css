@@ -712,6 +712,11 @@ textarea, input {
     width: 60%;
  }
 
+ .saved-notification {
+    font-size: 18px;
+    color: var(--accent);
+ }
+
 /* ---------------------------------------------------------------------------- */
 /* ADVISOR CHAT UI */
 .chat-header {
