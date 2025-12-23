@@ -669,6 +669,24 @@ textarea, input {
     margin-bottom: 1rem;
 }
 
+.note .no-notes {
+    background-color: transparent;
+    display: block;
+}
+.note .note-title.no-notes {
+    font-size: 18px;
+    white-space: normal;
+    overflow: visible;
+    text-overflow: clip;
+    max-width: none;
+    background-color: var(--p-color);
+    width: 98%;
+    padding: 1rem;
+    margin: 0;
+    border-radius: 1rem;
+    text-align: center;
+}
+
 #hide-missed-days :checked > .red-moon {
     visibility: none;
 }

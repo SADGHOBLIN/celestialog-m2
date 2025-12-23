@@ -293,7 +293,7 @@ function displayOverrideCheck(userEntry, notes, elements, modalTitle, nextAction
 
 // create modal DOM element to display a saved note
 function createNoteElement(note, elements, notes, state, arrayType, moonImages) {
-    
+
     const noteElement = document.createElement("div");
     noteElement.id = `${note.id}`;
     noteElement.setAttribute("data-note-id", note.id);
@@ -352,8 +352,8 @@ function createNoteElement(note, elements, notes, state, arrayType, moonImages) 
 function createEmptyNotesMessage(elements, message) {
     const emptyMessage = document.createElement("div");
     emptyMessage.innerHTML = `
-        <div class="note">
-            <h3 class="note-title"
+        <div class="note no-notes">
+            <h3 class="note-title no-notes"
             >${message}</h3>
         </div>`;
 
