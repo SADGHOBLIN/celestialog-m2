@@ -569,7 +569,7 @@ textarea, input {
     overflow-y: auto;
 
     background-color: var(--text);
-    margin: 2rem;
+    margin: 3rem;
 }
 
 #modal-title {
@@ -699,6 +699,7 @@ textarea, input {
     flex-grow: 1;
     background-color: var(--p-color);
     border: none;
+    font-size: 18px;
  }
  #modal-body.override-check button:first-of-type {
     background-color: var(--accent);
@@ -707,6 +708,8 @@ textarea, input {
  #modal-footer.override-check button {
     background-color: var(--p-color);
     color: var(--text);
+    align-self: center;
+    width: 60%;
  }
 
 /* ---------------------------------------------------------------------------- */
