@@ -65,35 +65,35 @@ const state = {
 const moonImages = {
     "NEW MOON": {
         symbol: "assets/images/moon/new-moon-symbol.svg",
-        illustration: "",
+        illustration: "assets/images/moon/red-moon.png",
     },
     "WANING CRESCENT": {
         symbol: "assets/images/moon/waning-crescent-symbol.svg",
-        illustration: "",
+        illustration: "assets/images/moon/red-moon.png",
     },
     "LAST QUARTER": {
         symbol: "assets/images/moon/third-quarter-symbol.svg",
-        illustration: "",
+        illustration: "assets/images/moon/red-moon.png",
     },
     "WANING GIBBOUS": {
         symbol: "assets/images/moon/waning-gibbous-symbol.svg",
-        illustration: "",
+        illustration: "assets/images/moon/red-moon.png",
     },
     "FULL MOON": {
         symbol: "assets/images/moon/full-moon-symbol.svg",
-        illustration: "",
+        illustration: "assets/images/moon/red-moon.png",
     },
     "WAXING GIBBOUS": {
         symbol: "assets/images/moon/waxing-gibbous-symbol.svg",
-        illustration: "",
+        illustration: "assets/images/moon/red-moon.png",
     },
     "FIRST QUARTER": {
         symbol: "assets/images/moon/first-quarter-symbol.svg",
-        illustration: "",
+        illustration: "assets/images/moon/red-moon.png",
     },
     "WAXING CRESCENT": {
         symbol: "assets/images/moon/waxing-crescent-symbol.svg",
-        illustration: "",
+        illustration: "assets/images/moon/red-moon.png",
     },
     "RED MOON": {
         symbol: "assets/images/moon/red-moon-symbol.svg",

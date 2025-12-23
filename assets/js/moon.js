@@ -90,11 +90,13 @@ async function displayMoonData(config, elements, moonImages) {
     const moonrise = moonData.astronomy.moonrise;
     const moonset = moonData.astronomy.moonset;
 
-    // display current moon phase with corresponding symbol
+    // display current moon phase with corresponding symbol and illustration
     elements.moonPhase.innerText = moonPhase;
     elements.noteMoon.innerText= `${moonPhase.toUpperCase()}`;
     const symbol = document.querySelector(".moon-symbol");
     symbol.src = moonImages[moonPhase.toUpperCase()].symbol;
+    const illustration = document.querySelector(".moon-illustration");
+    illustration.src = moonImages[moonPhase.toUpperCase()].illustration;
 
     // display current date
     elements.date.innerText = today.toDateString();

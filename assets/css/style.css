@@ -213,7 +213,7 @@ button {
     flex-direction: column;
     justify-content: flex-start;
 }
-.moon-info-img-placeholder {
+.moon-illustration {
     width: 150px;
     height: 150px;
     object-fit: cover;
