@@ -215,6 +215,10 @@ async function sendMessage(getEngine, config, elements, state) {
     elements.userMsgInput.value = "";
     state.isWaitingForReply = true;
     elements.sendMsgBtn.disabled = true;
+    
+    // test animation
+    const selectedCard = document.querySelector(".card-selected");
+    selectedCard.classList.replace("floating-animation", "wiggle-animation");
 
     try {
         // display submitted user message inside chat window
@@ -236,6 +240,7 @@ async function sendMessage(getEngine, config, elements, state) {
         elements.sendMsgBtn.disabled = false;
         elements.userMsgInput.focus();
         scrollSmooth(elements.chatWindow);
+        selectedCard.classList.replace("wiggle-animation", "floating-animation");
     }
 }
 
@@ -243,10 +248,15 @@ async function sendMessage(getEngine, config, elements, state) {
 function chooseAdvisorCard(card, elements, state) {
     const tarotImages = card.querySelectorAll(".card-visual");
 
+    if (state.isWaitingForReply) {
+        return;
+    }
+
     // if de-selecting the current card, return the deck to idle
     if (state.currentCard === card) {
         elements.deck.classList.replace("deck--selected", "deck--idle");
         state.currentCard.classList.replace("card-selected", "card-in-deck");
+        state.currentCard.classList.remove("floating-animation");
         tarotImages.forEach(img => img.classList.toggle("hidden"));
         document.querySelector(".first-msg").innerText = "...";
 
@@ -259,6 +269,7 @@ function chooseAdvisorCard(card, elements, state) {
     // if user clicked a non-selected card, de-select the current card
     if (state.currentCard) {
         state.currentCard.classList.replace("card-selected", "card-in-deck");
+        state.currentCard.classList.remove("floating-animation");
         const stateImages = state.currentCard.querySelectorAll(".card-visual");
         stateImages.forEach(img => img.classList.toggle("hidden"));
     }
@@ -281,6 +292,9 @@ function chooseAdvisorCard(card, elements, state) {
     ];
     document.querySelector(".first-msg").innerText = `${advisorPrompts[card.dataset.advisorName].openMessage}`;
     elements.userMsgInput.focus();
+
+    const selectedCard = document.querySelector(".card-selected");
+    selectedCard.classList.add("floating-animation");
     return state;
 }
 function updateDeckName(state, elements) {
