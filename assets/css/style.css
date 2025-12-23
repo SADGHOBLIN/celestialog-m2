@@ -630,7 +630,7 @@ textarea, input {
     margin-bottom: 1rem;
     background-color: var(--p-color);
     width: 98%;
-    padding: 0.75rem;
+    padding: 0.5rem 0.25rem;
     border-radius: 1rem;
     margin-top: 0.25rem;
     text-align: center;
