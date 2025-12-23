@@ -473,6 +473,7 @@ function displayTodaysNote(elements, notes) {
     - fetch rest of associated note data from the DOM,
     - format data, ready to be saved
     - check whether user is saving a new note, or overwriting an existing note
+    - display an error message if user tries to save a blank note
 */
 function captureUserEntry(elements, notes) {
     notes = sortNotes(notes);
@@ -486,10 +487,25 @@ function captureUserEntry(elements, notes) {
         noteId = generateNoteId();
         elements.noteEditor.setAttribute("data-note-id", noteId);
     }
+
     const title = elements.noteTitle.value;
     const date = elements.noteDate.textContent;
     const moon = elements.noteMoon.textContent;
     const content = elements.noteContent.value;
+
+    if (!elements.noteContent.value.trim()) {
+        console.log("No data");
+        const errorMessage = document.createElement("p");
+        const buttonsDiv = document.querySelector(".note-buttons");
+
+        errorMessage.innerText = "Cannot save a blank note";
+        errorMessage.classList.add("error-notification");
+        buttonsDiv.prepend(errorMessage);
+        setTimeout(() => {
+            errorMessage.remove();
+        }, 3500);
+        return;
+    }
 
     const userEntry = formatNoteData(noteId, title, date, moon, content);
 

@@ -716,6 +716,11 @@ textarea, input {
     font-size: 18px;
     color: var(--accent);
  }
+ .error-notification {
+    font-size: 18px;
+    color: red;
+    text-align: right;
+ }
 
 /* ---------------------------------------------------------------------------- */
 /* ADVISOR CHAT UI */
@@ -799,8 +804,6 @@ textarea, input {
 .wiggle-animation {
     animation: wiggle 2.5s ease-in-out infinite;
 }
-
-
 
 .hidden {
     display: none;
