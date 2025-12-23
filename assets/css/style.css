@@ -584,12 +584,14 @@ textarea, input {
     background-color: var(--p-color);
     order: -1;
     margin-bottom: 4px;
+    border: none;
 }
 #modal-footer button:first-of-type {
     background-color: var(--accent);
     color: var(--bg);
     flex-grow: 1;
     font-size: 18px;
+    border: none;
 }
 
 /* Saved note elements, displayed with View Notes button */
