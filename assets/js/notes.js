@@ -293,7 +293,7 @@ function displayOverrideCheck(userEntry, notes, elements, modalTitle, nextAction
 
 // create modal DOM element to display a saved note
 function createNoteElement(note, elements, notes, state, arrayType, moonImages) {
-
+    
     const noteElement = document.createElement("div");
     noteElement.id = `${note.id}`;
     noteElement.setAttribute("data-note-id", note.id);
@@ -303,6 +303,7 @@ function createNoteElement(note, elements, notes, state, arrayType, moonImages) 
                 <h3 class="note-title">${note.title}</h3>
                 <h4 class="note-date">${note.date}</h4>
                 <h4 class="note-moon">${note.moon}</h4>
+                <img class="moon-illustration-icon" src="${moonImages[note.moon].illustration}" alt="Illustration of a ${note.moon.toLowerCase()}">
         </div>`;
 
     // main action button, dependent on array,
