@@ -79,7 +79,7 @@ function checkMoonVisibility(moonrise, moonset) {
 }
 
 // MOON API features
-async function displayMoonData(config, elements) {
+async function displayMoonData(config, elements, moonImages) {
     let payload = await getMoonData(config);
 
     // moon info variables
@@ -90,9 +90,11 @@ async function displayMoonData(config, elements) {
     const moonrise = moonData.astronomy.moonrise;
     const moonset = moonData.astronomy.moonset;
 
-    // display current moon phase
+    // display current moon phase with corresponding symbol
     elements.moonPhase.innerText = moonPhase;
     elements.noteMoon.innerText= `${moonPhase.toUpperCase()}`;
+    const symbol = document.querySelector(".moon-symbol");
+    symbol.src = moonImages[moonPhase.toUpperCase()].symbol;
 
     // display current date
     elements.date.innerText = today.toDateString();

@@ -81,7 +81,7 @@ function saveNewNote(newNote, notes) {
 }
 
 
-function createNewNote(config, elements, notes) {
+function createNewNote(config, elements, notes, moonImages) {
 
     // safeguard against trying to create multiple new notes when UI is already empty
     if (!elements.noteEditor.dataset.noteId) {
@@ -89,7 +89,7 @@ function createNewNote(config, elements, notes) {
     }
 
     checkSaveChanges(elements, notes, () => {
-        clearNoteUI(config, elements);
+        clearNoteUI(config, elements, moonImages);
     });
 }
 
@@ -241,18 +241,18 @@ function insertMissingDays(filledDays, currentDay, nextDay) {
 
 // empty UI to allow for new note creation
 // run displayMoonData to get up to date Date and Moon info
-function clearNoteUI(config, elements) {
+function clearNoteUI(config, elements, moonImages) {
     elements.noteEditor.dataset.noteId = "";
     elements.noteTitle.value = "";
     elements.noteDate.innerText = "";
     elements.noteMoon.innerText = "";
     elements.noteContent.value = "";
-    displayMoonData(config, elements);
+    displayMoonData(config, elements, moonImages);
 }
 
 
 // injects a user selected note's data into UI for user editing
-function openSavedNote(noteId, notes, elements) {
+function openSavedNote(noteId, notes, elements, moonImages) {
     const noteToOpen = notes.userNotes.find((note) => note.id === noteId);
 
     elements.noteEditor.dataset.noteId = noteToOpen.id;
@@ -260,6 +260,9 @@ function openSavedNote(noteId, notes, elements) {
     elements.noteDate.innerText = noteToOpen.date;
     elements.noteMoon.innerText = noteToOpen.moon;
     elements.noteContent.value = noteToOpen.content;
+
+    const symbol = document.querySelector(".moon-symbol");
+    symbol.src = moonImages[noteToOpen.moon].symbol;
     closeModal(elements);
 }
 
@@ -289,7 +292,7 @@ function displayOverrideCheck(userEntry, notes, elements, modalTitle, nextAction
 
 
 // create modal DOM element to display a saved note
-function createNoteElement(note, elements, notes, state, arrayType) {
+function createNoteElement(note, elements, notes, state, arrayType, moonImages) {
 
     const noteElement = document.createElement("div");
     noteElement.id = `${note.id}`;
@@ -310,7 +313,7 @@ function createNoteElement(note, elements, notes, state, arrayType) {
     if (arrayType === "userNotesArray") {
         mainBtn = createModalBtn("Open note", () => {
             checkSaveChanges(elements, notes, () => {
-                openSavedNote(note.id, notes, elements);
+                openSavedNote(note.id, notes, elements, moonImages);
             });
         });
     }
@@ -482,7 +485,7 @@ function captureUserEntry(elements, notes) {
     - view a specific note, which is opened in the UI
     - delete note(s), which are removed from localStorage, note array, and the DOM
 */
-function viewAllNotes(elements, notes, state) {
+function viewAllNotes(elements, notes, state, moonImages) {
 
     // safeguard to ensure notes array is up to date and in descending order
     notes = sortNotes(notes);
@@ -504,7 +507,7 @@ function viewAllNotes(elements, notes, state) {
 
     // create a DOM element for each saved note
     notes.userNotes.forEach( (note) => {
-        createNoteElement(note, elements, notes, state, "userNotesArray");
+        createNoteElement(note, elements, notes, state, "userNotesArray", moonImages);
     });
 
     // add button that allows user to toggle display of missed journaling days
@@ -517,7 +520,7 @@ function viewAllNotes(elements, notes, state) {
     openModal(elements);
 }
 
-function viewRecycleBin(elements, notes, state) {
+function viewRecycleBin(elements, notes, state, moonImages) {
     notes = sortNotes(notes);
 
     clearModalContent(elements);
@@ -529,7 +532,7 @@ function viewRecycleBin(elements, notes, state) {
     }
 
     notes.recycleBin.forEach( (note) => {
-        createNoteElement(note, elements, notes, state, "recycleBinArray");
+        createNoteElement(note, elements, notes, state, "recycleBinArray", moonImages);
     });
     openModal(elements);
 }

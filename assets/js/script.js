@@ -62,6 +62,44 @@ const state = {
     currentAdvisor: "",
     currentCard: null,
 };
+const moonImages = {
+    "NEW MOON": {
+        symbol: "assets/images/moon/new-moon-symbol.svg",
+        illustration: "",
+    },
+    "WANING CRESCENT": {
+        symbol: "assets/images/moon/waning-crescent-symbol.svg",
+        illustration: "",
+    },
+    "LAST QUARTER": {
+        symbol: "assets/images/moon/third-quarter-symbol.svg",
+        illustration: "",
+    },
+    "WANING GIBBOUS": {
+        symbol: "assets/images/moon/waning-gibbous-symbol.svg",
+        illustration: "",
+    },
+    "FULL MOON": {
+        symbol: "assets/images/moon/full-moon-symbol.svg",
+        illustration: "",
+    },
+    "WAXING GIBBOUS": {
+        symbol: "assets/images/moon/waxing-gibbous-symbol.svg",
+        illustration: "",
+    },
+    "FIRST QUARTER": {
+        symbol: "assets/images/moon/first-quarter-symbol.svg",
+        illustration: "",
+    },
+    "WAXING CRESCENT": {
+        symbol: "assets/images/moon/waxing-crescent-symbol.svg",
+        illustration: "",
+    },
+    "RED MOON": {
+        symbol: "assets/images/moon/red-moon-symbol.svg",
+        illustration: "assets/images/moon/red-moon.png",
+    },
+};
 let notes = JSON.parse(localStorage.getItem("notes")) || {
     userNotes: [],
     recycleBin: [],
@@ -102,15 +140,15 @@ elements.saveNoteBtn.addEventListener("click", () => captureUserEntry(elements, 
 
 
 // CREATE NEW NOTE
-elements.createNoteBtn.addEventListener("click", () => createNewNote(config, elements, notes));
+elements.createNoteBtn.addEventListener("click", () => createNewNote(config, elements, notes, moonImages));
 
 
 // DISPLAY SAVED NOTES TO USER
-elements.viewNotesBtn.addEventListener("click", () => viewAllNotes(elements, notes, state));
+elements.viewNotesBtn.addEventListener("click", () => viewAllNotes(elements, notes, state, moonImages));
 
 
 // DISPLAY RECYCLE BIN TO USER
-elements.viewRecycleBtn.addEventListener("click", () => viewRecycleBin(elements, notes, state));
+elements.viewRecycleBtn.addEventListener("click", () => viewRecycleBin(elements, notes, state, moonImages));
 
 
 // CLOSE NOTES MODAL
@@ -157,7 +195,7 @@ elements.userMsgInput.addEventListener("keypress", event => {
 // ------------------------------------------------------------------------------------------------------
 
 // display moon data information to user
-await displayMoonData(config, elements);
+await displayMoonData(config, elements, moonImages);
 
 // fetch user notes and display, if note is from today
 displayTodaysNote(elements, notes);
