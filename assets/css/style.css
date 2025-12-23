@@ -691,6 +691,24 @@ textarea, input {
     visibility: none;
 }
 
+#modal-body.override-check {
+    flex-direction: row;
+    justify-content: center;
+}
+#modal-body.override-check button {
+    flex-grow: 1;
+    background-color: var(--p-color);
+    border: none;
+ }
+ #modal-body.override-check button:first-of-type {
+    background-color: var(--accent);
+    color: var(--bg);
+ }
+ #modal-footer.override-check button {
+    background-color: var(--p-color);
+    color: var(--text);
+ }
+
 /* ---------------------------------------------------------------------------- */
 /* ADVISOR CHAT UI */
 .chat-header {

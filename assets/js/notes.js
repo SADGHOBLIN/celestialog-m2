@@ -287,6 +287,8 @@ function displayOverrideCheck(userEntry, notes, elements, modalTitle, nextAction
 
     elements.modalBody.appendChild(saveBtn);
     elements.modalBody.appendChild(cancelBtn);
+    elements.modalBody.classList.add("override-check");
+    elements.modalFooter.classList.add("override-check");
     openModal(elements);
 }
 
@@ -398,6 +400,8 @@ function closeModal(elements) {
 function clearModalContent(elements) {
     elements.modalTitle.innerText = "";
     elements.modalBody.innerHTML = "";
+    elements.modalBody.classList = "";
+    elements.modalFooter.classList = "";
 
     let missedDaysBtn = document.getElementById("toggle-missed-days");
     if (missedDaysBtn) {
