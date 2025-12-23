@@ -531,6 +531,7 @@ function captureUserEntry(elements, notes) {
 function viewAllNotes(elements, notes, state, moonImages) {
 
     // safeguard to ensure notes array is up to date and in descending order
+    notes = JSON.parse(localStorage.getItem("notes")) || { userNotes: [], recycleBin: [] };
     notes = sortNotes(notes);
 
     // clear modal container
@@ -564,6 +565,8 @@ function viewAllNotes(elements, notes, state, moonImages) {
 }
 
 function viewRecycleBin(elements, notes, state, moonImages) {
+
+    notes = JSON.parse(localStorage.getItem("notes")) || { userNotes: [], recycleBin: [] };
     notes = sortNotes(notes);
 
     clearModalContent(elements);
