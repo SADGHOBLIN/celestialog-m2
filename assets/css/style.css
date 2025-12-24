@@ -550,7 +550,7 @@ textarea, input {
     transform: translateY(240px);
     transition: transform 0.5s;
 
-    background-color: var(--text);
+    background-color: var(--p-light);
     /* outline: 5px solid var(--accent); */
     color: black;
     border-radius: 1rem;
@@ -568,7 +568,7 @@ textarea, input {
     max-height: 60vh;
     overflow-y: auto;
 
-    background-color: var(--text);
+    background-color: var(--p-light);
     margin: 3rem;
 }
 
@@ -605,11 +605,12 @@ textarea, input {
     width: 180px;
     max-width: 180px;
 
-    background-color: var(--p-light);
+    background-color: var(--p-color);
     border-radius: 1rem;
+    box-shadow: 4px 4px 4px rgba(0 0 100 / 0.3);
 }
 .note-info {
-    background-color: var(--p-light);
+    background-color: var(--p-color);
     border-radius: 1rem;
     display: flex;
     flex-direction: column;
@@ -663,7 +664,8 @@ textarea, input {
 }
 .note button:last-of-type {
     border: none;
-    background-color: var(--p-color);
+    background-color: var(--p-light);
+    color: var(--bg);
     width: 80%;
     align-self: center;
     margin-bottom: 1rem;
