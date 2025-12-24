@@ -211,6 +211,19 @@ async function sendMessage(getEngine, config, elements, state) {
     const message = elements.userMsgInput.value.trim();
     if (!message) return;
 
+    if (!state.currentAdvisor) {
+        const errorMessage = document.createElement("p");
+        const buttonsDiv = document.querySelector(".note-buttons");
+
+        errorMessage.innerText = "Please select an advisor";
+        errorMessage.classList.add("error-notification");
+        buttonsDiv.prepend(errorMessage);
+        setTimeout(() => {
+            errorMessage.remove();
+        }, 2500);
+        return;
+    }
+
     // clear input box, and stop using sending new messages until reply is received
     elements.userMsgInput.value = "";
     state.isWaitingForReply = true;
