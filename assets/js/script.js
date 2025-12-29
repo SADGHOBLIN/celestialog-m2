@@ -190,6 +190,16 @@ elements.userMsgInput.addEventListener("keypress", event => {
     }
 });
 
+// DISPLAY COMMAND HINTS TO USER
+elements.userMsgInput.addEventListener("input", (e) => {
+    const value = e.target.value.trim();
+    if (value === ">" && elements.userMsgInput.selectionStart === value.length) {
+        document.getElementById("command-hint").classList.add("visible");
+    } else {
+        document.getElementById("command-hint").classList.remove("visible");
+    }
+})
+
 // ------------------------------------------------------------------------------------------------------
 // INITIALISE
 // ------------------------------------------------------------------------------------------------------

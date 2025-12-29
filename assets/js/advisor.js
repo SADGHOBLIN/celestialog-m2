@@ -143,7 +143,7 @@ const advisorPrompts = {
     },
 };
 const help = {
-    instructions: [
+    how: [
         "How to use this space:",
         "Begin by selecting an advisor from the deck.",
         "Each persona is shaped by an archetype from the deck of tarot.",
@@ -151,7 +151,7 @@ const help = {
         "You may invite them to aid you in your thinking, as a form of Council.",
         "By posing questions or thoughts into this space, your advisors will respond in character, helping you reflect, reframe, or go deeper.",
     ],
-    technical: [
+    system: [
         "Technical help:",
         "The first time that you consult your council, they will need time to gather in order to answer your call.",
         "Please allow some time for the advisor personas to be loaded into this space, as your browser acts as the conduit for their voice.",
@@ -164,7 +164,7 @@ const help = {
         "if you need some inspiration.",
         "Finally if you have any other problems, please write to me through our contact page.",
     ],
-    inspiration: [
+    idea: [
         "Try posing some of these questions to an advisor:",
     ],
 };
@@ -284,9 +284,9 @@ function characterDelay(character) {
 // display a list of pre-written instructions to the user corresponding to inputted command
 async function displayHelpMessage(elements, command) {
     const map = {
-        ">help": help.technical,
-        ">instructions": help.instructions,
-        ">inspiration": help.inspiration,
+        ">system": help.system,
+        ">how": help.how,
+        ">idea": help.idea,
     };
 
     const messages = map[command];
@@ -308,7 +308,7 @@ async function sendMessage(getEngine, config, elements, state) {
     if (!message) return;
 
     // allow user to input commands to receive help messages
-    if (message === ">help" || message === ">instructions" || message === ">inspiration") {
+    if (message === ">how" || message === ">system" || message === ">idea") {
         elements.userMsgInput.value = "";
         state.isWaitingForReply = true;
         elements.sendMsgBtn.disabled = true;
@@ -320,7 +320,6 @@ async function sendMessage(getEngine, config, elements, state) {
         elements.sendMsgBtn.disabled = false;
         document.getElementById("send-msg-btn").style.opacity = 1;
         elements.userMsgInput.focus();
-        scrollSmooth(elements.chatWindow);
         return;
     }
 
