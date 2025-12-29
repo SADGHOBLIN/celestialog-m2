@@ -211,6 +211,7 @@ To follow best practice, wireframes were constructed for mobile, tablet, and des
 | [Sentry.io - JavaScript Answers](https://sentry.io/answers/remove-specific-item-from-array/) | More help on understanding use cases for various array methods, contributing to the finding of the solution for 'back-filling missed journaling days, as seen in my code. |
 | [Mozilla JavaScript docs - Modules](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Modules) | Again, useful documentation. Used when realising that my code was getting too complicated for a single file, and helped with rebuilding the codebase into a more organised structure. |
 | [Realtime Colors](https://www.realtimecolors.com/?colors=dcd4ee-161519-9924dd-63519f-c4cd26&fonts=DM%20Sans-DM%20Sans) | Visualises colour palettes and fonts on a website, to check how colour choices look in realtime on different devices. |
+| [WebLLM Documentation - streaming chat completion](https://webllm.mlc.ai/docs/user/basic_usage.html#streaming-chat-completion) | Documentation for creating the typing effect when a response is displayed from the engine. Amended with the help of ChatGPT to create a effective solution for this specific website. |
 
 
 
