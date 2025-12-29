@@ -281,6 +281,7 @@ function characterDelay(character) {
     return 30;
 }
 
+// display a list of pre-written instructions to the user corresponding to inputted command
 async function displayHelpMessage(elements, command) {
     const map = {
         ">help": help.technical,
@@ -295,7 +296,7 @@ async function displayHelpMessage(elements, command) {
         const bubble = createChatBubble(elements, ["advisor-msg", "advisor-help"], msg);
 
         await sleep(120);
-        bubble.classList.add("visible)");
+        bubble.classList.add("visible");
         await sleep(1200);
     }
 }
