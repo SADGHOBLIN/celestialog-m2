@@ -311,11 +311,13 @@ async function sendMessage(getEngine, config, elements, state) {
         elements.userMsgInput.value = "";
         state.isWaitingForReply = true;
         elements.sendMsgBtn.disabled = true;
+        document.getElementById("send-msg-btn").style.opacity = 0.6;
 
         await displayHelpMessage(elements, message);
 
         state.isWaitingForReply = false;
         elements.sendMsgBtn.disabled = false;
+        document.getElementById("send-msg-btn").style.opacity = 1;
         elements.userMsgInput.focus();
         scrollSmooth(elements.chatWindow);
         return;
@@ -338,6 +340,7 @@ async function sendMessage(getEngine, config, elements, state) {
     elements.userMsgInput.value = "";
     state.isWaitingForReply = true;
     elements.sendMsgBtn.disabled = true;
+    document.getElementById("send-msg-btn").style.opacity = 0.6;
     
     // test animation
     const selectedCard = document.querySelector(".card-selected");
@@ -360,6 +363,7 @@ async function sendMessage(getEngine, config, elements, state) {
         // enable user input again
         state.isWaitingForReply = false;
         elements.sendMsgBtn.disabled = false;
+        document.getElementById("send-msg-btn").style.opacity = 1;
         elements.userMsgInput.focus();
         scrollSmooth(elements.chatWindow);
         selectedCard.classList.replace("wiggle-animation", "floating-animation");
