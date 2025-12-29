@@ -142,6 +142,32 @@ const advisorPrompts = {
         openMessage: "Let's separate what you know from what you're assuming. Tell me where to begin.",
     },
 };
+const help = {
+    instructions: [
+        "How to use this space:",
+        "Begin by selecting an advisor from the deck.",
+        "Each persona is shaped by an archetype from the deck of tarot.",
+        "They have a unique and distinct voice, offering a lens of perspective for your reflections.",
+        "You may invite them to aid you in your thinking, as a form of Council.",
+        "By posing questions or thoughts into this space, your advisors will respond in character, helping you reflect, reframe, or go deeper.",
+    ],
+    technical: [
+        "Technical help:",
+        "The first time that you consult your council, they will need time to gather in order to answer your call.",
+        "Please allow some time for the advisor personas to be loaded into this space, as your browser acts as the conduit for their voice.",
+        "Once they have assembled for the first time, further vists back to this space will only require a short wait.",
+        "If you need help or a reminder of these instructions, enter the message:",
+        ">help",
+        "into the window",
+        "You may also enter the message:",
+        ">prompt",
+        "if you need some inspiration.",
+        "Finally if you have any other problems, please write to me through our contact page.",
+    ],
+    inspiration: [
+        "Try posing some of these questions to an advisor:",
+    ],
+};
 let messages = [];
 
 // WEBLLM helpers
@@ -255,11 +281,45 @@ function characterDelay(character) {
     return 30;
 }
 
+async function displayHelpMessage(elements, command) {
+    const map = {
+        ">help": help.technical,
+        ">instructions": help.instructions,
+        ">inspiration": help.inspiration,
+    };
+
+    const messages = map[command];
+    if (!messages) return;
+
+    for (const msg of messages) {
+        const bubble = createChatBubble(elements, ["advisor-msg", "advisor-help"], msg);
+
+        await sleep(120);
+        bubble.classList.add("visible)");
+        await sleep(1200);
+    }
+}
+
 // WEBLLM features
 async function sendMessage(getEngine, config, elements, state) {
     // return if user message is blank
     const message = elements.userMsgInput.value.trim();
     if (!message) return;
+
+    // allow user to input commands to receive help messages
+    if (message === ">help" || message === ">instructions" || message === ">inspiration") {
+        elements.userMsgInput.value = "";
+        state.isWaitingForReply = true;
+        elements.sendMsgBtn.disabled = true;
+
+        await displayHelpMessage(elements, message);
+
+        state.isWaitingForReply = false;
+        elements.sendMsgBtn.disabled = false;
+        elements.userMsgInput.focus();
+        scrollSmooth(elements.chatWindow);
+        return;
+    }
 
     if (!state.currentAdvisor) {
         const errorMessage = document.createElement("p");
