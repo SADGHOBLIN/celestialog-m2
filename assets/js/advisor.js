@@ -342,7 +342,19 @@ async function sendMessage(getEngine, config, elements, state) {
     elements.sendMsgBtn.disabled = true;
     document.getElementById("send-msg-btn").style.opacity = 0.6;
     
-    // test animation
+    // remove hints to remove clutter from chat window
+    const hints = document.querySelectorAll(".advisor-help");
+    if (hints.length) {
+        console.log("hints is firing");
+        for (const hint of hints) {
+            hint.classList.remove("visible");
+        }
+        await sleep(500);
+        hints.forEach (hint => hint.remove());
+        scrollSmooth(elements.chatWindow);
+    }
+    
+    // play animation to indicate to user that "advisor is thinking"
     const selectedCard = document.querySelector(".card-selected");
     selectedCard.classList.replace("floating-animation", "wiggle-animation");
 
