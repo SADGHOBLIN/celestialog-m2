@@ -166,19 +166,59 @@ async function createEngine(config) {
 }
 
 // submit user inputted message to the language model and await a reply
-async function getReply (getEngine, config, userText) {
+async function getReply (getEngine, config, userText, advisorEl) {
     const engine = await getEngine(config);
 
     messages.push({role: "user", content: userText});
 
-    const reply = await engine.chat.completions.create({
+    const chunks = await engine.chat.completions.create({
         messages,
         temperature: 1.0,
+        stream: true,
     });
 
-    const assistantMessage = reply.choices[0].message.content;
-    messages.push({role: "assistant", content: assistantMessage});
-    return assistantMessage;
+    let reply = "";
+
+    // snippet from ChatGPT, streams LLM responses with a buffered typing effect
+    let buffer = [];
+    let typing = false;
+
+    async function typeLoop() {
+        typing = true;
+
+        while (buffer.length) {
+            const character = buffer.shift();
+            reply += character;
+            advisorEl.textContent = reply;
+            await sleep(characterDelay(character));
+        }
+        typing = false;
+    }
+
+    // amended snippet from WebLLM docs for 'streaming chat completion'
+    for await (const chunk of chunks) {
+        const token = chunk.choices[0]?.delta.content;
+        if (!token) {
+            continue;
+        }
+
+        buffer.push(...token);
+
+        if (!typing) {
+            typeLoop(); 
+        }
+
+        scrollSmooth(advisorEl.parentElement);
+    }
+
+    while (typing || buffer.length) {
+            await sleep(12);
+        }
+    // end of referenced code snippets
+
+    advisorEl.textContent = reply;
+    messages.push({ role: "assistant", content: reply});
+    return reply;
 }
 
 // fill advisor chat window with appropriate messages
@@ -203,6 +243,16 @@ function scrollSmooth(scrollToLocation) {
         top: scrollToLocation.scrollHeight,
         behavior: "smooth"
     });
+}
+// control typing speed, and delay for punctuation
+function sleep(ms) {
+    return new Promise(resolve => setTimeout(resolve, ms));
+}
+function characterDelay(character) {
+    if (".!?".includes(character)) return 120;
+    if (",;:".includes(character)) return 60;
+    if (character === "/n") return 180;
+    return 30;
 }
 
 // WEBLLM features
@@ -239,8 +289,7 @@ async function sendMessage(getEngine, config, elements, state) {
 
         // display advisor message inside chat window
         const advisor = createChatBubble(elements, ["advisor-msg", "loading"], "Advisor is thinking...");
-        const reply = await getReply(getEngine, config, message);
-        advisor.textContent = reply;
+        await getReply(getEngine, config, message, advisor);
         advisor.classList.remove("loading");
 
     } catch (error) {
@@ -271,7 +320,7 @@ function chooseAdvisorCard(card, elements, state) {
         state.currentCard.classList.replace("card-selected", "card-in-deck");
         state.currentCard.classList.remove("floating-animation");
         tarotImages.forEach(img => img.classList.toggle("hidden"));
-        document.querySelector(".first-msg").innerText = "...";
+        document.querySelector(".first-msg").innerText = "Please select a persona from the available tarot cards. They will offer you guidance to aid you in your reflections.";
 
         state.isDeckIdle = true;
         state.currentAdvisor = "";
