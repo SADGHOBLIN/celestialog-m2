@@ -2,8 +2,15 @@
 @import url('https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&display=swap'); 
 :root {
     --primary-font: "DM Sans";
-    --lg-text: 24px;
-    --sm-text: 12px;
+    --base-font-size: 18px;
+    --reg-weight: 400;
+    --bold-weight: 600;
+    --h1-text: 5.61rem;
+    --h2-text: 4.209rem;
+    --h4-text: 2.369rem;
+    --h6-text: 1.333rem;
+    --p-text: 1rem;
+    --sm-text: 0.75rem;
 
     --text: #dcd4ee;
     --text-light: #dcd4ee80;
@@ -21,26 +28,63 @@
 *::before,
 *::after {
     box-sizing: border-box;
-}
-* {
     margin: 0;
     padding: 0;
-    font: inherit;
+}
+html, body {
+    font-size: var(--base-font-size);
+    scrollbar-width: thin;
+    scrollbar-color: var(--p-color) var(--p-surface);
 }
 body {
     font-family: var(--primary-font), sans-serif;
-    font-size: 18px;
-    font-weight: 400;
+    font-weight: --reg-weight;
+    line-height: 1.6;
 
     background-color: var(--bg);
     color: var(--text);
 }
-/* SCROLL BAR */
-/* firefox */
-html, body {
-    scrollbar-width: thin;
-    scrollbar-color: var(--p-color) var(--p-surface);
+/* FORM ELEMENTS */
+input,
+textarea,
+button,
+select {
+    font-family: inherit;
+    font-size: inherit;
 }
+/* BUTTONS */
+button {
+    font-family: var(--primary-font), sans-serif;
+    font-size: var(--sm-text);
+    color: var(--text);
+    background-color: var(--p-transparent);
+    border-radius: 1rem;
+
+    padding: 0.25rem;
+}
+.big-btn {
+    padding: 1rem 0.25rem;
+    width: 90%;
+}
+.btn-cta {
+    color: var(--bg);
+    background-color: var(--accent);
+    width: 60px;
+    height: 80px;
+}
+.btn-small {
+    color: var(--text);
+    width: 60px;
+    height: 60px;
+}
+.lg-text {
+    font-size: var(--h6-text);
+    letter-spacing: -1px;
+}
+.sm-text {
+    font-size: var(--sm-text);
+}
+/* SCROLL BAR */
 /* chrome, edge, safari */
 ::-webkit-scrollbar {
     width: 8px;
@@ -52,43 +96,9 @@ html, body {
     background-color: var(--p-color);
     border-radius: 1rem;
 }
-/* BUTTONS */
-button {
-    border-radius: 1rem;
-    padding: .5rem;
-    background-color: var(--p-transparent);
-    color: var(--text);
-    font-size: 14px;
-}
-.big-btn {
-    padding: 1rem;
-    width: 90%;
-    background-color: var(--p-transparent);
-}
-
-.btn-cta {
-    background-color: var(--accent);
-    color: black;
-    width: 60px;
-    height: 80px;
-}
-
-.btn-small {
-    color: var(--text);
-    width: 60px;
-    height: 60px;
-    font-weight: 200;
-}
-
-.lg-text {
-    font-size: var(--lg-text);
-    letter-spacing: -1px;
-}
-.sm-text {
-    font-size: var(--sm-text);
-}
 /* ---------------------------------------------------------------------------- */
 /* Site-wide content */
+/* ---------------------------------------------------------------------------- */
 #nav {
     display: none;
     height: 5vh;
@@ -115,9 +125,9 @@ button {
     height: 100%;
     width: 80vw;
 }
-
 /* ---------------------------------------------------------------------------- */
 /* INDEX.html */
+/* ---------------------------------------------------------------------------- */
 .landing-img {
     background-color: rgb(0 0 255 / 0.2) !important;
 }
@@ -126,11 +136,9 @@ button {
     order: 1;
     z-index: 999;
 }
-
 /* ---------------------------------------------------------------------------- */
-/* JOURNAL SECTION - IN DEVELOPMENT */
-
-/* Spans entire journal.html page */
+/* JOURNAL.html PAGE */
+/* ---------------------------------------------------------------------------- */
 .section-wrapper.journal-pg {
     height: 94vh;
 }
@@ -149,17 +157,14 @@ button {
     justify-content: flex-end;
     align-items: flex-end;
     gap: 0.25rem;
+    margin: 0 0.25rem 2rem 0rem;
     order: -1;
-    margin-bottom: 2rem;
-    margin-right: 0.5rem;
 }
 
 /* main note editor, col-2 */
 .col-2 {
     height: 100%;
-    width: 50%;
-    max-width: 600px;
-    min-width: 320px;
+    width: clamp(320px, 50%, 600px);
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -168,13 +173,12 @@ button {
 /* persona cards, col-3 */
 .col-3 {
     height: 100%;
-    width: 20%;
-    max-width: 250px;
+    width: clamp(150px, 20%, 250px);
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    margin-left: 3.5rem;
+    margin-left: 5rem;
     gap: 0.25rem;
     padding: 1rem;
     border-radius: 1rem 1rem 0 0;
@@ -206,7 +210,8 @@ button {
 
 /* MOON INFO */
 .moon-info {
-    /* padding: 1rem; */
+    height: auto;
+    padding: 0 0.25rem 0.5rem 0.25rem;
     background-color: var(--p-surface);
     border-radius: 1rem;
     display: flex;

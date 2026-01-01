@@ -249,7 +249,7 @@ async function getReply (getEngine, config, userText, advisorEl) {
 
 // fill advisor chat window with appropriate messages
 function createChatBubble(elements, classList, message) {
-    const newMessage = document.createElement("div");
+    const newMessage = document.createElement("p");
 
     if (Array.isArray(classList)) {
         newMessage.classList.add(...classList);

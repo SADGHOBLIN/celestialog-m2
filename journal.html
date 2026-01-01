@@ -8,11 +8,9 @@
     <!-- meta keywords -->
     <title>Journal | Celestialog</title>
     <!-- favicon -->
-    <!-- CSS: bootstrap / custom -->
-    <link
-      rel="stylesheet"
-      href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined"
-    />
+    <!-- Google icons css -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined"/>
+    <!-- Custom css -->
     <link rel="stylesheet" href="assets/css/style.css" />
   </head>
 
@@ -29,60 +27,64 @@
       </ul>
     </div>
 
-    <!-- Journal app window -->
-     <div class="section-wrapper journal-pg wireframe">
-      <div class="section-container journal-pg wireframe">
+    <!-- Main journal app -->
+     <div class="section-wrapper journal-pg">
+      <div class="section-container journal-pg">
 
-        <!-- Note Taking UI -->
+        <!-- NOTE EDITOR, col-2 -->
         <div id="note-editor" data-note-id="" class="col-2">
-          <!-- note editor heading section -->
           <div class="note-editor-container">
+
+            <!-- Note editor, heading section  -->
             <div class="note-header">
+              <!-- journal display title and date -->
               <div class="title-container">
                 <label for="note-title"></label>
                 <input id="note-title" type="text" placeholder="Journal Title" autocomplete="off">
                 <p id="note-date"></p>
               </div>
-
+              <!-- journal display moon phase with icon -->
               <div class="moon-container">
-                <img
-                  src=""
-                  alt="A symbol of the moon"
-                  class="moon-symbol"
-                />
+                <img src="" alt="An icon of the moon" class="moon-symbol"/>
                 <p id="note-moon"></p>
               </div>
             </div>
-            <!-- note editor input section -->
+
+            <!-- Note editor, user input area -->
             <textarea
-              name="note-content"
               id="note-content"
+              name="note-content"
               placeholder="Begin your writing..."
+              autocomplete="off"
               required
             ></textarea>
           </div>
         </div>
 
-        <!-- Chat Advisor UI -->
+        <!-- CHAT ADVISOR, col-2 -->
         <div id="advisor" class="col-2 hidden">
           <div class="chat-wrapper">
 
+            <!-- Chat Advisor, heading section -->
             <div class="chat-header">
               <h2 id="advisor-name">Select an advisor</h2>
             </div>
 
+            <!-- Chat Advisor, chat window -->
             <div id="chat-body">
-              <div class="advisor-msg first-msg">
+              <p class="advisor-msg first-msg">
                 Hello, I will await your presence. Please consult me when you are ready...
-              </div>
+              </p>
             </div>
 
+            <!-- Chat Advisor, user input area -->
             <div class="user-input-box">
               <textarea
-                name="user-msg-input"
                 id="user-msg-input"
+                name="user-msg-input"
                 placeholder="Type > if you need guidance"
                 autocomplete="off"
+                required
               ></textarea>
               <div id="command-hint" class="command-hint">
                 how  >system >idea
@@ -93,51 +95,39 @@
           </div>
         </div>
 
-
-        <!-- note editor buttons, col-1 -->
+        <!-- Note Editor buttons, col-1 -->
         <div class="note-buttons col-1">
-          <button id="save-note" type="submit" class="btn-cta">
+          <button id="save-note" type="submit" class="btn-cta" aria-label="Save current note">
             <span class="material-symbols-outlined">save_as</span><br>
             save
           </button>
-
-          <button id="create-note" class="btn-small">
+          <button id="create-note" class="btn-small" aria-label="Create a new blank note">
             <span class="material-symbols-outlined">new_window</span><br>
             new
           </button>
-
-          <button id="view-notes" class="btn-small">
+          <button id="view-notes" class="btn-small" aria-label="View all saved notes">
             <span class="material-symbols-outlined">folder_open</span><br>
             open
           </button>
-
-          <button id="view-recycle-bin" class="btn-small">
+          <button id="view-recycle-bin" class="btn-small" aria-label="View the recycle bin">
             <span class="material-symbols-outlined">delete</span><br>
             bin
           </button>
-          <!-- Debugging - remove later -->
-          <!-- <button id="clear-notes">Delete all notes</button> -->
         </div>
 
-        <!-- advisor personas section, col-3 -->
+        <!-- ADVISOR SIDE PANNEL, col-3 -->
          <div id="personas" class="col-3">
 
-          <div class="moon-info wireframe">
-            <img
-                  src=""
-                  alt="An illustration of the moon"
-                  class="moon-illustration"
-                />
+          <!-- Todays Moon Information section -->
+          <div class="moon-info">
+            <img src="" alt="An illustration of the moon" class="moon-illustration"/>
             <p id="moon-phase-data" class="moon-info-data lg-text"></p>
             <p id="current-date-data" class="moon-info-data sm-text"></p>
             <p id="moon-visibility-data" class="moon-info-data sm-text"></p>
           </div>
-          <!-- <div class="persona-title wireframe">
-            <p id="deck__title">The Self</p>
-          </div> -->
 
-          <div class="persona-cards wireframe">
-            <!-- TODO: ability to swipe through personas to "select" -->
+          <!-- Select Current Advisor section -->
+          <div class="persona-cards">
              <div id="deck" class="deck--idle">
               <div class="card card-left card-in-deck" data-advisor-name="The Alchemist">
                 <button class="card-hitbox" aria-label="Select 'The Alchemist' card"></button>
@@ -158,13 +148,13 @@
             <p class="deck__instruction lg-text">Select advisor</p>
           </div>
 
+          <!-- Buttons to toggle between Note Editor and Chat Advisor -->
           <div class="toggle-windows">
-            <div class="options-header wireframe">
+            <div class="options-header">
               <button id="use-journal" class="big-btn">Write in Journal</button>
               <button id="use-advisor" class="big-btn">Talk to Advisor</button>
             </div>
           </div>
-
          </div>
 
       </div>
@@ -175,20 +165,16 @@
       <div class="section-container">2nd section</div>
     </div>
 
-    <!-- View notes modal -->
+    <!-- OPEN NOTES MODAL -->
     <div id="notes-container-modal" class="modal-overlay">
       <div id="modal-element" class="modal">
-
         <div class="modal-header">
           <h3 id="modal-title">Title</h3>
         </div>
-
         <div id="modal-body"></div>
-
         <div id="modal-footer">
           <button id="close-modal">Close Modal</button>
         </div>
-
       </div>
     </div>
 
