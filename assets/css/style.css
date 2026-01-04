@@ -250,83 +250,36 @@ button {
     transition: transform 1s cubic-bezier(0.22, 1, 0.36, 1);
 }
 .deck--selected ~ .deck__instruction {
-    transform: translateY(70px);
+    transform: translateY(180%);
 }
 
 /* Deck States - changes depending on whether user has selected a card from the deck */
-.deck--idle { 
+.deck--idle,
+.deck--selected {
+    height: 80%;
+    width: 100%;
     position: relative;
-    align-self: center;
     margin-bottom: 1rem;
-    height: 300px;
-    width: 150px;
-    --hover-y: -25px;
+    display: flex;
+    justify-content: center;
+    align-items: flex-end;
+}
+.deck--idle { 
+    --hover-y: -10%;
     --hover-r: 0deg;
     --hover-scale-mult: 1.6;
 }
 .deck--selected {
-    position: relative;
-    margin-bottom: 1rem;
-    height: 300px;
-    width: 150px;
-    --hover-y: 175px;
+    --hover-y: 55%;
     --hover-r: 0deg;
-    --hover-scale-mult: 1.15;
+    --hover-scale-mult: 1.05;
 }
 
-/* Card values - .card handles variables related to geometry, state, motion */
-.card {
-    height: 240px;
-    width: 140px;
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    border-radius: 0.5rem;
-    transform-origin: center;
-    cursor: pointer;
-    --base-x: 0px;
-    --base-y: 0px;
-    --base-r: 0deg;
-    --base-s: 0.5;
-
-    --offset-x: 0px;
-    --offset-y: 0px;
-    --offset-r: 0deg;
-    --scale-mult: 1;
-
-    --on-load-x: 0px;
-    --on-load-y: 0px;
-    --on-load-r: 0deg;
-    --on-load-scale-mult: 1;
-    translate:
-        calc(var(--base-x) + var(--offset-x) + var(--on-load-x))
-        calc(var(--base-y) + var(--offset-y) + var(--on-load-y));
-    rotate: calc(var(--base-r) + var(--offset-r) + var(--on-load-r));
-    scale: calc(var(--base-s) * var(--scale-mult) * var(--on-load-scale-mult));
-}
-.card-left {
-    /* background-color: blue; */
-    transition-delay: 0.09s;
-    --base-x: -80px;
-    --base-r: -5deg;
-}
-.card-center {
-    /* background-color: red; */
-    transition-delay: 0.03s;
-    --base-x: 8px;
-    --base-y: -12px;
-    z-index: 1;
-}
-.card-right {
-    /* background-color: green; */
-    transition-delay: 0.07s;
-    --base-x: 80px;
-    --base-r: 7deg;
-}
+/* Card individual components */
 /* handles interactivity triggers */
 .card-hitbox {
     position: absolute;
-    inset: -25px -15px -50px -15px;
+    inset: -0.25rem;
     background: transparent;
     border: none;
     cursor: pointer;
@@ -334,35 +287,85 @@ button {
 }
 /* contains the card image visuals */
 .card-visual {
-    width: 100%;
-    height: 100%;
+    width: inherit;
+    height: inherit;
     object-fit: contain;
+    display: block;
     border-radius: inherit;
     border: 2px solid var(--text);
     pointer-events: none;
 }
+ /* Card element values - .card handles variables related to geometry, state, motion */
+.card {
+    position: absolute;
+    left: 50%;
+    bottom: 0;
+    height: 240px;
+    width: 140px;
+    border-radius: 0.5rem;
+    transform-origin: center;
+    cursor: pointer;
 
-/* Card offsets - change cards dependent on current state */
+    /* shared anchor */
+    --anchor-x: -50%;
+    --anchor-y: 0%;
+
+    /* structure */
+    --base-x: 0%;
+    --base-y: 0%;
+    --base-r: 0deg;
+    --base-s: 0.5;
+
+    /* interaction */
+    --offset-x: 0%;
+    --offset-y: 0%;
+    --offset-r: 0deg;
+    --scale-mult: 1;
+
+    /* on-load animation */
+    --on-load-x: 0%;
+    --on-load-y: 0%;
+    --on-load-r: 0deg;
+    --on-load-scale-mult: 1; 
+
+    translate:
+        calc(var(--anchor-x) + var(--base-x) + var(--offset-x) + var(--on-load-x))
+        calc(var(--anchor-y) + var(--base-y) + var(--offset-y) + var(--on-load-y));
+    rotate: calc(var(--base-r) + var(--offset-r) + var(--on-load-r));
+    scale: calc(var(--base-s) * var(--scale-mult) * var(--on-load-scale-mult));
+}
+.card-left {
+    transition-delay: 0.09s;
+    --base-x: -50%;
+    --base-r: -5deg;
+}
+.card-center {
+    transition-delay: 0.03s;
+    --base-x: 0rem;
+    --base-y: -0.75rem;
+    z-index: 1;
+}
+.card-right {
+    transition-delay: 0.07s;
+    --base-x: 50%;
+    --base-r: 7deg;
+}
+
+/* Card offsets - change individual cards dependent on current state */
 /* deck size */
 .deck--idle .card-in-deck {
     --scale-mult: 1.6;
 }
 .deck--selected .card-in-deck {
-    --offset-y: 175px;
-    --scale-mult: 1;
+    --offset-y: 55%;
+    --scale-mult: 0.9;
 }
-/* when deck is smaller, tighten gap between card elements */
-.deck--selected .card-left {
-    --base-x: -45px;
-}
-.deck--selected .card-right {
-    --base-x: 60px;
-}
+
 /* user selected card takes main focus of container */
 .deck--selected .card-selected {
     --base-r: 0deg;
-    --base-x: 8px;
-    --offset-y: -45px;
+    --base-x: 0px;
+    --base-y: -28%;
     --scale-mult: 2;
     z-index: 3;
     filter: saturate(1.05);
@@ -374,14 +377,16 @@ button {
 /* Card transition animations */
 /* initial card animation on page load */
 .card:not(.is-loaded) {
-    --on-load-x: calc(var(--base-x) * -1.05);
-    --on-load-y: calc(var(--base-y) * -1);
-    --on-load-r: calc(var(--base-r) * -1.4);
-    --on-load-scale-mult: 1.4;
+    --on-load-x: calc(var(--base-x) * -1);
+    --on-load-r: calc(var(--base-r) * -1);
+    --on-load-scale-mult: 0.4;
+}
+.card:not(.is-loaded) > .card-visual {
+    filter: brightness(0.3);
 }
 .card.is-loaded {
-    --on-load-x: 0px;
-    --on-load-y: 0px;
+    --on-load-x: 0%;
+    --on-load-y: 0%;
     --on-load-r: 0deg;
     --on-load-scale-mult: 1; 
 }
@@ -833,7 +838,7 @@ textarea, input {
 
 @keyframes floating {
     0%, 100% { transform: translateY(0); }
-    50% { transform: translateY(10px); }
+    50% { transform: translateY(3%); }
 }
 @keyframes wiggle {
     0%, 100% { transform: rotate(0deg); }
@@ -849,7 +854,7 @@ textarea, input {
     will-change: transform;
 }
 .wiggle-animation {
-    animation: wiggle 2.5s ease-in-out infinite;
+    animation: wiggle 2s ease-in-out infinite;
 }
 
 .hidden {
