@@ -120,10 +120,12 @@
 
           <!-- Todays Moon Information section -->
           <div class="moon-info">
-            <img src="" alt="An illustration of the moon" class="moon-illustration"/>
-            <p id="moon-phase-data" class="moon-info-data lg-text"></p>
-            <p id="current-date-data" class="moon-info-data sm-text"></p>
-            <p id="moon-visibility-data" class="moon-info-data sm-text"></p>
+            <div class="today-moon">
+              <img src="" alt="An illustration of the moon" class="moon-illustration"/>
+              <p id="moon-phase-data" class="today-phase"></p>
+            </div>
+            <p id="current-date-data" class="today-date"></p>
+            <p id="moon-visibility-data" class="today-visibility"></p>
           </div>
 
           <!-- Select Current Advisor section -->
@@ -145,7 +147,7 @@
                 <img src="assets/images/tarot/king-of-swords-gold.webp" alt="King of swords tarot card" class="card-visual hidden">
               </div>
             </div>
-            <p class="deck__instruction lg-text">Select advisor</p>
+            <p class="deck__instruction">Select advisor</p>
           </div>
 
           <!-- Buttons to toggle between Note Editor and Chat Advisor -->

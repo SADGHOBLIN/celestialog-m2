@@ -106,8 +106,8 @@ async function displayMoonData(config, elements, moonImages) {
     const isVisible = checkMoonVisibility(moonrise, moonset);
 
     elements.moonVisibility.textContent = isVisible
-        ? `Visibility: ${moonrise} - ${moonset}`
-        : `Next moonrise: ${moonrise}`;
+        ? `${moonrise} - ${moonset}`
+        : `Moonrise at ${moonrise}`;
     
 
     // DEBUGGING:
