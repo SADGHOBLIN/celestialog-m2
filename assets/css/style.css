@@ -68,7 +68,7 @@ button {
     display: flex;
     justify-content: center;
     align-items: center;
-    gap: 0.25rem;
+    gap: 0.5rem;
 }
 .btn-cta {
     color: var(--bg);
@@ -386,6 +386,7 @@ textarea, input {
     flex-direction: column;
     align-items: center;
 
+    width: 80%;
     padding: 0.25rem 1rem;
 
     background-color: var(--p-surface);
@@ -545,7 +546,7 @@ textarea, input {
 .deck--selected .card-selected {
     --base-r: 0deg;
     --base-x: 0px;
-    --base-y: -28%;
+    --base-y: -32%;
     --scale-mult: 2;
     z-index: 3;
     filter: saturate(1.05);
@@ -828,4 +829,33 @@ textarea, input {
 }
 .hidden {
     display: none;
+}
+
+/* ---------------------------------------------------------------------------- */
+/* MEDIA QUERIES */
+@media screen and (max-width: 1440px) {
+    .section-container.journal-pg {
+        width: 94vw;
+    }
+}
+
+@media screen and (max-width: 1024px) {
+    .section-container.journal-pg {
+        width: 100vw;
+    }
+    .col-3 {
+        width: clamp(140px, 22%, 220px);
+        margin-left: 1.5rem;
+        padding: 0.25rem;
+    }
+    .toggle-windows {
+        width: 100%;
+        padding: 0.25rem 0;
+    }
+    .big-btn {
+        width: min(100%, 160px);
+        display: flex;
+        gap: 0.2rem;
+        padding: 0.25rem;
+    }
 }
