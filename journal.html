@@ -124,8 +124,10 @@
               <img src="" alt="An illustration of the moon" class="moon-illustration"/>
               <p id="moon-phase-data" class="today-phase"></p>
             </div>
-            <p id="current-date-data" class="today-date"></p>
-            <p id="moon-visibility-data" class="today-visibility"></p>
+            <div class="today-data">
+              <p id="current-date-data" class="today-date"></p>
+              <p id="moon-visibility-data" class="today-visibility"></p>
+            </div>
           </div>
 
           <!-- Select Current Advisor section -->
@@ -146,22 +148,20 @@
                 <img src="assets/images/tarot/king-of-swords-purple.webp" alt="King of swords tarot card" class="card-visual">
                 <img src="assets/images/tarot/king-of-swords-gold.webp" alt="King of swords tarot card" class="card-visual hidden">
               </div>
+              <p class="deck__instruction">Select advisor</p>
             </div>
-            <p class="deck__instruction">Select advisor</p>
           </div>
 
           <!-- Buttons to toggle between Note Editor and Chat Advisor -->
           <div class="toggle-windows">
-            <div class="options-header">
-              <button id="use-journal" class="big-btn">
-                <span class="material-symbols-outlined btn-icon" aria-hidden="true">book_4</span>
-                <span class="btn-text">Write in Journal</span>
-              </button>
-              <button id="use-advisor" class="big-btn">
-                <span class="material-symbols-outlined btn-icon" aria-hidden="true">psychology_alt</span>
-                <span class="btn-text">Talk to Advisor</span>
-              </button>
-            </div>
+            <button id="use-journal" class="big-btn">
+              <span class="material-symbols-outlined btn-icon" aria-hidden="true">book_4</span>
+              <span class="btn-text">Write in Journal</span>
+            </button>
+            <button id="use-advisor" class="big-btn">
+              <span class="material-symbols-outlined btn-icon" aria-hidden="true">psychology_alt</span>
+              <span class="btn-text">Talk to Advisor</span>
+            </button>
           </div>
          </div>
 
