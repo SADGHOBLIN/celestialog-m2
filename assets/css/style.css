@@ -149,7 +149,9 @@ button {
     flex-direction: row;
     justify-content: center;
 }
-
+.col-merge {
+    display: contents;
+}
 /* note editor buttons, col-1 container */
 .col-1 {
     height: 100%;
@@ -554,6 +556,9 @@ textarea, input {
 .deck--idle .card:not(:has(.card-hitbox:hover)) {
     filter: brightness(0.65) saturate(0.7);
 }
+.deck--selected .card-in-deck {
+    filter: brightness(0.65) saturate(0.7);
+}
 
 /* Card transition animations */
 /* initial card animation on page load */
@@ -858,4 +863,186 @@ textarea, input {
         gap: 0.2rem;
         padding: 0.25rem;
     }
+}
+
+@media screen and (max-width: 768px) {
+    /* main journal containers */
+    .section-wrapper.journal-pg {
+        height: auto;
+    }
+    .section-container.journal-pg {
+        flex-direction: column;
+    }
+    /* main columns override */
+    .col-merge {
+        height: 74vh;
+        width: 100%;
+        display: flex;
+        justify-content: center;
+        order: 3;
+    }
+    .col-1 {
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-end;
+        margin: 0;
+        margin-right: 2px;
+        padding: 0;
+        gap: 0.25rem;
+    }
+    .col-2 {
+        height: 100%;
+        width: 71%;
+        order: 3;
+        margin-right: 3rem;
+    }
+    .col-3 {
+        display: contents;
+        border: none;
+    }
+
+    /* main moon widget */
+    .moon-info {
+        order: 1;
+        height: 14vh;
+        margin: 0;
+        margin-bottom: 0.5rem;
+    }
+    .today-moon {
+        width: auto;
+    }
+
+    /* toggle between advisor and journal */
+    .col-3 .toggle-windows {
+        display: flex;
+        flex-direction: row;
+        width: 72%;
+        order: 2;
+    }
+    .big-btn {
+        padding: 0.25rem 0;
+        flex-grow: 1;
+    }
+
+    /* note editor buttons */
+    .col-1 button {
+        height: 50px;
+        width: 50px;
+        font-size: 0.75rem;
+        padding: 0.25rem;
+    }
+    .col-1 .btn-icon {
+        font-size: 1rem;
+    } 
+
+    /* note editor input UI */
+    .note-header {
+        margin: 0;
+    }
+    .title-container {
+        height: 100%;
+        margin: 0;
+        padding: 0;
+    }
+    #note-title {
+        height: 40%;
+        font-size: var(--p-text);
+    }
+    #note-date {
+        font-size: 0.75rem;
+    }
+    #note-moon {
+        font-size: 0.75rem;
+        margin-top: 0.5rem;
+        margin-bottom: 0;
+    }
+    .moon-container img {
+        height: 48px;
+        width: 48px;
+    }
+    #note-content {
+        margin: 0.5rem 0;
+    }
+
+    /* chat advisor UI */
+     .chat-header {
+        margin: 0;
+        padding: 0.5rem 1rem;
+        box-shadow: 0 4px 8px rgba(21, 21, 33, 0.3);
+        z-index: 2;
+     }
+     #advisor-name {
+        font-size: var(--p-text);
+        text-align: center;
+     }
+     .user-msg {
+        margin-right: 1rem;
+     }
+     .advisor-msg {
+        margin-left: 1rem;
+     }
+
+    /* tarot cards */
+    .persona-cards {
+        position: fixed;
+        bottom: 0;
+        order: 5;
+    }
+    #deck {
+        min-height: 0;
+    }
+    .card {
+        height: 16vh;
+        width: auto;
+        bottom: 0;
+        --base-y: 4rem;
+    }
+    .card-left,
+    .card-right {
+        --base-y: 5rem;
+    }
+    .deck--selected .card-in-deck {
+        --offset-y: 0%;
+        --scale-mult: 1.2;
+    }
+    .deck--selected .card-selected {
+        --base-r: 0deg;
+        --base-x: 0px;
+        --offset-y: -20%;
+        --offset-x: 43vw;
+        --scale-mult: 1.95;
+        z-index: 3;
+        filter: saturate(1.05);
+    }
+    .deck__instruction {
+        display: none;
+        font-size: var(--h6-text);
+        transform: translateY(0%);
+    }
+    .deck--selected .deck__instruction {
+        transform: translateY(0%);
+    }
+
+    /* saved notes */
+    .note {
+        max-width: 150px;
+    }
+}
+
+
+/* test */
+@media (max-width: 480px) {
+  .deck__instruction {
+    font-size: 0.85rem;
+  }
+
+  .moon-illustration {
+    width: 56px;
+  }
+
+  .big-btn {
+    padding: 0.4rem;
+    font-size: 0.7rem;
+  }
 }

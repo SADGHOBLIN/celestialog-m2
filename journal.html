@@ -32,7 +32,8 @@
       <div class="section-container journal-pg">
 
         <!-- NOTE EDITOR, col-2 -->
-        <div id="note-editor" data-note-id="" class="col-2">
+        <div class="col-merge">
+          <div id="note-editor" data-note-id="" class="col-2">
           <div class="note-editor-container">
 
             <!-- Note editor, heading section  -->
@@ -59,60 +60,61 @@
               required
             ></textarea>
           </div>
-        </div>
+          </div>
 
         <!-- CHAT ADVISOR, col-2 -->
-        <div id="advisor" class="col-2 hidden">
-          <div class="chat-wrapper">
+          <div id="advisor" class="col-2 hidden">
+            <div class="chat-wrapper">
 
-            <!-- Chat Advisor, heading section -->
-            <div class="chat-header">
-              <h2 id="advisor-name">Select an advisor</h2>
-            </div>
-
-            <!-- Chat Advisor, chat window -->
-            <div id="chat-body">
-              <p class="advisor-msg first-msg">
-                Hello, I will await your presence. Please consult me when you are ready...
-              </p>
-            </div>
-
-            <!-- Chat Advisor, user input area -->
-            <div class="user-input-box">
-              <textarea
-                id="user-msg-input"
-                name="user-msg-input"
-                placeholder="Type > if you need guidance"
-                autocomplete="off"
-                required
-              ></textarea>
-              <div id="command-hint" class="command-hint">
-                how  >system >idea
+              <!-- Chat Advisor, heading section -->
+              <div class="chat-header">
+                <h2 id="advisor-name">Select an advisor</h2>
               </div>
-              <button id="send-msg-btn" class="btn-cta">send</button>
+
+              <!-- Chat Advisor, chat window -->
+              <div id="chat-body">
+                <p class="advisor-msg first-msg">
+                  Hello, I will await your presence. Please consult me when you are ready...
+                </p>
+              </div>
+
+              <!-- Chat Advisor, user input area -->
+              <div class="user-input-box">
+                <textarea
+                  id="user-msg-input"
+                  name="user-msg-input"
+                  placeholder="Type > if you need guidance"
+                  autocomplete="off"
+                  required
+                ></textarea>
+                <div id="command-hint" class="command-hint">
+                  how  >system >idea
+                </div>
+                <button id="send-msg-btn" class="btn-cta">send</button>
+              </div>
+
             </div>
-
           </div>
-        </div>
 
-        <!-- Note Editor buttons, col-1 -->
-        <div class="note-buttons col-1">
-          <button id="save-note" type="submit" class="btn-cta" aria-label="Save current note">
-            <span class="material-symbols-outlined btn-icon" aria-hidden="true">save_as</span>
-            <span class="btn-text">save</span>
-          </button>
-          <button id="create-note" class="btn-small" aria-label="Create a new blank note">
-            <span class="material-symbols-outlined btn-icon" aria-hidden="true">new_window</span>
-            <span class="btn-text">new</span>
-          </button>
-          <button id="view-notes" class="btn-small" aria-label="View all saved notes">
-            <span class="material-symbols-outlined btn-icon" aria-hidden="true">folder_open</span>
-            <span class="btn-text">open</span>
-          </button>
-          <button id="view-recycle-bin" class="btn-small" aria-label="View the recycle bin">
-            <span class="material-symbols-outlined btn-icon" aria-hidden="true">delete</span>
-            <span class="btn-text">bin</span>
-          </button>
+          <!-- Note Editor buttons, col-1 -->
+          <div class="note-buttons col-1">
+            <button id="save-note" type="submit" class="btn-cta" aria-label="Save current note">
+              <span class="material-symbols-outlined btn-icon" aria-hidden="true">save_as</span>
+              <span class="btn-text">save</span>
+            </button>
+            <button id="create-note" class="btn-small" aria-label="Create a new blank note">
+              <span class="material-symbols-outlined btn-icon" aria-hidden="true">new_window</span>
+              <span class="btn-text">new</span>
+            </button>
+            <button id="view-notes" class="btn-small" aria-label="View all saved notes">
+              <span class="material-symbols-outlined btn-icon" aria-hidden="true">folder_open</span>
+              <span class="btn-text">open</span>
+            </button>
+            <button id="view-recycle-bin" class="btn-small" aria-label="View the recycle bin">
+              <span class="material-symbols-outlined btn-icon" aria-hidden="true">delete</span>
+              <span class="btn-text">bin</span>
+            </button>
+          </div>
         </div>
 
         <!-- ADVISOR SIDE PANNEL, col-3 -->
