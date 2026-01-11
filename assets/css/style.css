@@ -1033,6 +1033,121 @@ textarea, input {
 
 /* test */
 @media (max-width: 480px) {
+    html,
+    body {
+        height: 100%;
+        overflow: hidden;
+    }
+
+    .section-wrapper.journal-pg {
+        height: 100dvh;
+        /* width: 97dvw; */
+        display: flex;
+        overflow: hidden;
+    }
+    .section-container.journal-pg {
+        display: flex;
+        flex: 1;
+        overflow: hidden;
+    }
+
+    /* main columns override */
+    .col-merge {
+        /* height: 70vh;
+        gap: 0; */
+
+        display: flex;
+        flex: 1;
+        overflow: hidden;
+    }
+    .col-2 {
+        flex: 1;
+        overflow: hidden;
+    }
+
+    #note-editor {
+        flex: 1;
+        /* display: flex; */
+        overflow: hidden;
+    }
+
+    .note-editor-container {
+        flex: 1;
+        /* display: flex; */
+        flex-direction: column;
+        overflow: hidden;
+    }
+
+    #note-content {
+        flex: 1;
+        resize: none;
+        overflow-y: auto;
+    }
+
+    .chat-wrapper {
+        flex: 1;
+        flex-direction: column;
+        overflow: hidden;
+    }
+
+    #chat-body {
+        flex: 1;
+        overflow-y: auto;
+    }
+
+    .user-input-box {
+        display: flex;
+        gap: 0.5rem;
+        padding: 0.75rem;
+    }
+
+    textarea {
+        max-height: 40vh;
+        resize: none;
+    }
+
+
+
+
+
+
+    /* old styles */
+    /* .col-1 {
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-end;
+        margin: 0;
+        padding: 0;
+        gap: 0.25rem;
+
+    }
+    .col-2 {
+        width: 80%;
+        order: -1;
+    }
+    #note-editor {
+        margin: 0;
+    }
+    .toggle-windows {
+        gap: 1rem;
+        padding: 0;
+    } */
+    .toggle-windows button {
+        height: 32px;
+        margin: 0;
+    }
+    button .material-symbols-outlined  {
+        font-size: 1rem;
+    }
+
+
+    .note-editor-container {
+        padding: 0.5rem;
+    }
+
+
+
   .deck__instruction {
     font-size: 0.85rem;
   }
