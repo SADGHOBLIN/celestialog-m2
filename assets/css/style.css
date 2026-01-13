@@ -1030,134 +1030,168 @@ textarea, input {
     }
 }
 
-
-/* test */
 @media (max-width: 480px) {
     html,
     body {
         height: 100%;
         overflow: hidden;
     }
-
-    .section-wrapper.journal-pg {
-        height: 100dvh;
-        /* width: 97dvw; */
-        display: flex;
-        overflow: hidden;
+    .deck__instruction {
+        font-size: 0.85rem;
     }
-    .section-container.journal-pg {
-        display: flex;
-        flex: 1;
-        overflow: hidden;
+    .moon-illustration {
+        width: 56px;
     }
-
-    /* main columns override */
-    .col-merge {
-        /* height: 70vh;
-        gap: 0; */
-
-        display: flex;
-        flex: 1;
-        overflow: hidden;
-    }
-    .col-2 {
-        flex: 1;
-        overflow: hidden;
-    }
-
-    #note-editor {
-        flex: 1;
-        /* display: flex; */
-        overflow: hidden;
-    }
-
-    .note-editor-container {
-        flex: 1;
-        /* display: flex; */
-        flex-direction: column;
-        overflow: hidden;
-    }
-
-    #note-content {
-        flex: 1;
-        resize: none;
-        overflow-y: auto;
-    }
-
-    .chat-wrapper {
-        flex: 1;
-        flex-direction: column;
-        overflow: hidden;
-    }
-
-    #chat-body {
-        flex: 1;
-        overflow-y: auto;
-    }
-
-    .user-input-box {
-        display: flex;
+    #modal-body {
+        justify-content: center;
+        margin: 1.5rem 0rem;
         gap: 0.5rem;
-        padding: 0.75rem;
     }
 
-    textarea {
-        max-height: 40vh;
-        resize: none;
+    /* note editor */
+    .note-editor-container {
+        background-color: transparent;
     }
-
-
-
-
-
-
-    /* old styles */
-    /* .col-1 {
-        height: 100%;
-        display: flex;
-        flex-direction: column;
+    /* note editor header section */
+    .note-header {
+        height: auto;
+        margin-bottom: 0.25rem;
+    }
+    #note-title {
+        height: 32px;
+    }
+    .moon-container {
+        width: auto;
         justify-content: flex-end;
+        align-items: flex-end;
+    }
+    .moon-container img {
+        height: 32px;
+        width: 32px;
+    }
+    #note-moon {
+        display: none;
+        visibility: hidden;
         margin: 0;
-        padding: 0;
-        gap: 0.25rem;
+    }
+    /* note editor input section */
+    #note-content {
+        height: 100%;
+        flex-grow: 0;
+    }
 
+    /* note editor buttons */
+    .col-1 {
+        width: 90%;
+        justify-content: center;
+    }
+    .col-1 button {
+        height: 32px;
+        width: 42px;
+    }
+    .col-1 .btn-cta {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 1rem;
+        flex-grow: 1;
+    }
+    .btn-small .btn-text {
+        display: none;
+    }
+    .col-3 .toggle-windows {
+        display: flex;
+        width: 90%;
+    }
+    .toggle-windows .btn-icon {
+        font-size: 1rem;
+        padding: 4px 0;
+    }
+
+    /* chat advisor */
+    .chat-wrapper {
+        width: 90%;
+        padding: 0;
+        background-color: transparent;
+    }
+    .user-input-box {
+        padding: 1rem 0.5rem;
+        font-size: 0.8rem;
+    }
+    .user-msg,
+    .advisor-msg {
+        font-size: 0.8rem;
+    }
+
+    /* tarot cards */
+    .deck--idle,
+    .deck--selected {
+        align-items: center;
+    }
+    .card {
+        height: 14vh;
+        bottom: 50%;
+        --base-x: 0rem;
+        --base-y: 0%;
+        --offset-y: 0%;
+        --base-r: 0deg;
+        --anchor-y: 0%;
+    }
+    .card-left,
+    .card-right {
+        --offset-y: 0rem;
+    }
+    .card-left,
+    .card-left.card-selected {
+        --base-x: -5rem;
+    }
+    .card-right,
+    .card-right.card-selected {
+        --base-x: 5rem;
+    }
+    .deck--idle .card-in-deck {
+        --scale-mult: 1.4;
+    }
+    .deck--selected .card-in-deck {
+        --offset-y: 0%;
+        --scale-mult: 1.2;
+    }
+    .deck--selected .card-selected {
+        --offset-x: 0%;
+        --offset-y: 2rem;
+        --scale-mult: 1.4;
+    }
+    .deck--idle { 
+        --hover-y: 0%;
+        --hover-r: 0deg;
+        --hover-scale-mult: 1.4;
+    }
+    .deck--selected {
+        --hover-y: 0%;
+        --hover-r: 0deg;
+        --hover-scale-mult: 1;
+    }
+
+    /* re-ordering columns */
+    .col-merge {
+        display: contents;
+    }
+    .moon-info {
+        order: 1;
+        margin-top: 0.25rem;
     }
     .col-2 {
-        width: 80%;
-        order: -1;
-    }
-    #note-editor {
+        order: 2;
         margin: 0;
+        margin-top: 1.25rem;
+        width: 100%;
+        height: 55dvh;
     }
-    .toggle-windows {
-        gap: 1rem;
-        padding: 0;
-    } */
-    .toggle-windows button {
-        height: 32px;
-        margin: 0;
+    .col-1 {
+        order: 3;
+        flex-direction: row;
     }
-    button .material-symbols-outlined  {
-        font-size: 1rem;
+    .col-3 .toggle-windows {
+        order: 4;
     }
-
-
-    .note-editor-container {
-        padding: 0.5rem;
-    }
-
-
-
-  .deck__instruction {
-    font-size: 0.85rem;
-  }
-
-  .moon-illustration {
-    width: 56px;
-  }
-
-  .big-btn {
-    padding: 0.4rem;
-    font-size: 0.7rem;
-  }
 }
