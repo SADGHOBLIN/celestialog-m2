@@ -1055,6 +1055,11 @@ textarea, input {
     .note-header {
         height: auto;
         margin-bottom: 0.25rem;
+        justify-content: space-between;
+        gap: 0.5rem;
+    }
+    .title-container {
+        flex-grow: 1;
     }
     #note-title {
         height: 32px;
