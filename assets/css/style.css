@@ -198,6 +198,7 @@ button {
     background-color: var(--p-surface);
     border-radius: 1rem;
     padding: 0 1rem;
+    gap: 0.5rem;
 }
 .note-header {
     height: 10%;
@@ -865,23 +866,34 @@ textarea, input {
 }
 
 @media screen and (max-width: 768px) {
+    html,
+    body {
+        height: 100%;
+        overflow: hidden;
+    }
     /* main journal containers */
     .section-wrapper.journal-pg {
-        height: auto;
+        height: 100dvh;
+        margin-top: 0;
+        overflow: hidden;
     }
     .section-container.journal-pg {
         flex-direction: column;
+        height: 100%;
+        overflow: hidden;
     }
     /* main columns override */
     .col-merge {
-        height: 74vh;
+        height: auto;
         width: 100%;
         display: flex;
         justify-content: center;
         order: 3;
+        min-height: 0;
+        flex-grow: 1;
+        margin-bottom: 12dvh;
     }
     .col-1 {
-        height: 100%;
         display: flex;
         flex-direction: column;
         justify-content: flex-end;
@@ -891,7 +903,7 @@ textarea, input {
         gap: 0.25rem;
     }
     .col-2 {
-        height: 100%;
+        height: auto;
         width: 71%;
         order: 3;
         margin-right: 3rem;
@@ -904,8 +916,7 @@ textarea, input {
     /* main moon widget */
     .moon-info {
         order: 1;
-        height: 14vh;
-        margin: 0;
+        flex: 0 0 auto;
         margin-bottom: 0.5rem;
     }
     .today-moon {
@@ -918,6 +929,7 @@ textarea, input {
         flex-direction: row;
         width: 72%;
         order: 2;
+        flex: 0 0 auto;
     }
     .big-btn {
         padding: 0.25rem 0;
@@ -938,6 +950,8 @@ textarea, input {
     /* note editor input UI */
     .note-header {
         margin: 0;
+        height: auto;
+        flex: 0 0 auto;
     }
     .title-container {
         height: 100%;
@@ -962,6 +976,8 @@ textarea, input {
     }
     #note-content {
         margin: 0.5rem 0;
+        min-height: 0;
+        flex-grow: 1;
     }
 
     /* chat advisor UI */
@@ -987,19 +1003,26 @@ textarea, input {
         position: fixed;
         bottom: 0;
         order: 5;
+        height: 14dvh;
     }
     #deck {
         min-height: 0;
     }
     .card {
-        height: 16vh;
+        height: max(16vh, 120px);
         width: auto;
         bottom: 0;
-        --base-y: 4rem;
+        --base-y: 2rem;
     }
     .card-left,
     .card-right {
-        --base-y: 5rem;
+        --base-y: 2.5rem;
+    }
+    .card-left {
+        --base-x: -4rem;
+    }
+    .card-right {
+        --base-x: 4rem;
     }
     .deck--selected .card-in-deck {
         --offset-y: 0%;
@@ -1007,10 +1030,8 @@ textarea, input {
     }
     .deck--selected .card-selected {
         --base-r: 0deg;
-        --base-x: 0px;
-        --offset-y: -20%;
-        --offset-x: 43vw;
-        --scale-mult: 1.95;
+        --offset-y: 52%;
+        --scale-mult: 1.8;
         z-index: 3;
         filter: saturate(1.05);
     }
@@ -1030,11 +1051,6 @@ textarea, input {
 }
 
 @media (max-width: 480px) {
-    html,
-    body {
-        height: 100%;
-        overflow: hidden;
-    }
     .deck__instruction {
         font-size: 0.85rem;
     }
@@ -1050,6 +1066,7 @@ textarea, input {
     /* note editor */
     .note-editor-container {
         background-color: transparent;
+        margin-bottom: 0rem;
     }
     /* note editor header section */
     .note-header {
@@ -1086,6 +1103,7 @@ textarea, input {
 
     /* note editor buttons */
     .col-1 {
+        height: auto;
         width: 90%;
         justify-content: center;
     }
@@ -1128,6 +1146,9 @@ textarea, input {
     }
 
     /* tarot cards */
+    .persona-cards {
+        height: auto;
+    }
     .deck--idle,
     .deck--selected {
         align-items: center;
@@ -1189,7 +1210,8 @@ textarea, input {
         margin: 0;
         margin-top: 1.25rem;
         width: 100%;
-        height: 55dvh;
+        height: auto;
+        flex-grow: 1;
     }
     .col-1 {
         order: 3;
@@ -1197,5 +1219,6 @@ textarea, input {
     }
     .col-3 .toggle-windows {
         order: 4;
+        margin-bottom: 12dvh;
     }
 }
