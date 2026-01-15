@@ -165,7 +165,12 @@ const help = {
         "Finally if you have any other problems, please write to me through our contact page.",
     ],
     idea: [
-        "Try posing some of these questions to an advisor:",
+        'This is a place to explore your thoughts and ideas, with a little bit of help - should you need it.',
+        'Be open minded, and curious.',
+        'Try posing some of these statements to an advisor, if you need help with a place to begin:',
+        '"Ask me one question that will help me begin."',
+        '"Can you give me a short opening line to start my journal with today?"',
+        '"Ask me a difficult question."',
     ],
 };
 let messages = [];
