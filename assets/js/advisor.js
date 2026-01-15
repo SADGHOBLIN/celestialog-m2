@@ -171,6 +171,23 @@ const help = {
 let messages = [];
 
 // WEBLLM helpers
+// check to see if the user device is likely a mobile/tablet, not just a resized desktop window
+// then use the appropriate language model for that device
+function checkIfMobileDevice() {
+    // snippet taken from ChatGPT, to check if device is small or low powered
+    const smallScreen = Math.min(screen.width, screen.height) <= 820;
+    const lowMemory = navigator.deviceMemory && navigator.deviceMemory <= 4;
+    const lowCores = navigator.hardwareConcurrency && navigator.hardwareConcurrency <= 4;
+    // end of referenced snippet
+
+    return smallScreen || lowMemory || lowCores;
+}
+function pickModel(config) {
+  return checkIfMobileDevice()
+    ? config.MODELS.mobileModel
+    : config.MODELS.defaultModel;
+}
+
 // store language model engine, or create a new engine instance
 function cacheEngine() {
     let cachedEngine = null;
@@ -182,7 +199,7 @@ function cacheEngine() {
     };
 }
 async function createEngine(config) {
-    const engine = await CreateMLCEngine(config.MODELS.defaultModel, {
+    const engine = await CreateMLCEngine(pickModel(config), {
         initProgressCallback: (progress) => {
             console.log("loading:", progress.progress);
         }
