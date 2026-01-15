@@ -921,6 +921,7 @@ textarea, input {
     }
     .today-moon {
         width: auto;
+        background-color: var(--p-transparent);
     }
 
     /* toggle between advisor and journal */
