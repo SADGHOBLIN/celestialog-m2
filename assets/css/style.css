@@ -101,15 +101,46 @@ button {
 /* Site-wide content */
 /* ---------------------------------------------------------------------------- */
 #nav {
-    display: none;
-    height: 5vh;
-    width: 100%;
-    background-color: var(--p-transparent);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    position: absolute;
+    z-index: 999;
     color: var(--text);
+    gap: 0.5rem;
+}
+#nav img {
+    height: 32px;
+}
+#nav ul {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    margin-left: 1rem;
 }
 #nav a {
+    display: inline-block;
+    transition: transform 0.2s ease, opacity 0.2s ease;
     color: var(--text);
+    letter-spacing: 1px;
+    text-decoration: none;
+    font-size: var(--p-text);
 }
+#nav a.active {
+    color: var(--accent);
+    font-size: var(--h6-text);
+    font-weight: 600;
+}
+#nav a:hover {
+    font-weight: 600;
+    opacity: 0.6;
+}
+#nav ul:hover a:hover {
+    opacity: 1;
+    transform: translateX(6px) scale(1.05);
+}
+
+
 .section-wrapper {
     display: flex;
     justify-content: center;
@@ -845,6 +876,20 @@ textarea, input {
 }
 
 @media screen and (max-width: 1024px) {
+    #nav img {
+    height: 28px;
+    }
+    #nav ul {
+        margin-left: 1rem;
+    }
+    #nav a {
+        letter-spacing: 1.25px;
+        font-size: var(--sm-text);
+    }
+    #nav a.active {
+        font-size: var(--p-text);
+    }
+
     .section-container.journal-pg {
         width: 100vw;
     }
@@ -871,6 +916,13 @@ textarea, input {
         height: 100%;
         overflow: hidden;
     }
+    #nav {
+        margin-top: 1rem;
+    }
+    #nav a {
+        letter-spacing: 1px;
+    }
+
     /* main journal containers */
     .section-wrapper.journal-pg {
         height: 100dvh;
