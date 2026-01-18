@@ -1,7 +1,9 @@
 /* DM Sans from Google Fonts */
-@import url('https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&display=swap'); 
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inknut+Antiqua:wght@300;400;500;600;700;800;900&display=swap');
 :root {
-    --primary-font: "DM Sans";
+    --primary-font: "DM Sans", sans-serif;
+    --display-font: "Inknut Antiqua", serif;
     --base-font-size: 16px;
     --reg-weight: 400;
     --bold-weight: 600;
@@ -37,7 +39,7 @@ html, body {
     scrollbar-color: var(--p-color) var(--p-surface);
 }
 body {
-    font-family: var(--primary-font), sans-serif;
+    font-family: var(--primary-font);
     font-weight: --reg-weight;
     line-height: 1.6;
 
@@ -54,7 +56,7 @@ select {
 }
 /* BUTTONS */
 button {
-    font-family: var(--primary-font), sans-serif;
+    font-family: var(--primary-font);
     font-size: var(--sm-text);
     color: var(--text);
     background-color: var(--p-transparent);
@@ -141,12 +143,12 @@ button {
     transform: translateX(6px) scale(1.05);
 }
 
-
 .section-wrapper {
     display: flex;
     justify-content: center;
+    align-items: center;
 
-    height: 80vh;
+    height: 87vh;
     margin-top: 1rem;
 }
 .section-container {
@@ -156,18 +158,80 @@ button {
     flex-direction: column;
 
     height: 100%;
-    width: 80vw;
 }
 /* ---------------------------------------------------------------------------- */
 /* INDEX.html */
 /* ---------------------------------------------------------------------------- */
-.landing-img {
-    background-color: rgb(0 0 255 / 0.2) !important;
+/* .h1 {
+    font-family: var(--display-font);
+    letter-spacing: -0.25rem;
+    font-size: clamp(var(--h4-text), 18vw, var(--h1-text));
+    font-weight: var(--bold-weight);
+    color: var(--accent);
+    text-align: center;
 }
-.title {
-    font-size: 6rem;
-    order: 1;
-    z-index: 999;
+.heading-container {
+    height: 80%;
+    width: min(15%, 160px);
+    border-radius: 1rem;
+    background-color: var(--p-surface);
+
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    align-items: center;
+
+    gap: 1rem;
+    overflow: visible;
+}
+
+.landing-img-container {
+    animation: logo-float 3.5s ease-in-out infinite;
+    order: -1;
+}
+.landing-img {
+    height: min(280px, 30vh);
+    width: auto;
+    display: inline-block;
+    animation: spin 25s linear infinite;
+    will-change: transform;
+} */
+
+.heading-container {
+    height: min(72vh, 32rem);
+    width: min(32vw, 12rem);
+    border-radius: 1.25rem;
+    background-color: var(--p-surface);
+
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    align-items: center;
+
+    gap: clamp(0.25rem, 2vh, 1rem);
+    padding: clamp(1rem, 3vh, 2rem);
+    overflow: visible;
+}
+.landing-img-container {
+    animation: logo-float 3.5s ease-in-out infinite;
+}
+.landing-img {
+    height: auto;
+    width: clamp(90px, 40vw, 240px);
+    animation: spin 25s linear infinite;
+    will-change: transform;
+}
+.h1 {
+    font-family: var(--display-font);
+    font-size: clamp(6vw, var(--h1-text), 12vw);
+    font-weight: var(--bold-weight);
+    color: var(--accent);
+
+    letter-spacing: 0.25rem;
+    line-height: 0.9;
+    text-align: center;
+    margin-bottom: clamp(-0.75rem, -2vh, -0.25rem);
 }
 /* ---------------------------------------------------------------------------- */
 /* JOURNAL.html PAGE */
@@ -843,7 +907,15 @@ textarea, input {
  }
 
 /* ---------------------------------------------------------------------------- */
-/* Card animation keyframes */
+/* Animation keyframes */
+@keyframes spin {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+}
+@keyframes logo-float {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(10%); }
+}
 @keyframes floating {
     0%, 100% { transform: translateY(0); }
     50% { transform: translateY(3%); }
@@ -909,8 +981,11 @@ textarea, input {
 }
 
 @media screen and (max-width: 768px) {
-    html,
-    body {
+    .section-wrapper.journal-pg {
+        height: 100%;
+        overflow: hidden;
+    }
+    .section-container.journal-pg {
         height: 100%;
         overflow: hidden;
     }
@@ -1272,4 +1347,11 @@ textarea, input {
         order: 4;
         margin-bottom: 12dvh;
     }
+}
+
+
+
+
+.wireframe {
+    outline: 2px solid red;
 }
