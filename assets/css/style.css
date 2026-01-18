@@ -196,6 +196,26 @@ button {
     text-align: center;
     margin-bottom: clamp(-0.75rem, -2vh, -0.25rem);
 }
+ .main-cta {
+    height: 60px;
+    width: 250px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    font-size: var(--h6-text);
+    background-color: var(--p-color);
+    color: var(--text);
+    box-shadow: 0px 4px 8px var(--bg);
+    border-radius: 1rem;
+
+    text-transform: uppercase;
+    text-decoration: none;
+    letter-spacing: 3px;
+
+    padding: 0.25rem;
+    margin-top: 1rem;
+}
 /* ---------------------------------------------------------------------------- */
 /* JOURNAL.html PAGE */
 /* ---------------------------------------------------------------------------- */
@@ -905,7 +925,10 @@ textarea, input {
 
 /* ---------------------------------------------------------------------------- */
 /* MEDIA QUERIES */
-@media screen and (max-width: 1440px) {
+@media screen and (min-width: 1024px) {
+    .section-wrapper.journal-pg {
+        width: 94vw;
+    }
     .section-container.journal-pg {
         width: 94vw;
     }
@@ -986,6 +1009,19 @@ textarea, input {
         font-weight: var(--reg-weight);
         transform: translateX(0) scale(1);
         color: var(--accent);
+    }
+
+    .heading-container {
+        justify-content: center;
+        padding-bottom: 0;
+    }
+    .main-cta {
+        height: 60px;
+        width: 180px;
+        font-size: var(--p-text);
+        padding: 0.25rem;
+        margin-top: 2rem;
+        margin-bottom: 2rem;
     }
 
     /* main journal containers */
@@ -1169,6 +1205,10 @@ textarea, input {
 }
 
 @media (max-width: 480px) {
+    /* Index page */
+    .heading-container {
+        height: 28rem;
+    }
     /* Journal page */
     .deck__instruction {
         font-size: 0.85rem;
