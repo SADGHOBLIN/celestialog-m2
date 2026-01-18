@@ -104,10 +104,12 @@ button {
     display: flex;
     flex-direction: column;
     justify-content: center;
-    position: absolute;
+    position: fixed;
     z-index: 999;
     color: var(--text);
     gap: 0.5rem;
+    left: 1rem;
+    width: 60px;
 }
 #nav img {
     height: 32px;
@@ -116,7 +118,6 @@ button {
     list-style: none;
     display: flex;
     flex-direction: column;
-    margin-left: 1rem;
 }
 #nav a {
     display: inline-block;
@@ -879,9 +880,6 @@ textarea, input {
     #nav img {
     height: 28px;
     }
-    #nav ul {
-        margin-left: 1rem;
-    }
     #nav a {
         letter-spacing: 1.25px;
         font-size: var(--sm-text);
@@ -917,7 +915,7 @@ textarea, input {
         overflow: hidden;
     }
     #nav {
-        margin-top: 1rem;
+        top: 1rem;
     }
     #nav a {
         letter-spacing: 1px;
