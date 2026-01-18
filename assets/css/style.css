@@ -152,7 +152,7 @@ button {
 }
 .section-container {
     display: flex;
-    justify-content: center;
+    justify-content: flex-end;
     align-items: center;
     flex-direction: column;
     height: 100%;
@@ -163,6 +163,7 @@ button {
 .heading-container {
     height: min(72vh, 32rem);
     width: min(32vw, 12rem);
+    flex-grow: 1;
     border-radius: 1.25rem;
     background-color: var(--p-surface);
 
@@ -174,6 +175,7 @@ button {
 
     gap: clamp(0.25rem, 2vh, 1rem);
     padding: clamp(1rem, 3vh, 2rem);
+    margin-bottom: 3.5rem;
     overflow: visible;
 }
 .landing-img-container {
@@ -181,13 +183,13 @@ button {
 }
 .landing-img {
     height: auto;
-    width: clamp(90px, 40vw, 240px);
+    width: clamp(90px, 40vw, 260px);
     animation: spin 25s linear infinite;
     will-change: transform;
 }
 .h1 {
     font-family: var(--display-font);
-    font-size: clamp(6vw, var(--h1-text), 12vw);
+    font-size: clamp(6vw, 12rem, 12vw);
     font-weight: var(--bold-weight);
     color: var(--accent);
 
@@ -1206,8 +1208,12 @@ textarea, input {
 
 @media (max-width: 480px) {
     /* Index page */
+    .section-container {
+        justify-content: center;
+    }
     .heading-container {
         height: 28rem;
+        flex-grow: 0;
     }
     /* Journal page */
     .deck__instruction {
