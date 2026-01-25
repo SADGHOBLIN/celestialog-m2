@@ -160,6 +160,7 @@ button {
 /* ---------------------------------------------------------------------------- */
 /* INDEX.html */
 /* ---------------------------------------------------------------------------- */
+/* landing section */
 .heading-container {
     height: min(72vh, 32rem);
     width: min(32vw, 12rem);
@@ -217,6 +218,79 @@ button {
 
     padding: 0.25rem;
     margin-top: 1rem;
+}
+
+/* about section */
+#about {
+    height: auto;
+}
+#about .section-container {
+    height: auto;
+}
+.h2 {
+    font-size: var(--h2-text);
+}
+.h4 {
+    font-size: var(--h4-text);
+}
+.h6 {
+    font-size: var(--h6-text);
+}
+.accent-color {
+    color: var(--accent);
+}
+.about-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    flex-grow: 1;
+    height: auto;
+    width: 40vw;
+
+    /* outline: 2px solid orange; */
+}
+.about-heading {
+    line-height: 1.1;
+    gap: 8rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.about-description {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+    margin: 8rem 0;
+    gap: 0.5rem;
+    line-height: 1.8;
+}
+.about-description > .about-description-list {
+    align-self: center;
+    line-height: 1.6;
+}
+.about-description-list {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    margin-top: 0.5rem;
+}
+
+/* bottom gradient */
+.bottom-gradient {
+    position: fixed;
+    left: 0;
+    bottom: 0;
+    height: 120px;
+    width: 100%;
+    pointer-events: none;
+    z-index: 999;
+
+    background: linear-gradient(
+        to top,
+        var(--bg),
+        rgba( 10 10 10 / 0)
+    );
 }
 /* ---------------------------------------------------------------------------- */
 /* JOURNAL.html PAGE */
