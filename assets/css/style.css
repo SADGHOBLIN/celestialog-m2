@@ -306,7 +306,6 @@ button {
     gap: 5rem;
     margin: 3rem 0;
 }
-
 .tarot-character-container {
     display: flex;
     justify-content: space-evenly;
@@ -320,6 +319,7 @@ button {
     flex-direction: column;
     justify-content: center;
     align-items: flex-start;
+    margin: 1rem;
 }
 .tarot-card-description {
     display: flex;
@@ -346,6 +346,13 @@ button {
 .king-swords-tarot {
     rotate: 1deg;
 }
+.about-cta {
+    margin-top: -2.5rem;
+    margin-bottom: 5rem;
+    background-color: var(--accent);
+    color: var(--bg);
+    font-weight: var(--bold-weight);
+}
 
 /* bottom gradient */
 .bottom-gradient {
@@ -355,13 +362,33 @@ button {
     height: 180px;
     width: 100%;
     pointer-events: none;
-    z-index: 999;
+    z-index: 1;
 
     background: linear-gradient(
         to top,
         var(--bg),
         rgba( 10 10 10 / 0)
     );
+}
+.website-info {
+    font-size: var(--sm-text);
+    color: var(--text);
+    position: relative;
+    z-index: 2;
+    display: flex;
+}
+.website-info > p {
+    margin-left: auto;
+    margin-right: 0.5rem;
+    margin-bottom: 0.5rem;
+}
+.website-info a,
+.website-info a:visited,
+.website-info a:hover,
+.website-info a:active,
+.website-info a:focus {
+    color: var(--accent);
+    text-decoration: none;
 }
 /* ---------------------------------------------------------------------------- */
 /* JOURNAL.html PAGE */
@@ -1183,11 +1210,28 @@ textarea, input {
         margin-top: 2rem;
         margin-bottom: 2rem;
     }
+    .about-cta {
+        margin-top: -2rem;
+        margin-bottom: 5rem;
+    }
     .about-container {
         width: 80vw;
     }
     .about-description {
         gap: 1.5rem;
+    }
+    .website-info {
+        font-size: var(--sm-text);
+        color: var(--text);
+        position: relative;
+        z-index: 2;
+        display: flex;
+        justify-content: center;
+    }
+    .website-info > p {
+        margin: 0;
+        margin-bottom: 1rem;
+        text-align: center;
     }
 
     /* main journal containers */
