@@ -335,6 +335,7 @@ button {
 .narrative-img {
     height: 55vh;
     width: auto;
+    margin: 1rem;
 }
 .magician-tarot {
     rotate: 3deg;
@@ -1378,6 +1379,10 @@ textarea, input {
         height: 28rem;
         flex-grow: 0;
     }
+    .about-container,
+    .narrative-container {
+        width: 80vw;
+    }
     .about-heading {
         height: auto;
         width: 90vw;
@@ -1388,7 +1393,36 @@ textarea, input {
     .about-heading .h2 {
         height: auto;
         font-size: 3rem;
+        text-align: center;
     }
+    .narrative-container {
+        display: flex;
+        flex-direction: column;
+        gap: 3rem;
+    }
+    .tarot-character-container {
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+    }
+    .tarot-character-container.flipped {
+        flex-direction: column;
+    }
+    .tarot-guide {
+        width: 90%;
+    }
+    .tarot-card-description {
+        display: flex;
+        flex-direction: column;
+        margin: 1.25rem 0;
+        gap: 0.75rem;
+    }
+    .narrative-img {
+        height: 40vh;
+        width: auto;
+        rotate: 0deg;
+    }
+
     /* Journal page */
     .deck__instruction {
         font-size: 0.85rem;
@@ -1560,11 +1594,4 @@ textarea, input {
         order: 4;
         margin-bottom: 12dvh;
     }
-}
-
-
-
-
-.wireframe {
-    outline: 2px solid red;
 }
