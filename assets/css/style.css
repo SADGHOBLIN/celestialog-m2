@@ -228,7 +228,7 @@ button {
     height: auto;
 }
 .h2 {
-    font-size: var(--h2-text);
+    font-size: var(--h1-text);
 }
 .h4 {
     font-size: var(--h4-text);
@@ -240,27 +240,31 @@ button {
     color: var(--accent);
 }
 .about-container {
+    min-height: 90vh;
     display: flex;
     flex-direction: column;
     align-items: center;
     flex-grow: 1;
     height: auto;
     width: 40vw;
-    margin: 2rem 0;
+    margin-top: 1rem;
+    margin-bottom: 4rem;
 }
 .about-heading {
     line-height: 1.1;
-    gap: 4rem;
+    margin: 4rem 0;
     display: flex;
     flex-direction: column;
+    justify-content: center;
     align-items: center;
+    flex-grow: 1;
 }
 .about-description {
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: flex-start;
-    margin: 6rem 0;
+    margin: 4rem 0;
     gap: 0.5rem;
     line-height: 1.8;
 }
@@ -292,6 +296,55 @@ button {
 .about-description-list li:nth-child(1)::before { content: "dark_mode"; }
 .about-description-list li:nth-child(2)::before { content: "psychology_alt"; }
 .about-description-list li:nth-child(3)::before { content: "book_4"; }
+
+/* narrative about section */
+.narrative-container {
+    height: auto;
+    width: 80vw;
+    display: flex;
+    flex-direction: column;
+    gap: 5rem;
+    margin: 3rem 0;
+}
+
+.tarot-character-container {
+    display: flex;
+    justify-content: space-evenly;
+}
+.tarot-character-container.flipped {
+    flex-direction: row-reverse;
+}
+.tarot-guide {
+    width: 40%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+}
+.tarot-card-description {
+    display: flex;
+    flex-direction: column;
+    margin: 1.25rem 0;
+    gap: 0.75rem;
+}
+.tarot-card-description > ul {
+    padding-left: 1rem;
+    font-size: 0.9rem;
+    font-style: italic;
+}
+.narrative-img {
+    height: 55vh;
+    width: auto;
+}
+.magician-tarot {
+    rotate: 3deg;
+}
+.ten-swords-tarot {
+    rotate: -2deg;
+}
+.king-swords-tarot {
+    rotate: 1deg;
+}
 
 /* bottom gradient */
 .bottom-gradient {
@@ -1039,8 +1092,14 @@ textarea, input {
         font-size: var(--p-text);
     }
 
+    .h2 {
+        font-size: var(--h2-text);
+    }
     .about-container {
         margin: 1rem 0;
+    }
+    .about-heading {
+        margin-top: 2rem;
     }
     .about-description {
         margin: 4rem 0;
