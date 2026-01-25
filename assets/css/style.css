@@ -246,12 +246,11 @@ button {
     flex-grow: 1;
     height: auto;
     width: 40vw;
-
-    /* outline: 2px solid orange; */
+    margin: 2rem 0;
 }
 .about-heading {
     line-height: 1.1;
-    gap: 8rem;
+    gap: 4rem;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -261,7 +260,7 @@ button {
     flex-direction: column;
     justify-content: center;
     align-items: flex-start;
-    margin: 8rem 0;
+    margin: 6rem 0;
     gap: 0.5rem;
     line-height: 1.8;
 }
@@ -273,15 +272,33 @@ button {
     display: flex;
     flex-direction: column;
     align-items: flex-start;
+    list-style: none;
+    padding: 0;
+    margin-left: 0;
     margin-top: 0.5rem;
 }
+.about-description-list li {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin: 0.25rem 0;
+}
+.about-description-list li::before {
+    font-family: "Material Symbols Outlined";
+    font-size: 1.5rem;
+    line-height: 1;
+    color: var(--accent);
+}
+.about-description-list li:nth-child(1)::before { content: "dark_mode"; }
+.about-description-list li:nth-child(2)::before { content: "psychology_alt"; }
+.about-description-list li:nth-child(3)::before { content: "book_4"; }
 
 /* bottom gradient */
 .bottom-gradient {
     position: fixed;
     left: 0;
     bottom: 0;
-    height: 120px;
+    height: 180px;
     width: 100%;
     pointer-events: none;
     z-index: 999;
