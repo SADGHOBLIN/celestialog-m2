@@ -1220,6 +1220,28 @@ textarea, input {
     .about-description {
         gap: 1.5rem;
     }
+    .narrative-container {
+        display: flex;
+        flex-direction: column;
+        gap: 3rem;
+    }
+    .tarot-character-container {
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+    }
+    .tarot-character-container.flipped {
+        flex-direction: column;
+    }
+    .tarot-guide {
+        width: 90%;
+    }
+    .tarot-card-description {
+        display: flex;
+        flex-direction: column;
+        margin: 1.25rem 0;
+        gap: 0.75rem;
+    }
     .website-info {
         font-size: var(--sm-text);
         color: var(--text);
@@ -1438,28 +1460,6 @@ textarea, input {
         height: auto;
         font-size: 3rem;
         text-align: center;
-    }
-    .narrative-container {
-        display: flex;
-        flex-direction: column;
-        gap: 3rem;
-    }
-    .tarot-character-container {
-        flex-direction: column;
-        justify-content: center;
-        align-items: center;
-    }
-    .tarot-character-container.flipped {
-        flex-direction: column;
-    }
-    .tarot-guide {
-        width: 90%;
-    }
-    .tarot-card-description {
-        display: flex;
-        flex-direction: column;
-        margin: 1.25rem 0;
-        gap: 0.75rem;
     }
     .narrative-img {
         height: 40vh;
