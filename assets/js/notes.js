@@ -494,9 +494,13 @@ function captureUserEntry(elements, notes) {
     const content = elements.noteContent.value;
 
     if (!elements.noteContent.value.trim()) {
+        const editorContainer = document.querySelector(".note-editor-container")
+        if (editorContainer.querySelector(".error-notification")) {
+            return;
+        }
+
         const errorMessage = document.createElement("p");
         const buttonsDiv = document.querySelector(".note-editor-container");
-
         errorMessage.innerText = "Cannot save a blank note";
         errorMessage.classList.add("error-notification");
         buttonsDiv.prepend(errorMessage);
