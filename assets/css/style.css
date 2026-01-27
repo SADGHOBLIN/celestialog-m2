@@ -1504,7 +1504,7 @@ textarea, input {
     /* note editor */
     .note-editor-container {
         background-color: transparent;
-        margin-bottom: 0rem;
+        margin-bottom: 0.75rem;
     }
     /* note editor header section */
     .note-header {
@@ -1581,6 +1581,16 @@ textarea, input {
     .user-msg,
     .advisor-msg {
         font-size: 0.8rem;
+    }
+     .saved-notification {
+        font-size: 12px;
+        bottom: -0.6rem;
+        left: 1.5rem;
+    }
+    .error-notification {
+        font-size: 12px;
+        bottom: -0.6rem;
+        left: 1.5rem;
     }
 
     /* tarot cards */
