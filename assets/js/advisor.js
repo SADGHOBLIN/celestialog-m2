@@ -160,7 +160,7 @@ const help = {
         ">help",
         "into the window",
         "You may also enter the message:",
-        ">prompt",
+        ">idea",
         "if you need some inspiration.",
         "Finally if you have any other problems, please write to me through our contact page.",
     ],
