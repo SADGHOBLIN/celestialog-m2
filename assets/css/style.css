@@ -452,6 +452,7 @@ button {
     border-radius: 1rem;
     padding: 0 1rem;
     gap: 0.5rem;
+    position: relative;
 }
 .note-header {
     height: 10%;
@@ -1069,11 +1070,18 @@ textarea, input {
  .saved-notification {
     font-size: 18px;
     color: var(--accent);
+    position: absolute;
+    bottom: -0.5rem;
+    left: 1rem;
+    z-index: 999;
  }
  .error-notification {
     font-size: 18px;
     color: red;
-    text-align: right;
+    position: absolute;
+    bottom: -0.5rem;
+    left: 1rem;
+    z-index: 999;
  }
 
 /* ---------------------------------------------------------------------------- */

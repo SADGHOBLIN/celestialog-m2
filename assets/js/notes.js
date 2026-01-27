@@ -79,7 +79,7 @@ function saveNewNote(newNote, notes) {
     notes.userNotes.unshift(newNote);
 
     const savedMessage = document.createElement("p");
-    const buttonsDiv = document.querySelector(".note-buttons");
+    const buttonsDiv = document.querySelector(".note-editor-container");
 
     savedMessage.innerText = "Note saved!";
     savedMessage.classList.add("saved-notification");
@@ -159,7 +159,7 @@ function overrideNoteData(userEntry, notes) {
     notes.userNotes[index].content = userEntry.content;
 
     const savedMessage = document.createElement("p");
-    const buttonsDiv = document.querySelector(".note-buttons");
+    const buttonsDiv = document.querySelector(".note-editor-container");
 
     savedMessage.innerText = "Note saved!";
     savedMessage.classList.add("saved-notification");
@@ -494,9 +494,8 @@ function captureUserEntry(elements, notes) {
     const content = elements.noteContent.value;
 
     if (!elements.noteContent.value.trim()) {
-        console.log("No data");
         const errorMessage = document.createElement("p");
-        const buttonsDiv = document.querySelector(".note-buttons");
+        const buttonsDiv = document.querySelector(".note-editor-container");
 
         errorMessage.innerText = "Cannot save a blank note";
         errorMessage.classList.add("error-notification");
