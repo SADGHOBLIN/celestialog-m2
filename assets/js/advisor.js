@@ -346,14 +346,13 @@ async function sendMessage(getEngine, config, elements, state) {
     }
 
     if (!state.currentAdvisor) {
-        const errorMessage = document.createElement("p");
-        const buttonsDiv = document.querySelector(".note-buttons");
-
-        errorMessage.innerText = "Please select an advisor";
-        errorMessage.classList.add("error-notification");
-        buttonsDiv.prepend(errorMessage);
+        const errorMsg = "Please select an advisor from the available Tarot cards.";
+        const errorBubble = createChatBubble(elements, ["advisor-msg", "advisor-error"], errorMsg);
+        errorBubble.classList.add("visible");
+        state.isWaitingForReply = true;
         setTimeout(() => {
-            errorMessage.remove();
+            errorBubble.remove();
+            state.isWaitingForReply = false;
         }, 2500);
         return;
     }

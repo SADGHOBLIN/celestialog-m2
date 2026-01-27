@@ -595,6 +595,9 @@ textarea, input {
     background-color: var(--accent);
     color: var(--bg);
 }
+.advisor-error {
+    background-color: rgb(109, 9, 9);
+}
 .instruction-msg {
     margin-top: auto;
     display: flex;
