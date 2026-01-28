@@ -1083,7 +1083,13 @@ textarea, input {
     left: 1rem;
     z-index: 999;
  }
-
+/* ---------------------------------------------------------------------------- */
+.section-wrapper.error404 {
+    height: 95vh;
+}
+.error404 .heading-container {
+    width: 100%;
+}
 /* ---------------------------------------------------------------------------- */
 /* Animation keyframes */
 @keyframes spin {
@@ -1668,5 +1674,15 @@ textarea, input {
     .col-3 .toggle-windows {
         order: 4;
         margin-bottom: 12dvh;
+    }
+    .section-wrapper.error404 {
+        height: 90vh;
+    }
+    .error404 .heading-container {
+        width: 95%;
+        height: 70%;
+    }
+    .error404 .h4 {
+        font-size: 1.25rem;
     }
 }
