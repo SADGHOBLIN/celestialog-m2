@@ -401,6 +401,8 @@ button {
     display: flex;
     flex-direction: row;
     justify-content: center;
+    height: 100%;
+    min-height: 0;
 }
 .col-merge {
     display: contents;
@@ -419,11 +421,12 @@ button {
 
 /* main note editor and advisor chat, col-2 container */
 .col-2 {
-    height: 100%;
     width: clamp(320px, 50%, 600px);
     display: flex;
     flex-direction: column;
     align-items: center;
+    height: 100%;
+    min-height: 0;
 }
 
 /* persona cards and moon info, col-3 container */
@@ -444,7 +447,6 @@ button {
 /* col-2, NOTE EDITOR UI */
 /* notes entry UI */
 .note-editor-container {
-    height: 100%;
     width: 100%;
     display: flex;
     flex-direction: column;
@@ -453,14 +455,16 @@ button {
     padding: 0 1rem;
     gap: 0.5rem;
     position: relative;
+    flex: 1 1 auto;
+    min-height: 0;
 }
 .note-header {
-    height: 10%;
     width: 100%;
     display: flex;
     flex-direction: row;
     justify-content: space-evenly;
     margin-top: 0.5rem;
+    flex: 0 0 auto;
 }
 .title-container {
     display: flex;
@@ -505,13 +509,12 @@ textarea, input {
     resize: none;
     border-radius: 1rem;
     padding-left: 14px;
-
     background-color: var(--p-surface);
     color: var(--text);
-    
 }
 #note-content {
     flex-grow: 1;
+    min-height: 0;
     overflow-y: auto;
     padding: 1rem 14px;
     margin: 1rem 0;
