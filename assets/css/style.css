@@ -1101,7 +1101,7 @@ textarea, input {
 }
 .section-wrapper.contact {
     height: auto;
-    overflow: visible;
+    min-height: 95vh;
 }
 .section-container.contact {
     height: auto;
