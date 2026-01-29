@@ -1089,13 +1089,16 @@ textarea, input {
 /* ---------------------------------------------------------------------------- */
 /* Error and Contact page */
 .section-wrapper.error404 {
-    height: 95vh;
+    height: 94vh;
     width: auto;
 }
+.section-container.error404 {
+    height: auto;
+}
 .error404 .heading-container {
+    height: auto;
     width: 100%;
 }
-
 .section-wrapper.contact {
     height: auto;
     overflow: visible;
