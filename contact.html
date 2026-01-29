@@ -6,7 +6,7 @@
     <!-- TODO: -->
     <!-- meta description -->
     <!-- meta keywords -->
-    <title>404 | Celestialog</title>
+    <title>Contact | Celestialog</title>
     <!-- Favicon - generated with favicon.io -->
     <link rel="apple-touch-icon" sizes="180x180" href="assets/favicon/apple-touch-icon.png">
     <link rel="icon" type="image/png" sizes="32x32" href="assets/favicon/favicon-32x32.png">
@@ -27,23 +27,36 @@
           <a href="journal.html">Journal</a>
         </li>
         <li>
-          <a href="contact.html">Contact</a>
+          <a href="contact.html" aria-current="page" class="active">Contact</a>
         </li>
       </ul>
     </nav>
 
     <!-- Main landing section -->
     <main>
-      <div class="section-wrapper error404">
-        <div class="section-container error404">
+      <div class="section-wrapper error404 contact">
+        <div class="section-container error404 contact">
           <div class="heading-container">
             <div class="landing-img-container">
               <img src="assets/images/moon/full-moon.png" alt="Illustration of the moon" class="landing-img"/>
             </div>
-            <h1 class="h2">404</h1>
-            <h2 class="h4">Page not found</h2>
-            <!-- main CTA -->
-            <a href="index.html" class="main-cta">Return Home</a>
+            <h1 class="h2">Contact</h1>
+
+            <form action="success.html" method="GET" class="form-container">
+              <div class="form-section">
+                  <label for="name">Name</label>
+                  <input id="name" type="text" name="name" autocomplete="name" required>
+              </div>
+              <div class="form-section">
+                  <label for="email">Email</label>
+                  <input id="email" type="email" name="email" autocomplete="email" required>
+              </div>
+              <div class="form-section">
+                  <label for="message">Message</label>
+                  <textarea id="message" name="message" rows="8" placeholder="Enter your message" required></textarea>
+              </div>
+              <button type="submit" class="main-cta">Submit</button>
+            </form>
           </div>
         </div>
       </div>
