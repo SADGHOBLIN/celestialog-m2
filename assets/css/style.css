@@ -390,6 +390,9 @@ button {
     color: var(--accent);
     text-decoration: none;
 }
+.website-info.journal {
+    margin-top: 0.5rem;
+}
 /* ---------------------------------------------------------------------------- */
 /* JOURNAL.html PAGE */
 /* ---------------------------------------------------------------------------- */
@@ -1337,6 +1340,9 @@ textarea, input {
         margin: 0;
         margin-bottom: 1rem;
         text-align: center;
+    }
+    .website-info.journal {
+        display: none;
     }
 
     /* main journal containers */

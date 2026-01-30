@@ -1,26 +1,26 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
   <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     <!-- TODO: -->
     <!-- meta description -->
     <!-- meta keywords -->
     <title>Journal | Celestialog</title>
     <!-- Favicon - generated with favicon.io -->
-    <link rel="apple-touch-icon" sizes="180x180" href="assets/favicon/apple-touch-icon.png">
-    <link rel="icon" type="image/png" sizes="32x32" href="assets/favicon/favicon-32x32.png">
-    <link rel="icon" type="image/png" sizes="16x16" href="assets/favicon/favicon-16x16.png">
-    <link rel="manifest" href="assets/favicon/site.webmanifest">
+    <link rel="apple-touch-icon" sizes="180x180" href="assets/favicon/apple-touch-icon.png"/>
+    <link rel="icon" type="image/png" sizes="32x32" href="assets/favicon/favicon-32x32.png"/>
+    <link rel="icon" type="image/png" sizes="16x16" href="assets/favicon/favicon-16x16.png"/>
+    <link rel="manifest" href="assets/favicon/site.webmanifest"/>
     <!-- Google icons css -->
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined"/>
     <!-- Custom css -->
     <link rel="stylesheet" href="assets/css/style.css"/>
   </head>
   <body>
-    <!-- Navbar -->
-    <div id="nav">
-      <img src="assets/images/moon/waning-crescent-symbol.svg" alt="Celestialog moon icon">
+    <!-- NAVBAR -->
+    <nav id="nav" aria-label="Primary navigation">
+      <img src="assets/images/moon/waning-crescent-symbol.svg" alt="Celestialog moon icon"/>
       <ul>
         <li>
           <a href="index.html">Home</a>
@@ -32,85 +32,92 @@
           <a href="contact.html">Contact</a>
         </li>
       </ul>
-    </div>
-
-    <!-- Main journal app -->
-     <main class="section-wrapper journal-pg">
+    </nav>
+    <!-- MAIN APP section -->
+    <main class="section-wrapper journal-pg">
+      <h1 class="hidden">Journal App</h1>
       <div class="section-container journal-pg">
-
-        <!-- NOTE EDITOR, col-2 -->
         <div class="col-merge">
-          <div id="note-editor" data-note-id="" class="col-2">
-          <div class="note-editor-container">
 
-            <!-- Note editor, heading section  -->
-            <div class="note-header">
-              <!-- journal display title and date -->
-              <div class="title-container">
-                <label for="note-title"></label>
-                <input id="note-title" type="text" placeholder="Journal Title" autocomplete="off">
-                <p id="note-date"></p>
+          <!-- MAIN UI: toggle between NOTE EDTIOR and CHAT ADVISOR -->
+          <!-- NOTE EDITOR: col-2 -->
+          <h2 class="hidden">Notes journal</h2>
+          <section id="note-editor" data-note-id="" class="col-2">
+            <div class="note-editor-container">
+              <!-- Heading section: note editor -->
+              <div class="note-header">
+                <div class="title-container">
+                  <!-- note title -->
+                  <label for="note-title" class="hidden">Enter journal title</label>
+                  <input id="note-title" type="text" placeholder="Journal Title" autocomplete="off"/>
+                  <!-- note date -->
+                  <p id="note-date"></p>
+                </div>
+                <!-- Moon data for notes: note editor -->
+                <div class="moon-container">
+                  <!-- note's moon icon -->
+                  <img src="" alt="An icon of the moon" class="moon-symbol"/>
+                  <!-- note's moon phase -->
+                  <p id="note-moon"></p>
+                </div>
               </div>
-              <!-- journal display moon phase with icon -->
-              <div class="moon-container">
-                <img src="" alt="An icon of the moon" class="moon-symbol"/>
-                <p id="note-moon"></p>
-              </div>
+              <!-- User input: note editor -->
+              <textarea
+                id="note-content"
+                name="note-content"
+                placeholder="Begin your writing..."
+                autocomplete="off"
+              ></textarea>
             </div>
+          </section>
 
-            <!-- Note editor, user input area -->
-            <textarea
-              id="note-content"
-              name="note-content"
-              placeholder="Begin your writing..."
-              autocomplete="off"
-              required
-            ></textarea>
-          </div>
-          </div>
-
-        <!-- CHAT ADVISOR, col-2 -->
-          <div id="advisor" class="col-2 hidden">
+          <!-- CHAT ADVISOR: col-2 -->
+          <h2 class="hidden">Advisor chat interface</h2>
+          <section id="advisor" class="col-2 hidden">
             <div class="chat-wrapper">
-
-              <!-- Chat Advisor, heading section -->
+              <!-- Heading section: advisor -->
               <div class="chat-header">
                 <h2 id="advisor-name">Select an advisor</h2>
               </div>
-
-              <!-- Chat Advisor, chat window -->
-              <div id="chat-body">
+              <!-- Chat messages window: advisor -->
+              <div id="chat-body" role="log" aria-live="polite">
+                <!-- default chat messages -->
                 <div class="instruction-msg">
                   <p class="advisor-msg intro-msg">
-                    Upon consulting your Council for the first time, it may take a few minutes for them to gather. Please be patient. Subsequent visits will not take as long.
+                    Welcome. Upon consulting your Council for the first time, it may take a few minutes for them to gather.
+                  </p>
+                  <p class="advisor-msg intro-msg">
+                    Please be patient. Subsequent visits will not take as long.
+                  </p>
+                  <p class="advisor-msg intro-msg">
+                    Begin by selecting an advisor card from the tarot deck.
                   </p>
                   <p class="advisor-msg first-msg">
                     Hello, I will await your presence. Please consult me when you are ready...
                   </p>
                 </div>
               </div>
-
-              <!-- Chat Advisor, user input area -->
+              <!-- Chat user input area: advisor -->
               <div class="user-input-box">
                 <textarea
                   id="user-msg-input"
                   name="user-msg-input"
                   placeholder="Type > if you need guidance"
                   autocomplete="off"
-                  required
                 ></textarea>
+                <!-- help prompt -->
                 <div id="command-hint" class="command-hint">
-                  how  >system >idea
+                  how >system >idea
                 </div>
-                <button id="send-msg-btn" class="btn-cta">send</button>
+                <!-- send message button -->
+                <button id="send-msg-btn" class="btn-cta" aria-label="Send message to advisor">send</button>
               </div>
-
             </div>
-          </div>
+          </section>
 
-          <!-- Note Editor buttons, col-1 -->
-          <div class="note-buttons col-1">
-            <button id="save-note" type="submit" class="btn-cta" aria-label="Save current note">
+          <!-- NOTE EDITOR BUTTONS: col-1 -->
+          <aside class="note-buttons col-1">
+            <button id="save-note" class="btn-cta" aria-label="Save current note">
               <span class="material-symbols-outlined btn-icon" aria-hidden="true">save_as</span>
               <span class="btn-text">save</span>
             </button>
@@ -126,47 +133,59 @@
               <span class="material-symbols-outlined btn-icon" aria-hidden="true">delete</span>
               <span class="btn-text">bin</span>
             </button>
-          </div>
+          </aside>
         </div>
 
-        <!-- ADVISOR SIDE PANNEL, col-3 -->
-         <div id="personas" class="col-3">
-
-          <!-- Todays Moon Information section -->
+        <!-- ADVISOR SIDE PANEL: col-3 -->
+        <h3 class="hidden">Daily moon data</h3>
+        <aside id="personas" class="col-3">
+          <!-- DAILY MOON DATA section -->
           <div class="moon-info">
             <div class="today-moon">
+              <!-- illustration of today's moon -->
               <img src="" alt="An illustration of the moon" class="moon-illustration"/>
+              <!-- today's moon phase -->
               <p id="moon-phase-data" class="today-phase"></p>
             </div>
             <div class="today-data">
+              <!-- today's date -->
               <p id="current-date-data" class="today-date"></p>
+              <!-- today's time of moon visibility -->
               <p id="moon-visibility-data" class="today-visibility"></p>
             </div>
           </div>
 
-          <!-- Select Current Advisor section -->
+          <!-- ADVISOR SELECTOR section -->
+          <h3 class="hidden">Select an advisor from the tarot deck</h3>
           <div class="persona-cards">
-             <div id="deck" class="deck--idle">
+            <div id="deck" class="deck--idle">
+              <!-- card 1: The Alchemist -->
               <div class="card card-left card-in-deck" data-advisor-name="The Alchemist">
-                <button class="card-hitbox" aria-label="Select 'The Alchemist' card"></button>
-                <img src="assets/images/tarot/the-magician-purple.webp" alt="The magician tarot card" class="card-visual">
-                <img src="assets/images/tarot/the-magician-gold.webp" alt="The magician tarot card" class="card-visual hidden">
+                <button class="card-hitbox" aria-label="Select 'The Alchemist' card">
+                  <img src="assets/images/tarot/the-magician-purple.webp" alt="The magician tarot card" class="card-visual"/>
+                  <img src="assets/images/tarot/the-magician-gold.webp" alt="" aria-hidden="true" class="card-visual hidden"/>
+                </button>
               </div>
+              <!-- card 2: The Watcher -->
               <div class="card card-center card-in-deck" data-advisor-name="The Watcher">
-                <button class="card-hitbox" aria-label="Select 'The Watcher' card"></button>
-                <img src="assets/images/tarot/ten-of-swords-purple.webp" alt="Ten of swords tarot card" class="card-visual">
-                <img src="assets/images/tarot/ten-of-swords-gold.webp" alt="Ten of swords tarot card" class="card-visual hidden">
+                <button class="card-hitbox" aria-label="Select 'The Watcher' card">
+                  <img src="assets/images/tarot/ten-of-swords-purple.webp" alt="Ten of swords tarot card" class="card-visual"/>
+                  <img src="assets/images/tarot/ten-of-swords-gold.webp" alt="" aria-hidden="true" class="card-visual hidden"/>
+                </button>
               </div>
+              <!-- card 3: The Logician -->
               <div class="card card-right card-in-deck" data-advisor-name="The Logician">
-                <button class="card-hitbox" aria-label="Select 'The Logician' card"></button>
-                <img src="assets/images/tarot/king-of-swords-purple.webp" alt="King of swords tarot card" class="card-visual">
-                <img src="assets/images/tarot/king-of-swords-gold.webp" alt="King of swords tarot card" class="card-visual hidden">
+                <button class="card-hitbox" aria-label="Select 'The Logician' card">
+                  <img src="assets/images/tarot/king-of-swords-purple.webp" alt="King of swords tarot card" class="card-visual"/>
+                  <img src="assets/images/tarot/king-of-swords-gold.webp" alt="" aria-hidden="true" class="card-visual hidden"/>
+                </button>
               </div>
+              <!-- user instruction -->
               <p class="deck__instruction">Select advisor</p>
             </div>
           </div>
 
-          <!-- Buttons to toggle between Note Editor and Chat Advisor -->
+          <!-- WINDOW TOGGLE BUTTONS -->
           <div class="toggle-windows">
             <button id="use-journal" class="big-btn">
               <span class="material-symbols-outlined btn-icon" aria-hidden="true">book_4</span>
@@ -177,16 +196,15 @@
               <span class="btn-text">Talk to Advisor</span>
             </button>
           </div>
-         </div>
-
+        </aside>
       </div>
     </main>
 
-    <!-- OPEN NOTES MODAL -->
-    <div id="notes-container-modal" class="modal-overlay">
+    <!-- SAVED NOTES modal -->
+    <div id="notes-container-modal" class="modal-overlay" role="dialog" aria-modal="true" aria-labelledby="modal-title">
       <div id="modal-element" class="modal">
         <div class="modal-header">
-          <h3 id="modal-title">Title</h3>
+          <h4 id="modal-title">Title</h4>
         </div>
         <div id="modal-body"></div>
         <div id="modal-footer">
@@ -194,7 +212,10 @@
         </div>
       </div>
     </div>
-
+    <!-- DEV INFO -->
+    <footer class="website-info journal">
+      <p>© celestialog 2026 | Built by <a href="https://github.com/SADGHOBLIN" target="_blank" rel="noopener noreferrer" aria-label="View SADGHOBLIN's GitHub profile">SADGHOBLIN</a></p>
+    </footer>
     <!-- Custom JavaScript -->
     <script src="assets/js/script.js" type="module"></script>
   </body>
