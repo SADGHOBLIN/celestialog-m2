@@ -65,39 +65,39 @@ const state = {
 const moonImages = {
     "NEW MOON": {
         symbol: "assets/images/moon/new-moon-symbol.svg",
-        illustration: "assets/images/moon/full-moon.png",
+        illustration: "assets/images/moon/new-moon.webp",
     },
     "WANING CRESCENT": {
         symbol: "assets/images/moon/waning-crescent-symbol.svg",
-        illustration: "assets/images/moon/full-moon.png",
+        illustration: "assets/images/moon/waning-crescent.webp",
     },
     "LAST QUARTER": {
-        symbol: "assets/images/moon/third-quarter-symbol.svg",
-        illustration: "assets/images/moon/full-moon.png",
+        symbol: "assets/images/moon/last-quarter-symbol.svg",
+        illustration: "assets/images/moon/last-quarter.webp",
     },
     "WANING GIBBOUS": {
         symbol: "assets/images/moon/waning-gibbous-symbol.svg",
-        illustration: "assets/images/moon/full-moon.png",
+        illustration: "assets/images/moon/waning-gibbous.webp",
     },
     "FULL MOON": {
         symbol: "assets/images/moon/full-moon-symbol.svg",
-        illustration: "assets/images/moon/full-moon.png",
+        illustration: "assets/images/moon/full-moon.webp",
     },
     "WAXING GIBBOUS": {
         symbol: "assets/images/moon/waxing-gibbous-symbol.svg",
-        illustration: "assets/images/moon/full-moon.png",
+        illustration: "assets/images/moon/waxing-gibbous.webp",
     },
     "FIRST QUARTER": {
         symbol: "assets/images/moon/first-quarter-symbol.svg",
-        illustration: "assets/images/moon/full-moon.png",
+        illustration: "assets/images/moon/first-quarter.webp",
     },
     "WAXING CRESCENT": {
         symbol: "assets/images/moon/waxing-crescent-symbol.svg",
-        illustration: "assets/images/moon/full-moon.png",
+        illustration: "assets/images/moon/waxing-crescent.webp",
     },
     "RED MOON": {
         symbol: "assets/images/moon/red-moon-symbol.svg",
-        illustration: "assets/images/moon/red-moon.png",
+        illustration: "assets/images/moon/red-moon.webp",
     },
 };
 let notes = JSON.parse(localStorage.getItem("notes")) || {
