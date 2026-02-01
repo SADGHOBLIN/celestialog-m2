@@ -1,4 +1,4 @@
-/* DM Sans from Google Fonts */
+/* DM Sans and Inknut Antiqua from Google Fonts */
 @import url('https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Inknut+Antiqua:wght@300;400;500;600;700;800;900&display=swap');
 :root {
@@ -13,14 +13,10 @@
     --h6-text: 1.333rem;
     --p-text: 1rem;
     --sm-text: 0.75rem;
-
     --text: #dcd4ee;
     --text-light: #dcd4ee80;
     --bg: #161519;
-    --primary: #9924dd;
-    --secondary: #5f4a80;
     --accent: rgba(196, 205, 38, 0.8);
-
     --p-color: #834feb;
     --p-surface: #63519f44;
     --p-transparent: rgba(131, 79, 235, 0.4);
@@ -40,9 +36,8 @@ html, body {
 }
 body {
     font-family: var(--primary-font);
-    font-weight: --reg-weight;
+    font-weight: var(--reg-weight);
     line-height: 1.6;
-
     background-color: var(--bg);
     color: var(--text);
 }
@@ -61,7 +56,6 @@ button {
     color: var(--text);
     background-color: var(--p-transparent);
     border-radius: 1rem;
-
     padding: 0.25rem;
 }
 .big-btn {
@@ -142,7 +136,6 @@ button {
     opacity: 1;
     transform: translateX(6px) scale(1.05);
 }
-
 .section-wrapper {
     display: flex;
     justify-content: center;
@@ -354,7 +347,7 @@ button {
     font-weight: var(--bold-weight);
 }
 
-/* bottom gradient */
+/* bottom of screen gradient effect */
 .bottom-gradient {
     position: fixed;
     left: 0;
@@ -370,6 +363,7 @@ button {
         rgba( 10 10 10 / 0)
     );
 }
+/* dev info */
 .website-info {
     font-size: var(--sm-text);
     color: var(--text);
@@ -446,7 +440,7 @@ button {
     border-radius: 1rem 1rem 0 0;
     border: 5px solid var(--p-surface);
 }
-/* ---------------------------------------------------------------------------- */
+
 /* col-2, NOTE EDITOR UI */
 /* notes entry UI */
 .note-editor-container {
@@ -527,7 +521,6 @@ textarea, input {
     font-style: italic;
 }
 
-/* ---------------------------------------------------------------------------- */
 /* col-2, ADVISOR CHAT UI */
 .chat-header {
     padding: 1rem;
@@ -625,7 +618,6 @@ textarea, input {
     opacity: 0.8;
 }
 
-/* ---------------------------------------------------------------------------- */
 /* col-3, ADVSISOR CARD SELECTOR and MOON INFO */
 /* containers */
 .col-3 > div {
@@ -655,7 +647,7 @@ textarea, input {
     margin-bottom: 0.25rem;
 }
 
-/* Today's moon information */
+/* TODAY MOON information */
 .today-moon {
     display: flex;
     flex-direction: column;
@@ -690,7 +682,7 @@ textarea, input {
     margin-top: -0.35rem;
 }
 
-/* Persona Tarot cards */
+/* ADVISOR PERSONA TAROT CARDS */
 /* card deck image container */
 #deck {
     flex: 1 1 auto;
@@ -707,7 +699,7 @@ textarea, input {
     transform: translateY(-50%);
 }
 
-/* Deck States - changes depending on whether user has selected a card from the deck */
+/* deck states - changes depending on whether user has selected a card from the deck */
 .deck--idle,
 .deck--selected {
     height: 80%;
@@ -728,7 +720,7 @@ textarea, input {
     --hover-scale-mult: 1.05;
 }
 
-/* Card individual components */
+/* card individual components */
 /* handles interactivity triggers */
 .card-hitbox {
     width: inherit;
@@ -750,7 +742,7 @@ textarea, input {
     border: 2px solid var(--text);
     pointer-events: none;
 }
- /* Card element values - .card handles variables related to geometry, state, motion */
+ /* card element values - .card handles variables related to geometry, state, motion */
 .card {
     width: clamp(1px, 14vh, 14vw);
     height: auto;
@@ -807,7 +799,7 @@ textarea, input {
     --base-r: 7deg;
 }
 
-/* Card offsets - change individual cards dependent on current state */
+/* card offsets - change individual cards dependent on current state */
 /* deck size */
 .deck--idle .card-in-deck {
     --scale-mult: 1.6;
@@ -833,7 +825,7 @@ textarea, input {
     filter: brightness(0.65) saturate(0.7);
 }
 
-/* Card transition animations */
+/* card transition animations */
 /* initial card animation on page load */
 .card:not(.is-loaded) {
     --on-load-x: calc(var(--base-x) * -1);
@@ -890,7 +882,7 @@ textarea, input {
 
 /* ---------------------------------------------------------------------------- */
 /* SAVED NOTES DATA MODAL */
-/* View notes modal */
+/* view notes modal */
 .modal-overlay {
     position: fixed;
     top: 0;
@@ -960,7 +952,7 @@ textarea, input {
     border: none;
 }
 
-/* Saved note elements inside modal, displayed with View Notes button */
+/* saved note elements inside modal, displayed with View Notes button */
 .note {
     display: flex;
     flex-direction: column;
@@ -1050,9 +1042,8 @@ textarea, input {
     text-align: center;
 }
 #hide-missed-days :checked > .red-moon {
-    visibility: none;
+    visibility: hidden;
 }
-
 #modal-body.override-check {
     flex-direction: row;
     justify-content: center;
@@ -1090,7 +1081,7 @@ textarea, input {
     z-index: 999;
  }
 /* ---------------------------------------------------------------------------- */
-/* Error and Contact page */
+/* ERROR404, CONTACT, and SUCCESS pages */
 .section-wrapper.error404 {
     height: 94vh;
     width: auto;
@@ -1150,7 +1141,7 @@ textarea, input {
     padding-top: 1rem;
 }
 /* ---------------------------------------------------------------------------- */
-/* Animation keyframes */
+/* ANIMATION FX */
 @keyframes spin {
     from { transform: rotate(0deg); }
     to { transform: rotate(360deg); }
@@ -1185,6 +1176,7 @@ textarea, input {
 
 /* ---------------------------------------------------------------------------- */
 /* MEDIA QUERIES */
+/* LARGE SCREENS */
 @media screen and (min-width: 1024px) {
     .section-wrapper.journal-pg {
         width: 94vw;
@@ -1194,6 +1186,7 @@ textarea, input {
     }
 }
 
+/* LARGE TABLETS AND SMALL LAPTOPS */
 @media screen and (max-width: 1024px) {
     #nav img {
     height: 28px;
@@ -1239,6 +1232,7 @@ textarea, input {
     }
 }
 
+/* TABLETS AND LARGE PHONES */
 @media screen and (max-width: 768px) {
     /* Index page */
     .section-wrapper {
@@ -1356,6 +1350,7 @@ textarea, input {
         height: 100%;
         overflow: hidden;
     }
+
     /* main columns override */
     .col-merge {
         height: auto;
@@ -1525,6 +1520,7 @@ textarea, input {
     }
 }
 
+/* MOBILE DEVICES */
 @media (max-width: 480px) {
     /* Index page */
     .section-container {
@@ -1737,6 +1733,8 @@ textarea, input {
         order: 4;
         margin-bottom: 12dvh;
     }
+
+    /* Error, Contact, Success pages */
     .section-wrapper.error404 {
         height: 90vh;
     }
