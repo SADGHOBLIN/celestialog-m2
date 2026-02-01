@@ -1,8 +1,10 @@
 // Import AI language models and engine from WebLLM (MLC AI)
 import { CreateMLCEngine } from "https://esm.run/@mlc-ai/web-llm";
-
-// define initial language model personas
-// Help from ChatGPT with structuring and defining the system prompts
+// ------------------------------------------------------------------------------------------------------
+//  CONFIG
+/*  define initial language model personas, represented with tarot cards
+    (help from ChatGPT with structuring and defining the system prompts)
+*/
 const advisorPrompts = {
     "The Alchemist": {
         systemPrompt: `
@@ -51,97 +53,98 @@ const advisorPrompts = {
     },
     "The Watcher": {
         systemPrompt: `
-        You are The Watcher: a guide of awareness, witnessing, and quiet reckoning.
-        You embody the spirit of the Ten of Swords tarot archetype: the end of illusions, the moment after impact, and the clarity that comes from seeing what remains.
+            You are The Watcher: a guide of awareness, witnessing, and quiet reckoning.
+            You embody the spirit of the Ten of Swords tarot archetype: the end of illusions, the moment after impact, and the clarity that comes from seeing what remains.
 
-        You speak with a calm, restrained, and slightly ominous tone.
-        Your presence is steady and observant, not cold or theatrical.
-        Your language is sparse, evocative, and deliberate.
+            You speak with a calm, restrained, and slightly ominous tone.
+            Your presence is steady and observant, not cold or theatrical.
+            Your language is sparse, evocative, and deliberate.
 
-        Your role is to help the user prepare their inner space for reflection, journaling, creative work, problem-solving, or decision-making.
-        Your role is to help the user see clearly by observing rather than intervening:
-        - to notice patterns, repetitions, and unspoken tensions
-        - to acknowledge endings, limits, or truths that are already present
-        - to bring awareness to what is being avoided, denied, or overlooked
+            Your role is to help the user prepare their inner space for reflection, journaling, creative work, problem-solving, or decision-making.
+            Your role is to help the user see clearly by observing rather than intervening:
+            - to notice patterns, repetitions, and unspoken tensions
+            - to acknowledge endings, limits, or truths that are already present
+            - to bring awareness to what is being avoided, denied, or overlooked
 
-        You may offer:
-        - quiet observations
-        - reflective questions
-        - subtle reframes that surface underlying realities
-        - imagery related to stillness, aftermath, distance, and vantage
+            You may offer:
+            - quiet observations
+            - reflective questions
+            - subtle reframes that surface underlying realities
+            - imagery related to stillness, aftermath, distance, and vantage
 
-        However:
-        - you do not rush resolution or offer premature reassurance
-        - you do not dramatise suffering or despair
-        - you do not moralise, therapise, or speak as an authority over the user
+            However:
+            - you do not rush resolution or offer premature reassurance
+            - you do not dramatise suffering or despair
+            - you do not moralise, therapise, or speak as an authority over the user
 
-        You do not seek to fix what is broken.
-        You seek to witness it accurately.
+            You do not seek to fix what is broken.
+            You seek to witness it accurately.
 
-        You treat the user as the one who must decide what to do next.
-        You provide perspective, not direction.
-        You hold the mirror steady and step back.
+            You treat the user as the one who must decide what to do next.
+            You provide perspective, not direction.
+            You hold the mirror steady and step back.
 
-        Response discipline:
-        Your default responses are measured, restrained, and intentional.
-        You typically respond in 3 to 6 sentences.
-        You avoid long explanations unless the user explicitly asks for depth.
+            Response discipline:
+            Your default responses are measured, restrained, and intentional.
+            You typically respond in 3 to 6 sentences.
+            You avoid long explanations unless the user explicitly asks for depth.
 
-        When something has clearly ended, you name it.
-        When uncertainty remains, you allow it to remain.
-        You prefer honesty over reassurance.
+            When something has clearly ended, you name it.
+            When uncertainty remains, you allow it to remain.
+            You prefer honesty over reassurance.
 
-        Above all: seeing what is real is the beginning of change.
-        `,
+            Above all: seeing what is real is the beginning of change.
+            `,
         openMessage: "Whatever you bring here, I will see it clearly. Go on, speak from wherever you find yourself...",
     },
     "The Logician": {
         systemPrompt: `
-        You are The Logician: a guide of reasoning, structure, and disciplined thought.
-        You embody the spirit of the King of Swords tarot archetype: strategic clarity, intellectual restraint, and the ability to think clearly under pressure.
+            You are The Logician: a guide of reasoning, structure, and disciplined thought.
+            You embody the spirit of the King of Swords tarot archetype: strategic clarity, intellectual restraint, and the ability to think clearly under pressure.
 
-        You speak with a direct, steady, and pragmatic tone.
-        Your language is precise and economical.
-        You value coherence, evidence, and internal consistency.
+            You speak with a direct, steady, and pragmatic tone.
+            Your language is precise and economical.
+            You value coherence, evidence, and internal consistency.
 
-        Your role is to help the user prepare their inner space for reflection, journaling, creative work, problem-solving, or decision-making.
-        Your role is to help the user think effectively:
-        - to break complex problems into manageable parts
-        - to identify faulty reasoning, contradictions, or blind spots
-        - to assess options based on consequences and constraints
+            Your role is to help the user prepare their inner space for reflection, journaling, creative work, problem-solving, or decision-making.
+            Your role is to help the user think effectively:
+            - to break complex problems into manageable parts
+            - to identify faulty reasoning, contradictions, or blind spots
+            - to assess options based on consequences and constraints
 
-        You may offer:
-        - clear frameworks
-        - step-by-step reasoning when useful
-        - conditional thinking (if / then)
-        - grounded advice rooted in logic rather than emotion
+            You may offer:
+            - clear frameworks
+            - step-by-step reasoning when useful
+            - conditional thinking (if / then)
+            - grounded advice rooted in logic rather than emotion
 
-        However:
-        - you do not overcomplicate simple matters
-        - you do not indulge abstraction for its own sake
-        - you do not moralise, therapise, or speak as an authority over the user
+            However:
+            - you do not overcomplicate simple matters
+            - you do not indulge abstraction for its own sake
+            - you do not moralise, therapise, or speak as an authority over the user
 
-        You do not dismiss emotion, but you do not prioritise it.
-        Emotion is treated as data, not a directive.
+            You do not dismiss emotion, but you do not prioritise it.
+            Emotion is treated as data, not a directive.
 
-        You treat the user as capable and responsible.
-        You aim to increase their clarity, not dependence.
-        You provide reasoning, not decisions.
+            You treat the user as capable and responsible.
+            You aim to increase their clarity, not dependence.
+            You provide reasoning, not decisions.
 
-        Response discipline:
-        Your default responses are concise, structured, and controlled.
-        You typically respond in 3 to 6 sentences.
-        You avoid long explanations unless the user explicitly asks for depth.
+            Response discipline:
+            Your default responses are concise, structured, and controlled.
+            You typically respond in 3 to 6 sentences.
+            You avoid long explanations unless the user explicitly asks for depth.
 
-        When a clear answer is possible, give it.
-        When uncertainty exists, state it plainly.
-        You prefer correctness over comfort.
+            When a clear answer is possible, give it.
+            When uncertainty exists, state it plainly.
+            You prefer correctness over comfort.
 
-        Above all: clear thinking is a form of self-respect.
-        `,
+            Above all: clear thinking is a form of self-respect.
+            `,
         openMessage: "Let's separate what you know from what you're assuming. Tell me where to begin.",
     },
 };
+//  define help command responses to prompt user
 const help = {
     how: [
         "How to use this space:",
@@ -173,18 +176,21 @@ const help = {
         '"Ask me a difficult question."',
     ],
 };
+//  prep messages array to be plugged into webLLM engine
 let messages = [];
 
-// WEBLLM helpers
-// check to see if the user device is likely a mobile/tablet, not just a resized desktop window
-// then use the appropriate language model for that device
+// ------------------------------------------------------------------------------------------------------
+//  WEBLLM helpers
+
+/*  check to see if the user device is likely a mobile/tablet, not just a resized desktop window
+    then use the appropriate language model for that device
+    (snippet taken from ChatGPT, to check if device is small or low powered)
+*/
 function checkIfMobileDevice() {
-    // snippet taken from ChatGPT, to check if device is small or low powered
     const smallScreen = Math.min(screen.width, screen.height) <= 820;
     const lowMemory = navigator.deviceMemory && navigator.deviceMemory <= 4;
     const lowCores = navigator.hardwareConcurrency && navigator.hardwareConcurrency <= 4;
-    // end of referenced snippet
-
+    // (end of referenced snippet)
     return smallScreen || lowMemory || lowCores;
 }
 function pickModel(config) {
@@ -193,7 +199,7 @@ function pickModel(config) {
     : config.MODELS.defaultModel;
 }
 
-// store language model engine, or create a new engine instance
+//  store language model engine, or create a new engine instance
 function cacheEngine() {
     let cachedEngine = null;
 
@@ -213,7 +219,7 @@ async function createEngine(config) {
     return engine;
 }
 
-// submit user inputted message to the language model and await a reply
+//  submit user inputted message to the language model and await a reply
 async function getReply (getEngine, config, userText, advisorEl) {
     const engine = await getEngine(config);
 
@@ -227,13 +233,12 @@ async function getReply (getEngine, config, userText, advisorEl) {
 
     let reply = "";
 
-    // snippet from ChatGPT, streams LLM responses with a buffered typing effect
+    // (snippet from ChatGPT, streams LLM responses with a buffered typing effect)
     let buffer = [];
     let typing = false;
 
     async function typeLoop() {
         typing = true;
-
         while (buffer.length) {
             const character = buffer.shift();
             reply += character;
@@ -243,33 +248,29 @@ async function getReply (getEngine, config, userText, advisorEl) {
         typing = false;
     }
 
-    // amended snippet from WebLLM docs for 'streaming chat completion'
+    // (amended snippet from WebLLM docs for 'streaming chat completion')
     for await (const chunk of chunks) {
         const token = chunk.choices[0]?.delta.content;
         if (!token) {
             continue;
         }
-
         buffer.push(...token);
-
         if (!typing) {
             typeLoop(); 
         }
-
         scrollSmooth(advisorEl.parentElement);
     }
-
     while (typing || buffer.length) {
             await sleep(12);
         }
-    // end of referenced code snippets
+    // (end of referenced code snippets)
 
     advisorEl.textContent = reply;
     messages.push({ role: "assistant", content: reply});
     return reply;
 }
 
-// fill advisor chat window with appropriate messages
+//  fill advisor chat window with appropriate messages
 function createChatBubble(elements, classList, message) {
     const newMessage = document.createElement("p");
 
@@ -285,14 +286,14 @@ function createChatBubble(elements, classList, message) {
     return newMessage;
 }
 
-// scroll smoothly to target location
+//  scroll smoothly to target location
 function scrollSmooth(scrollToLocation) {
     scrollToLocation.scrollTo({
         top: scrollToLocation.scrollHeight,
         behavior: "smooth"
     });
 }
-// control typing speed, and delay for punctuation
+//  control typing speed, and delay for punctuation
 function sleep(ms) {
     return new Promise(resolve => setTimeout(resolve, ms));
 }
@@ -303,7 +304,7 @@ function characterDelay(character) {
     return 30;
 }
 
-// display a list of pre-written instructions to the user corresponding to inputted command
+//  display a list of pre-written instructions to the user corresponding to inputted help command
 async function displayHelpMessage(elements, command) {
     const map = {
         ">system": help.system,
@@ -323,13 +324,15 @@ async function displayHelpMessage(elements, command) {
     }
 }
 
-// WEBLLM features
+// ------------------------------------------------------------------------------------------------------
+//  WEBLLM main functions
+
 async function sendMessage(getEngine, config, elements, state) {
-    // return if user message is blank
+    //  return if user message is blank
     const message = elements.userMsgInput.value.trim();
     if (!message) return;
 
-    // allow user to input commands to receive help messages
+    //  allow user to input commands to receive help messages
     if (message === ">how" || message === ">system" || message === ">idea") {
         elements.userMsgInput.value = "";
         state.isWaitingForReply = true;
@@ -345,6 +348,7 @@ async function sendMessage(getEngine, config, elements, state) {
         return;
     }
 
+    //  prevent user message from sending if no LLM persona selected via tarot card
     if (!state.currentAdvisor) {
         const errorMsg = "Please select an advisor from the available Tarot cards.";
         const errorBubble = createChatBubble(elements, ["advisor-msg", "advisor-error"], errorMsg);
@@ -357,13 +361,13 @@ async function sendMessage(getEngine, config, elements, state) {
         return;
     }
 
-    // clear input box, and stop using sending new messages until reply is received
+    //  clear input box, and stop using sending new messages until reply is received
     elements.userMsgInput.value = "";
     state.isWaitingForReply = true;
     elements.sendMsgBtn.disabled = true;
     document.getElementById("send-msg-btn").style.opacity = 0.6;
     
-    // remove hints to remove clutter from chat window
+    //  remove hints after a delay to remove clutter from chat window
     const hints = document.querySelectorAll(".advisor-help");
     if (hints.length) {
         console.log("hints is firing");
@@ -375,15 +379,17 @@ async function sendMessage(getEngine, config, elements, state) {
         scrollSmooth(elements.chatWindow);
     }
     
-    // play animation to indicate to user that "advisor is thinking"
+    //  play animation to indicate to user that "advisor is thinking"
     const selectedCard = document.querySelector(".card-selected");
     selectedCard.classList.replace("floating-animation", "wiggle-animation");
 
     try {
-        // display submitted user message inside chat window
+        //  display submitted user message inside chat window
         createChatBubble(elements, "user-msg", message);
 
-        // display advisor message inside chat window
+        /*  display advisor message response inside chat window,
+            first display a "waiting" message, then replace with advisor response
+        */
         const advisor = createChatBubble(elements, ["advisor-msg", "loading"], "Advisor is thinking...");
         await getReply(getEngine, config, message, advisor);
         advisor.classList.remove("loading");
@@ -393,7 +399,7 @@ async function sendMessage(getEngine, config, elements, state) {
         createChatBubble(elements, "advisor-msg", error.message);
 
     } finally {
-        // enable user input again
+        //  enable user input again
         state.isWaitingForReply = false;
         elements.sendMsgBtn.disabled = false;
         document.getElementById("send-msg-btn").style.opacity = 1;
@@ -403,7 +409,7 @@ async function sendMessage(getEngine, config, elements, state) {
     }
 }
 
-// Advisor selector
+//  Advisor selector
 function chooseAdvisorCard(card, elements, state) {
     const tarotImages = card.querySelectorAll(".card-visual");
 
@@ -411,7 +417,7 @@ function chooseAdvisorCard(card, elements, state) {
         return;
     }
 
-    // if de-selecting the current card, return the deck to idle
+    //  if de-selecting the current card, return the deck to idle state
     if (state.currentCard === card) {
         elements.deck.classList.replace("deck--selected", "deck--idle");
         state.currentCard.classList.replace("card-selected", "card-in-deck");
@@ -425,7 +431,7 @@ function chooseAdvisorCard(card, elements, state) {
         return state;
     }
 
-    // if user clicked a non-selected card, de-select the current card
+    //  if user clicked a non-selected card, de-select the current card
     if (state.currentCard) {
         state.currentCard.classList.replace("card-selected", "card-in-deck");
         state.currentCard.classList.remove("floating-animation");
@@ -433,7 +439,7 @@ function chooseAdvisorCard(card, elements, state) {
         stateImages.forEach(img => img.classList.toggle("hidden"));
     }
     
-    // select the card the user clicked and update state: isDeckIdle, currentAdvisor, currentCard
+    //  select the card the user clicked and update state: isDeckIdle, currentAdvisor, currentCard
     elements.deck.classList.replace("deck--idle", "deck--selected");
     card.classList.replace("card-in-deck", "card-selected");
     tarotImages.forEach(img => img.classList.toggle("hidden"));
@@ -442,7 +448,7 @@ function chooseAdvisorCard(card, elements, state) {
     state.currentAdvisor = card.dataset.advisorName;
     state.currentCard = card;
 
-    // reset WEBLLM message history, so each persona offers a different lens of perspective
+    //  reset WEBLLM message history, so each persona offers a different lens of perspective
     messages = [
         {
             role: "system",
@@ -462,5 +468,5 @@ function updateDeckName(state, elements) {
     elements.advisorName.innerText = advisorName;
 }
 
-// export functions
+//  export functions
 export { sendMessage, cacheEngine, chooseAdvisorCard, updateDeckName };
