@@ -1113,6 +1113,9 @@ textarea, input {
 .contact .h2 {
     font-size: var(--h2-text);
 }
+.contact small {
+    margin-top: -1rem;
+}
 .form-container {
     height: auto;
     width: 92%;
