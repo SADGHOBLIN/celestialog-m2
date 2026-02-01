@@ -14,17 +14,21 @@ Live site can be viewed here: [celestialog | Journaling App](https://sadghoblin.
 
 **Celestialog** is a journaling web application built primarily with HTML, CSS, and JavaScript, designed to explore how interactive systems and narrative framing can encourage a more consistent and meaningful journaling practice.
 
-Whilst traditional journaling tools or apps tend to focus on minimalism and self discipline, **celestialog** introduces optional narrative-driven features that aim to support reflection, curiousity, and emotional engagement in an user's journaling practice, through the **Tarot Advisor** system.
+Whilst traditional journaling tools or apps tend to focus on minimalism and self discipline, **Celestialog** introduces optional narrative-driven features that aim to support reflection, curiousity, and emotional engagement in an user's journaling practice through the **Tarot Advisor** system.
 
-The target audience consists of users who actively journal, but are **looking to find a more expressive way of writing**. The project also aims to **support users who are new to journaling** - particularly those who have **struggled to maintain consistency**, or may have not yet found a work that works for them.
+The target audience consists of users who actively journal, but are **looking to find a more expressive way of writing**. The project also aims to **support users who are new to journaling** - particularly those who have **struggled to maintain consistency**, or may have not yet found a work that works for them. 
+
+Thematically, the moon phase data in **Celstialog** reinforces the push for consistency, framing the user to *journal under the gaze of the moon*. Since the **majority of people journal early morning or late evening**, the lunar cycle provides a **natural and symbolic backdrop for reflection**.
+
+The app currently focuses on *dark mode*, targetting users who journal at night time. Further development plans include the introduction of a *day mode toggle* with a *sun tracker* to better support users who prefer to journal in the morning.
 
 Two core experiemental features define the experience:
-- The ***Tarot Card Advisor*** system adds a narrative experience for the user, allowing them converse, ask questions, and seek guidance from one of the tarot-inspired personas.
+- The ***Tarot Card Advisor*** system adds a narrative experience for the user, allowing them converse, ask questions, and seek guidance from one of the AI adviors with personalities inspired by Tarot Card archetypes.
 - The ***Red Moon*** system gently introduces accountability for missed journaling days. Rather than punishing the user, missed entries are representing symbolically, encouraging awareness and consistency.
 
 However, these unique features are **optional** and more casual visitors to the website are able to access a thematic, lightweight, and private journaling space that stores their notes data locally. The *Advisor* system only draws resources when engaged with, and the *Red Moons* can be disabled at any time. 
 
-**Celestialog** acts as a prototype for future development, with the aim of building a consistent user base to source valuable feedback for further iterations. Potential extentions include a richer pool of Tarot Advisors, optional cloud-based storage for access across multiple devices, expanded visual illustration work, ambient sound or music, and deeper personalisation features.
+**Celestialog** acts as a prototype for future development, with the aim of building a consistent user base to source valuable feedback for further iterations. Potential extentions include a richer pool of Tarot Advisors, more distinct and developed AI personas, optional cloud-based storage for access across multiple devices, expanded visual illustration work, ambient sound or music, and deeper personalisation features.
 
 ![screenshot](documentation/site-responsive-mockups.png)
 
@@ -134,8 +138,23 @@ flowchart TD
 - [Imagery](#imagery) (see below)
 
 ### Colour Scheme:
-> [!NOTE]
-> TODO: Under development
+
+I used [coolors.co](https://coolors.co/161519-834feb-63519f-dcd4ee-e8c643) to generate my colour palette.
+
+- `#161519` Onyx - background colour
+- `#834feb` Majorelle Blue - primary theme colour, CTA buttons
+- `#63519F` Dusty Grape - semi-transparent, muted surface colour, used to build UI
+- `#dcd4ee` Lavender - primary text colour
+- `#e8c643` Tuscan Sun - primary accent colour, used for key UI moments
+
+![screenshot](documentation/colour-palette.png)
+
+The rationale for this colour scheme was to enhance the narrative theme of the website: a *dark-mode feel* to mimic the ambience of journaling under the moon.
+Purples are a popular choice for dark-mode themes, and align with the *mysticism* of the Tarot Card inspired aesthetic.
+
+Both the purple UI and warm lavender text colour are easy on the eye and reduce eye strain, especially in low-light conditions - making the choices perfect for late-night journaling.
+
+The vibrant *Tuscan Sun* yellow adds a touch of *brilliance* for key features and user moments. The Tarot persona cards light up when selected, enhancing the tactility of user interaction and complimenting the purples used in the main UI.
 
 ### Typography:
 > [!NOTE]
