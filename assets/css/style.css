@@ -17,7 +17,8 @@
     --text-light: #dcd4ee80;
     --bg: #161519;
     --accent: rgba(196, 205, 38, 0.8);
-    --p-color: #834feb;
+    --accent: #c4cd26cc;
+    --p-color: #693bc5;
     --p-surface: #63519f44;
     --p-transparent: rgba(131, 79, 235, 0.4);
     --p-light: #A9A6E5;
@@ -65,6 +66,27 @@ button {
     justify-content: center;
     align-items: center;
     gap: 0.5rem;
+}
+ .main-cta {
+    height: 60px;
+    width: 250px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    font-size: var(--h6-text);
+    font-weight: var(--bold-weight);
+    background-color: var(--p-color);
+    color: var(--text);
+    box-shadow: 0px 4px 8px var(--bg);
+    border-radius: 1rem;
+
+    text-transform: uppercase;
+    text-decoration: none;
+    letter-spacing: 3px;
+
+    padding: 0.25rem;
+    margin-top: 1rem;
 }
 .btn-cta {
     color: var(--bg);
@@ -191,26 +213,6 @@ button {
     line-height: 0.9;
     text-align: center;
     margin-bottom: clamp(-0.75rem, -2vh, -0.25rem);
-}
- .main-cta {
-    height: 60px;
-    width: 250px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-
-    font-size: var(--h6-text);
-    background-color: var(--p-color);
-    color: var(--text);
-    box-shadow: 0px 4px 8px var(--bg);
-    border-radius: 1rem;
-
-    text-transform: uppercase;
-    text-decoration: none;
-    letter-spacing: 3px;
-
-    padding: 0.25rem;
-    margin-top: 1rem;
 }
 
 /* about section */
@@ -912,7 +914,7 @@ textarea, input {
     transform: translateY(240px);
     transition: transform 0.5s;
     background-color: var(--p-light);
-    color: black;
+    color: var(--text);
     border-radius: 1rem;
     box-shadow: 4px 4px 16px var(--p-color);
 }
