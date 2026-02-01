@@ -1764,3 +1764,29 @@ textarea, input {
         width: 100%;
     }
 }
+
+@media (prefers-reduced-motion: reduce) {
+    /* stops looping and decorative animations */
+    .landing-img,
+    .landing-img-container,
+    .floating-animation,
+    .wiggle-animation {
+        animation: none !important;
+    }
+
+    /* disables tarot card motion */
+    .card {
+        transition: none !important;
+        translate:
+            calc(var(--anchor-x) + var(--base-x))
+            calc(var(--anchor-y) + var(--base-y));
+        rotate: var(--base-r);
+        scale: var(--base-s);
+    }
+    .card:not(.card-selected):has(.card-hitbox:hover) {
+        --offset-x: 0%;
+        --offset-y: 0%;
+        --offset-r: 0deg;
+        --scale-mult: 1;
+    }
+}
