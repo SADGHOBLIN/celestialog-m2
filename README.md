@@ -30,7 +30,7 @@ However, these unique features are **optional** and more casual visitors to the 
 
 **Celestialog** acts as a prototype for future development, with the aim of building a consistent user base to source valuable feedback for further iterations. Potential extentions include a richer pool of Tarot Advisors, more distinct and developed AI personas, optional cloud-based storage for access across multiple devices, expanded visual illustration work, ambient sound or music, and deeper personalisation features.
 
-![screenshot](documentation/site-responsive-mockups.png)
+![screenshot](documentation/visual-design/site-responsive-mockups.png)
 
 source: [celestialog-m2 amiresponsive](https://fireship.dev/amiresponsive?url=https://sadghoblin.github.io/celestialog-m2/)
 
@@ -141,13 +141,15 @@ flowchart TD
 
 I used [coolors.co](https://coolors.co/161519-834feb-63519f-dcd4ee-e8c643) to generate my colour palette.
 
+[Realtime Colours](https://www.realtimecolors.com/?colors=dcd4ee-161519-9924dd-63519f-c4cd26&fonts=DM%20Sans-DM%20Sans) was a useful tool for exploring ideas and visualising the colour palette in a mockup form.
+
 - `#161519` Onyx - background colour
 - `#834feb` Majorelle Blue - primary theme colour, CTA buttons
 - `#63519F` Dusty Grape - semi-transparent, muted surface colour, used to build UI
 - `#dcd4ee` Lavender - primary text colour
 - `#e8c643` Tuscan Sun - primary accent colour, used for key UI moments
 
-![screenshot](documentation/colour-palette.png)
+![screenshot](documentation/visual-design/colour-palette.png)
 
 The rationale for this colour scheme was to enhance the narrative theme of the website: a *dark-mode feel* to mimic the ambience of journaling under the moon.
 Purples are a popular choice for dark-mode themes, and align with the *mysticism* of the Tarot Card inspired aesthetic.
@@ -157,12 +159,33 @@ Both the purple UI and warm lavender text colour are easy on the eye and reduce 
 The vibrant *Tuscan Sun* yellow adds a touch of *brilliance* for key features and user moments. The Tarot persona cards light up when selected, enhancing the tactility of user interaction and complimenting the purples used in the main UI.
 
 ### Typography:
-> [!NOTE]
-> TODO: Under development
+
+Fonts were sourced from [Google Fonts](https://fonts.google.com/), with the primary goal of utilising a clean and readable font.
+
+- [DM Sans](https://fonts.google.com/specimen/DM+Sans/) is a popular sans serif font that is particularly effective at smaller sizes, but also adaptable for clean headings.
+![screenshot](documentation/visual-design/font-sample-dmsans.png)
+
+- [Inknut Antiqua](https://fonts.google.com/specimen/Inknut+Antiqua) is an interesting antiqua font that is designed to mimic handwriting styles that were common in the 15th and 16th centuries. This compliments the feel of mysticism and tarot-inspired themes and makes for a striking title font that resonates with traditional methods of pen and paper journaling.
+![screenshot](documentation/visual-design/font-sample-inknutantiqua.png)
+
+- [Google Fonts Icons](https://fonts.google.com/icons) were also used throughout the site, such as in lists and buttons.
 
 ### Imagery:
-> [!NOTE]
-> TODO: Under development
+
+A range of imagery was used throughout the site to compliment the website's design elements.
+
+The main illustrations are the Tarot cards that represent the various AI chat personas. These are adaptations of the classic [Rider-Waite-Smith tarot](https://steve-p.org/cards/RWSa.html) cards, which are instantly recognisable. Not only are these designs now in the public domain and free to use, but capture a user's attention through their in-built symbolism.
+
+Because of this, I am able to creatively adapt their artwork to match my app and create a recognisable look, but also able to take advantage of any in-built preconceptions that a user has, allowing the cards to, somewhat, 'speak for themselves'.
+
+Tarot Advisor Cards, with golden alt versions
+![screenshot](documentation/visual-design/tarot-illustrations.png)
+
+Alongide the tarot cards, another key feature of **Celestialog** is the moon phase tracker. The moon phases are one of the identifying components of the user's saved notes, therefore I wanted to create an image for each phase by hand, so that the art style closely aligned with the tarot cards.
+
+Moon Phase Icons
+![screenshot](documentation/visual-design/moon-illustrations.png)
+
 ---
 
 
