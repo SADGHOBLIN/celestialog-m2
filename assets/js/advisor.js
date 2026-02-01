@@ -1,4 +1,4 @@
-// Import AI language models and engine from WebLLM (MLC AI)
+//  reference: Import AI language models and engine from WebLLM (MLC AI)
 import { CreateMLCEngine } from "https://esm.run/@mlc-ai/web-llm";
 // ------------------------------------------------------------------------------------------------------
 //  CONFIG
@@ -467,6 +467,6 @@ function updateDeckName(state, elements) {
     elements.deckInstruction.innerText = advisorName;
     elements.advisorName.innerText = advisorName;
 }
-
+// ------------------------------------------------------------------------------------------------------
 //  export functions
 export { sendMessage, cacheEngine, chooseAdvisorCard, updateDeckName };

@@ -578,6 +578,6 @@ function viewRecycleBin(elements, notes, state, moonImages) {
     });
     openModal(elements);
 }
-
+// ------------------------------------------------------------------------------------------------------
 //  export functions
 export { initNotes, displayTodaysNote, captureUserEntry, createNewNote, viewAllNotes, viewRecycleBin, toggleHidden, closeModal };

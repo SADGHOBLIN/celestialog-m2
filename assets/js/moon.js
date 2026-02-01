@@ -1,6 +1,7 @@
-// Astronomy API from IPGeolocation
-// MOON API helpers
-// load API data from local storage and check freshness, or get new fresh data
+//  reference: Astronomy API from IPGeolocation
+
+//  MOON API helpers
+//  load API data from local storage and check freshness, then get new fresh data if stale
 async function getMoonData(config) {
     const savedData = localStorage.getItem("astronomyData");
 
@@ -14,7 +15,7 @@ async function getMoonData(config) {
         : await saveAstronomyData(config);
 }
 
-// get astronomy data from API and save to local storage
+//  get astronomy data from API and save to local storage
 async function saveAstronomyData(config) {
     let city = "Leeds%2C%20UK";
     const queryString = `${config.API_URL}?apiKey=${config.API_KEY}&location=${city}`;
@@ -27,10 +28,10 @@ async function saveAstronomyData(config) {
         const apiDate = data.astronomy.date;
         const apiTime = data.astronomy.current_time;
 
-        // credit to ChatGPT for help converting the API date and time data to milliseconds since unix epoch (UTC)
+        // (snippet from ChatGPT to help converting the API date and time data to milliseconds since unix epoch (UTC))
         const dateTime = `${apiDate}T${apiTime}`;
         const timestamp = new Date(dateTime).getTime();
-        // end
+        //  (end of referenced snippet)
         
         const payload = {
             moonData: data,
@@ -44,7 +45,7 @@ async function saveAstronomyData(config) {
     }
 }
 
-// check if data is from same date, and less than 12 hours old
+//  check if data is from same date, and less than 12 hours old
 function isDataFresh(payload, config) {
     const age = Date.now() - payload.timestamp;
     const expiryTime = config.DATA_EXPIRY_HOURS * 60 * 60 * 1000;
@@ -54,7 +55,7 @@ function isDataFresh(payload, config) {
     return age <= expiryTime && dataDate === currentDate;
 }
 
-// convert API data into a readable format
+//  convert API data into a readable format
 function formatMoonData(currentPhase) {
     return currentPhase
         .toLowerCase()
@@ -63,7 +64,7 @@ function formatMoonData(currentPhase) {
         .join(" ");
 }
 
-// check moon visibility based on moonrise and moonset data (HHMM format)
+//  check moon visibility based on moonrise and moonset data (HHMM format)
 function checkMoonVisibility(moonrise, moonset) {
     const today = new Date();
     const now = today.getHours() * 100 + today.getMinutes();
@@ -78,11 +79,13 @@ function checkMoonVisibility(moonrise, moonset) {
         : now >= rise && now <= set;
 }
 
-// MOON API features
+// ------------------------------------------------------------------------------------------------------
+//  MOON API features
+
 async function displayMoonData(config, elements, moonImages) {
     let payload = await getMoonData(config);
 
-    // moon info variables
+    //  moon info variables
     const today = new Date(payload.timestamp);
     const moonData = payload.moonData;
     
@@ -90,7 +93,7 @@ async function displayMoonData(config, elements, moonImages) {
     const moonrise = moonData.astronomy.moonrise;
     const moonset = moonData.astronomy.moonset;
 
-    // display current moon phase with corresponding symbol and illustration
+    //  display current moon phase with corresponding symbol and illustration in DOM
     elements.moonPhase.innerText = moonPhase;
     elements.noteMoon.innerText= `${moonPhase.toUpperCase()}`;
     const symbol = document.querySelector(".moon-symbol");
@@ -98,21 +101,17 @@ async function displayMoonData(config, elements, moonImages) {
     const illustration = document.querySelector(".moon-illustration");
     illustration.src = moonImages[moonPhase.toUpperCase()].illustration;
 
-    // display current date
+    //  display current date
     elements.date.innerText = today.toDateString();
     elements.noteDate.innerText = today.toDateString();
 
-    // display moon visibility
+    //  display moon visibility
     const isVisible = checkMoonVisibility(moonrise, moonset);
 
     elements.moonVisibility.textContent = isVisible
         ? `${moonrise} - ${moonset}`
         : `Moonrise at ${moonrise}`;
-    
-
-    // DEBUGGING:
-    console.log(payload);
 }
-
-// export functions
+// ------------------------------------------------------------------------------------------------------
+//  export functions
 export { displayMoonData };
