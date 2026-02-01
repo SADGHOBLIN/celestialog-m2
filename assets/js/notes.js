@@ -2,10 +2,16 @@
 import { displayMoonData } from "./moon.js";
 
 // NOTES DATA helpers
+function initNotes() {
+    return JSON.parse(localStorage.getItem("notes")) || {
+        userNotes: [],
+        recycleBin: [],
+    };
+}
 
-
-// generates a unique timestamp at time of creation to be used as the unique Note ID
-// represents the number of milliseconds since midnight Jan 1 1970 (Unix epoch)
+/*  generates a unique timestamp at time of creation to be used as the unique Note ID
+    represents the number of milliseconds since midnight Jan 1 1970 (Unix epoch) 
+*/
 function generateNoteId() {
     const timestamp = Date.now();
     return timestamp.toString();
@@ -587,4 +593,4 @@ function viewRecycleBin(elements, notes, state, moonImages) {
 }
 
 // export functions
-export { displayTodaysNote, captureUserEntry, createNewNote, viewAllNotes, viewRecycleBin, toggleHidden, closeModal };
+export { initNotes, displayTodaysNote, captureUserEntry, createNewNote, viewAllNotes, viewRecycleBin, toggleHidden, closeModal };

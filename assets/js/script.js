@@ -1,25 +1,23 @@
 // Import custom functions from other modules
 import { displayMoonData } from "./moon.js";
 import { sendMessage, cacheEngine, chooseAdvisorCard, updateDeckName } from "./advisor.js";
-import { displayTodaysNote, captureUserEntry, createNewNote, viewAllNotes, viewRecycleBin, toggleHidden, closeModal } from "./notes.js";
-
+import { initNotes, displayTodaysNote, captureUserEntry, createNewNote, viewAllNotes, viewRecycleBin, toggleHidden, closeModal } from "./notes.js";
+// ------------------------------------------------------------------------------------------------------
 // CONFIG
 const config = {
+    /*  api key is exposed, but this is a free plan with a daily limit.
+        securing the api key is beyond the scope of this project, and the
+        risk of this particular exposed key within this context is low.
+    */
     API_KEY: "1cd00c803c544f90b75357b117b4c27a",
     API_URL: "https://api.ipgeolocation.io/v2/astronomy",
     DATA_EXPIRY_HOURS: 12,
     MODELS: {
         defaultModel: "Llama-3.2-3B-Instruct-q4f16_1-MLC",
         mobileModel: "Llama-3.2-1B-Instruct-q4f16_1-MLC",
-        experimentalModel: "NeuralHermes-2.5-Mistral-7B-q4f16_1-MLC"
     }
 };
 const elements = {
-    // moon information
-    date: document.getElementById("current-date-data"),
-    moonPhase: document.getElementById("moon-phase-data"),
-    moonVisibility: document.getElementById("moon-visibility-data"),
-
     // buttons
     useJournal: document.getElementById("use-journal"),
     useAdvisor: document.getElementById("use-advisor"),
@@ -30,12 +28,25 @@ const elements = {
     closeModalBtn: document.getElementById("close-modal"),
     sendMsgBtn: document.getElementById("send-msg-btn"),
 
-    // journal notes form data
+    // journal notes interface
     noteEditor: document.getElementById("note-editor"),
     noteTitle: document.getElementById("note-title"),
     noteDate: document.getElementById("note-date"),
     noteMoon: document.getElementById("note-moon"),
     noteContent: document.getElementById("note-content"),
+
+    // advisor chat interface
+    advisor: document.getElementById("advisor"),
+    chatWindow: document.getElementById("chat-body"),
+    userMsgInput: document.getElementById("user-msg-input"),
+    deck: document.getElementById("deck"),
+    deckInstruction: document.querySelector(".deck__instruction"),
+    advisorName: document.getElementById("advisor-name"),
+
+    // moon information
+    date: document.getElementById("current-date-data"),
+    moonPhase: document.getElementById("moon-phase-data"),
+    moonVisibility: document.getElementById("moon-visibility-data"),
 
     // journal notes modal
     journal: document.getElementById("journal"),
@@ -44,15 +55,6 @@ const elements = {
     modalTitle: document.getElementById("modal-title"),
     modalBody: document.getElementById("modal-body"),
     modalFooter: document.getElementById("modal-footer"),
-
-    // advisor chat
-    advisor: document.getElementById("advisor"),
-    chatWindow: document.getElementById("chat-body"),
-    userMsgInput: document.getElementById("user-msg-input"),
-
-    deck: document.getElementById("deck"),
-    deckInstruction: document.querySelector(".deck__instruction"),
-    advisorName: document.getElementById("advisor-name"),
 };
 const state = {
     isWaitingForReply: false,
@@ -100,58 +102,33 @@ const moonImages = {
         illustration: "assets/images/moon/red-moon.webp",
     },
 };
-let notes = JSON.parse(localStorage.getItem("notes")) || {
-    userNotes: [],
-    recycleBin: [],
-};
-const getEngine = cacheEngine();
-
-// DEBUGGING;
-// note data for a day in the past, to test backfill functionality
-// timestamp string for NOV 30 2025, UTC midnight
-// {
-//     id: "1764460800000",
-//     title: "Debug Note",
-//     date: "Sun Nov 30 2025",
-//     moon: "WAXING CRESCENT",
-//     content: "This is a test note for debugging."
-// }
-
-
 
 // ------------------------------------------------------------------------------------------------------
-// ------------------------------------------------------------------------------------------------------
-// JOURNAL FUNCTIONALITY - in development
-
-// TOGGLE BETWEEN NOTES AND ADVISOR WINDOWS
+// EVENT LISTENERS
+// Toggle between primary journal functions: NOTES and ADVISOR CHAT
 elements.useAdvisor.addEventListener("click", () => {
     toggleHidden(elements, "advisor", "noteEditor");
     elements.userMsgInput.focus();
 });
-
 elements.useJournal.addEventListener("click", () => {
     toggleHidden(elements, "noteEditor", "advisor");
     elements.noteTitle.focus();
 });
 
-
-// SAVE NEW NOTE
+// Notes Functionality
+// save new note
 elements.saveNoteBtn.addEventListener("click", () => captureUserEntry(elements, notes));
 
-
-// CREATE NEW NOTE
+// create new note
 elements.createNoteBtn.addEventListener("click", () => createNewNote(config, elements, notes, moonImages));
 
-
-// DISPLAY SAVED NOTES TO USER
+// display saved notes (open modal)
 elements.viewNotesBtn.addEventListener("click", () => viewAllNotes(elements, notes, state, moonImages));
 
-
-// DISPLAY RECYCLE BIN TO USER
+// display recycle bin (open modal)
 elements.viewRecycleBtn.addEventListener("click", () => viewRecycleBin(elements, notes, state, moonImages));
 
-
-// CLOSE NOTES MODAL
+// close modal
 elements.closeModalBtn.addEventListener("click", () => closeModal(elements));
 elements.notesContainerModal.addEventListener("click", (e) => {
     if (e.target === e.currentTarget) {
@@ -159,27 +136,12 @@ elements.notesContainerModal.addEventListener("click", (e) => {
     }
 });
 
-// CARD ANIMATION ON LOAD
-window.addEventListener("load", () => {
-    document.querySelectorAll(".card").forEach(card => {
-        card.classList.add("is-loaded");
-
-        const hitbox = card.querySelector(".card-hitbox");
-        hitbox.addEventListener("click", () => {
-            chooseAdvisorCard(card, elements, state);
-            updateDeckName(state, elements);
-        });
-    });
-});
-
-
-// ADVISOR FUNCTIONALITY
-
-// HANDLE USER SUBMITTED MESSAGES
-elements.sendMsgBtn.addEventListener("click", () => {
-    sendMessage(getEngine, config, elements, state);
-});
-
+// Advisor functionality
+/*  submit user inputted messages to webLLM engine (triggered by button press, or pressing Enter on keyboard):
+    - checks the user has selected a tarot advisor
+    - disables user input whilst waiting for a response
+    - returns the response to the chat window for the user
+*/
 elements.userMsgInput.addEventListener("keypress", event => {
     if (event.key === "Enter") {
         event.preventDefault();
@@ -189,8 +151,11 @@ elements.userMsgInput.addEventListener("keypress", event => {
         sendMessage(getEngine, config, elements, state);
     }
 });
+elements.sendMsgBtn.addEventListener("click", () => {
+    sendMessage(getEngine, config, elements, state);
+});
 
-// DISPLAY COMMAND HINTS TO USER
+// displays hints to the user within the chat input box, indicating the user can type ">" to see a list of help commands
 elements.userMsgInput.addEventListener("input", (e) => {
     const value = e.target.value.trim();
     if (value === ">" && elements.userMsgInput.selectionStart === value.length) {
@@ -200,30 +165,31 @@ elements.userMsgInput.addEventListener("input", (e) => {
     }
 })
 
+// animate tarot cards on load
+window.addEventListener("load", () => {
+    document.querySelectorAll(".card").forEach(card => {
+
+        card.classList.add("is-loaded");
+
+        // add hitbox to cards, which trigger user selection and updates in DOM
+        const hitbox = card.querySelector(".card-hitbox");
+        hitbox.addEventListener("click", () => {
+            chooseAdvisorCard(card, elements, state);
+            updateDeckName(state, elements);
+        });
+    });
+});
+
 // ------------------------------------------------------------------------------------------------------
 // INITIALISE
-// ------------------------------------------------------------------------------------------------------
+// fetch user notes from localStorage (if any), or create empty object to store data
+let notes = initNotes();
 
-// display moon data information to user
+// pull moon data from api and display today's moon information to user
 await displayMoonData(config, elements, moonImages);
 
-// fetch user notes and display, if note is from today
+// preloads the user's most recent note, if the note is from today
 displayTodaysNote(elements, notes);
 
-
-// ------------------------------------------------------------------------------------------------------
-// ------------------------------------------------------------------------------------------------------
-
-// debugging - delete all notes from local storage
-// window.notes = notes;
-
-// document.getElementById("clear-notes").addEventListener("click", () => {
-//     localStorage.removeItem("notes");
-//     notes = {
-//         userNotes: [],
-//         recycleBin: [],
-//     }
-//     window.notes = notes;
-//     displayTodaysNote(elements, notes);
-//     console.log("notes cleared");
-// });
+// create the webLLM engine: prepares to load LLM if user initiates by sending a message
+const getEngine = cacheEngine();
