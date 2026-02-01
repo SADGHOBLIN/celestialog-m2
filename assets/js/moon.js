@@ -17,8 +17,7 @@ async function getMoonData(config) {
 
 //  get astronomy data from API and save to local storage
 async function saveAstronomyData(config) {
-    let city = "Leeds%2C%20UK";
-    const queryString = `${config.API_URL}?apiKey=${config.API_KEY}&location=${city}`;
+    const queryString = `${config.API_URL}?apiKey=${config.API_KEY}`;
 
     const response = await fetch(queryString);
     const data = await response.json();
