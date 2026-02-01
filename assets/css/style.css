@@ -934,6 +934,7 @@ textarea, input {
 }
 #modal-title {
     font-size: 28px;
+    color: var(--bg);
     letter-spacing: -1px;
 }
 #modal-footer {
