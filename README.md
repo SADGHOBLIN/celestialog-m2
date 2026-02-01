@@ -2,8 +2,34 @@
 
 
 ## Project Rationale:
-> [!NOTE]
-> TODO: Under development
+Developer: Matt McCarthy ([SADGHOBLIN](https://www.github.com/SADGHOBLIN))
+
+Live site can be viewed here: [celestialog | Journaling App](https://sadghoblin.github.io/celestialog-m2/)
+
+[![GitHub commit activity](https://img.shields.io/github/commit-activity/t/SADGHOBLIN/celestialog-m2)](https://www.github.com/SADGHOBLIN/celestialog-m2/commits/main)
+[![GitHub last commit](https://img.shields.io/github/last-commit/SADGHOBLIN/celestialog-m2)](https://www.github.com/SADGHOBLIN/celestialog-m2/commits/main)
+[![GitHub repo size](https://img.shields.io/github/repo-size/SADGHOBLIN/celestialog-m2)](https://www.github.com/SADGHOBLIN/celestialog-m2)
+[![badge](https://img.shields.io/badge/deployment-GitHub_Pages-purple)](https://sadghoblin.github.io/celestialog-m2)
+
+
+**Celestialog** is a journaling web application built primarily with HTML, CSS, and JavaScript, designed to explore how interactive systems and narrative framing can encourage a more consistent and meaningful journaling practice.
+
+Whilst traditional journaling tools or apps tend to focus on minimalism and self discipline, **celestialog** introduces optional narrative-driven features that aim to support reflection, curiousity, and emotional engagement in an user's journaling practice, through the **Tarot Advisor** system.
+
+The target audience consists of users who actively journal, but are **looking to find a more expressive way of writing**. The project also aims to **support users who are new to journaling** - particularly those who have **struggled to maintain consistency**, or may have not yet found a work that works for them.
+
+Two core experiemental features define the experience:
+- The ***Tarot Card Advisor*** system adds a narrative experience for the user, allowing them converse, ask questions, and seek guidance from one of the tarot-inspired personas.
+- The ***Red Moon*** system gently introduces accountability for missed journaling days. Rather than punishing the user, missed entries are representing symbolically, encouraging awareness and consistency.
+
+However, these unique features are **optional** and more casual visitors to the website are able to access a thematic, lightweight, and private journaling space that stores their notes data locally. The *Advisor* system only draws resources when engaged with, and the *Red Moons* can be disabled at any time. 
+
+**Celestialog** acts as a prototype for future development, with the aim of building a consistent user base to source valuable feedback for further iterations. Potential extentions include a richer pool of Tarot Advisors, optional cloud-based storage for access across multiple devices, expanded visual illustration work, ambient sound or music, and deeper personalisation features.
+
+![screenshot](documentation/site-responsive-mockups.png)
+
+source: [celestialog-m2 amiresponsive](https://fireship.dev/amiresponsive?url=https://sadghoblin.github.io/celestialog-m2/)
+
 ---
 
 
