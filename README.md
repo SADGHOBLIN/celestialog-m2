@@ -262,8 +262,27 @@ To follow best practice, wireframes were constructed for mobile, tablet, and des
 
 
 ## Tools & Technologies
-> [!NOTE]
-> TODO: Under development
+
+ Tool / Tech | Use |
+| --- | --- |
+| [![badge](https://img.shields.io/badge/Markdown_Builder-grey?logo=markdown&logoColor=000000)](https://markdown.2bn.dev) | Generate README and TESTING templates |
+| [![badge](https://img.shields.io/badge/Git-grey?logo=git&logoColor=F05032)](https://git-scm.com) | Version control (`git add`, `git commit`, `git push`) |
+| [![badge](https://img.shields.io/badge/GitHub-grey?logo=github&logoColor=181717)](https://github.com) | Secure online code storage |
+| [![badge](https://img.shields.io/badge/VSCode-grey?logo=htmx&logoColor=007ACC)](https://code.visualstudio.com) | Local IDE for development |
+| [![badge](https://img.shields.io/badge/HTML-grey?logo=html5&logoColor=E34F26)](https://en.wikipedia.org/wiki/HTML) | Main site content and layout |
+| [![badge](https://img.shields.io/badge/CSS-grey?logo=css&logoColor=1572B6)](https://en.wikipedia.org/wiki/CSS) | Design and layout |
+| [![badge](https://img.shields.io/badge/JavaScript-grey?logo=javascript&logoColor=F7DF1E)](https://www.javascript.com) | User interaction on the site |
+| [![badge](https://img.shields.io/badge/GitHub_Pages-grey?logo=githubpages&logoColor=222222)](https://pages.github.com) | Hosting the deployed front-end site |
+| [![badge](https://img.shields.io/badge/Figma-grey?logo=figma&logoColor=F24E1E)](https://www.figma.com) | Creating wireframes |
+| [![badge](https://img.shields.io/badge/ChatGPT-grey?logo=googlemessages&logoColor=75A99C)](https://chat.openai.com) | Help debug, troubleshoot, and explain things |
+| [![badge](https://img.shields.io/badge/W3Schools-grey?logo=w3schools&logoColor=04AA6D)](https://www.w3schools.com) | Tutorials/Reference Guide |
+| [![badge](https://img.shields.io/badge/favicon.io-grey?logo=fi&logoColor=209CEE)](https://favicon.io) | Generating the favicon |
+| [![badge](https://img.shields.io/badge/Adobe_PhotoShop-grey?logo=phpstorm&logoColor=blue)](https://www.adobe.com/uk/products/photoshop.html) | Creating tarot and moon illustrations |
+| [![badge](https://img.shields.io/badge/Adobe_Illustrator-grey?logo=instapaper&logoColor=orange)](https://www.adobe.com/uk/products/illustrator.html) | Creating moon symbols |
+| [![badge](https://img.shields.io/badge/Google_Fonts-grey?logo=googlefonts&logoColor=green)](https://fonts.google.com/) | Fonts and icons |
+| [![badge](https://img.shields.io/badge/WebLLM-grey?logo=ollama&logoColor=yellow)](https://webllm.mlc.ai/) | Local LLM engine for chat advisor functionality |
+| [![badge](https://img.shields.io/badge/ipGeolocation.io-grey?logo=pinboard&logoColor=purple)](https://ipgeolocation.io/astronomy-api.html) | Astronomy API for moon data information |
+
 ---
 
 
