@@ -2,6 +2,7 @@
 
 
 ## Project Rationale:
+
 Developer: Matt McCarthy ([SADGHOBLIN](https://www.github.com/SADGHOBLIN))
 
 Live site can be viewed here: [celestialog | Journaling App](https://sadghoblin.github.io/celestialog-m2/)
@@ -199,6 +200,7 @@ To follow best practice, wireframes were constructed for mobile, tablet, and des
 | journal.html | ![screenshot](documentation/wireframes/journal-1.png) ![screenshot](documentation/wireframes/journal-2.png) ![screenshot](documentation/wireframes/journal-3.png) |
 | about.html | ![screenshot](documentation/wireframes/about.png) |
 | contact.html | ![screenshot](documentation/wireframes/contact.png) |
+
 ---
 
 
@@ -219,6 +221,7 @@ To follow best practice, wireframes were constructed for mobile, tablet, and des
 | #8: ![badge](https://img.shields.io/badge/should_have-1d76db) | [Add advisor personas](https://github.com/SADGHOBLIN/celestialog-m2/issues/8) | As a frequent user, I would like to further indulge in immersive features - I would like to chat with different advisor personas that are thematically relevant to the site's mood and tone. This would provide a more enriching user experience by adding an additional layer to the site's core functionality that would keep me coming back. |
 | #9: ![badge](https://img.shields.io/badge/could_have-0e8a16) | [Light theme mode with a todo list](https://github.com/SADGHOBLIN/celestialog-m2/issues/9) | As a frequent user who has enjoyed using the website for its moon and journaling features, I would like if I could also use it for 'day-time' features, such as making specific todo lists and task tracking. This could elevate the website from being solely a 'night-time' companion, to a full-day companion that allows me to keep track of my notes, lists, and journal in one place - with the additional advisor functionality. |
 | #10: ![badge](https://img.shields.io/badge/could_have-0e8a16) | [Error pages](https://github.com/SADGHOBLIN/celestialog-m2/issues/10) | As a user, I want to be notified of any errors that prevent me from using or accessing the website. I should then be able to direct myself easily back to the home page so that I can continue using the site. |
+
 ---
 
 
@@ -318,23 +321,64 @@ I've decomposed my Epics into User Stories for prioritising and implementing the
 ## Testing
 > [!IMPORTANT]
 > For all testing, please refer to the [TESTING.md](TESTING.md) file.
+
 ---
 
 
 ## Deployment
-> [!NOTE]
-> TODO: Under development
-- ### GitHub Pages:
-- ### Local Development:
-- ### Cloning:
-- ### Forking:
-- ### Local vs Deployment:
+
+### GitHub Pages
+
+The site was deployed to GitHub Pages. The steps to deploy are as follows:
+
+- In the [GitHub repository](https://www.github.com/SADGHOBLIN/celestialog-m2), navigate to the "Settings" tab.
+- In Settings, click on the "Pages" link from the menu on the left.
+- From the "Build and deployment" section, click the drop-down called "Branch", and select the **main** branch, then click "Save".
+- The page will be automatically refreshed with a detailed message display to indicate the successful deployment.
+- Allow up to 5 minutes for the site to fully deploy.
+
+The live link can be found on [GitHub Pages](https://sadghoblin.github.io/celestialog-m2).
+
+### Local Development
+
+This project can be cloned or forked in order to make a local copy on your own system.
+
+#### Cloning
+
+You can clone the repository by following these steps:
+
+1. Go to the [GitHub repository](https://www.github.com/SADGHOBLIN/celestialog-m2).
+2. Locate and click on the green "Code" button at the very top, above the commits and files.
+3. Select whether you prefer to clone using "HTTPS", "SSH", or "GitHub CLI", and click the "copy" button to copy the URL to your clipboard.
+4. Open "Git Bash" or "Terminal".
+5. Change the current working directory to the location where you want the cloned directory.
+6. In your IDE Terminal, type the following command to clone the repository:
+	- `git clone https://www.github.com/SADGHOBLIN/celestialog-m2.git`
+7. Press "Enter" to create your local clone.
+
+Alternatively, if using Ona (formerly Gitpod), you can click below to create your own workspace using this repository.
+
+[![Open in Ona-Gitpod](https://ona.com/run-in-ona.svg)](https://gitpod.io/#https://www.github.com/SADGHOBLIN/celestialog-m2)
+
+**Please Note**: in order to directly open the project in Ona (Gitpod), you should have the browser extension installed. A tutorial on how to do that can be found [here](https://www.gitpod.io/docs/configure/user-settings/browser-extension).
+
+#### Forking
+
+By forking the GitHub Repository, you make a copy of the original repository on our GitHub account to view and/or make changes without affecting the original owner's repository. You can fork this repository by using the following steps:
+
+1. Log in to GitHub and locate the [GitHub Repository](https://www.github.com/SADGHOBLIN/celestialog-m2).
+2. At the top of the Repository, just below the "Settings" button on the menu, locate and click the "Fork" Button.
+3. Once clicked, you should now have a copy of the original repository in your own GitHub account!
+
+### Local VS Deployment
+
+There are no known major differences between the local version when compared to the deployed version online.
+
 ---
 
 
 ## Credits
-> [!NOTE]
-> TODO: Under development
+
 - ### Content:
 
 | Source | Notes |
@@ -351,7 +395,19 @@ I've decomposed my Epics into User Stories for prioritising and implementing the
 | [Realtime Colors](https://www.realtimecolors.com/?colors=dcd4ee-161519-9924dd-63519f-c4cd26&fonts=DM%20Sans-DM%20Sans) | Visualises colour palettes and fonts on a website, to check how colour choices look in realtime on different devices. |
 | [WebLLM Documentation - streaming chat completion](https://webllm.mlc.ai/docs/user/basic_usage.html#streaming-chat-completion) | Documentation for creating the typing effect when a response is displayed from the engine. Amended with the help of ChatGPT to create a effective solution for this specific website. |
 
-
-
 - ### Media:
+
+All main **media images** displayed on this site are either, original illustrations of the developer [Matt McCarthy](https://github.com/SADGHOBLIN), or public domain images that have been used as a starting point for creative work.
+
+**Moon Phase Illustrations** - original illustrations, created with Adobe PhotoShop:
+![screenshot](documentation/visual-design/moon-illustrations.png)
+
+**Tarot Advisor Card Illustrations** - adapted illustrations using [Rider-Waite-Smith tarot card illustrations](https://steve-p.org/cards/RWSa.html), which are free to use and in the public domain:
+![screenshot](documentation/visual-design/tarot-illustrations.png)
+
+- **The Alchemist** is inspired by [the Magician major arcana card](https://steve-p.org/cards/pix/RWSa-T-01.png) and uses it as a starting point
+- **The Watcher** is inspired by [the ten of swords minor arcana card](https://steve-p.org/cards/pix/RWSa-S-10.png) and uses it as a starting point
+- **The Logician** is inspired by [the king of swords minor arcana card](https://steve-p.org/cards/pix/RWSa-S-KI.png) and uses it as a starting point
+
+
 - ### Acknowledgements:
