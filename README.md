@@ -179,12 +179,14 @@ The main illustrations are the Tarot cards that represent the various AI chat pe
 
 Because of this, I am able to creatively adapt their artwork to match my app and create a recognisable look, but also able to take advantage of any in-built preconceptions that a user has, allowing the cards to, somewhat, 'speak for themselves'.
 
-Tarot Advisor Cards, with golden alt versions
+**Tarot Advisor Card** illustrations, with golden alternate versions:
+
 ![screenshot](documentation/visual-design/tarot-illustrations.png)
 
 Alongide the tarot cards, another key feature of **Celestialog** is the moon phase tracker. The moon phases are one of the identifying components of the user's saved notes, therefore I wanted to create an image for each phase by hand, so that the art style closely aligned with the tarot cards.
 
-Moon Phase Icons
+**Moon Phase** illustrated icons:
+
 ![screenshot](documentation/visual-design/moon-illustrations.png)
 
 ---
@@ -205,6 +207,7 @@ To follow best practice, wireframes were constructed for mobile, tablet, and des
 
 
 ## User Stories
+
 - A list of user stories can be found on this [Project's Board](https://github.com/users/SADGHOBLIN/projects/4/views/1), which was used to track development progress, using [MoSCoW Prioritisation](#moscow-prioritsation).
 - **Acceptance criteria** and **tasks** for each can user story can be found by following the project board link.
 - More information regarding the [Agile Development Process](#agile-development-process) that was used for this project can be found later in the document.
@@ -227,7 +230,7 @@ To follow best practice, wireframes were constructed for mobile, tablet, and des
 
 ## Features
 
-- ### Existing Features:
+### Existing Features:
 
 | Feature | Notes | Screenshot |
 | --- | --- | --- |
@@ -249,7 +252,7 @@ To follow best practice, wireframes were constructed for mobile, tablet, and des
 | Success page | Indicates to user that the form was submitted, and allows them to return to the home page without needing to use browser buttons - actual form submission are out of the scope of this project. | ![screenshot](documentation/features/success.png) |
 | Error 404 page | Informs user that something has gone wrong, and allows them to return to the home page without the need for browser buttons. | ![screenshot](documentation/features/error404.png) |
 
-- ### Future Features:
+### Future Features:
 
 - **Full Tarot deck of personas**: The site currently only has 3 unique advisor personalities. I would like to eventually create a fully illustrated deck, to provide a more robust experience. This opens up opportunities for monetisation in the future, as well as user-submitted designs, and more uniquely personalised experiences for users.
 
@@ -291,13 +294,13 @@ To follow best practice, wireframes were constructed for mobile, tablet, and des
 
 ## Agile Development Process
 
-- ### GitHub Projects:
+### GitHub Projects:
 
 [GitHub Projects](https://github.com/SADGHOBLIN/celestialog-m2/projects) served as an Agile tool for this project. Through it, EPICs, User Stories, issues/bugs, and Milestone tasks were planned, then subsequently tracked on a regular basis using the Kanban project board.
 
 ![screenshot](documentation/agile/github-projects.png)
 
-- ### GitHub Issues:
+### GitHub Issues:
 
 [GitHub Issues](https://www.github.com/SADGHOBLIN/celestialog-m2/issues) served as an another Agile tool. There, I managed my User Stories and Milestone tasks, and tracked any issues/bugs.
 
@@ -306,7 +309,7 @@ To follow best practice, wireframes were constructed for mobile, tablet, and des
 | [![GitHub issues](https://img.shields.io/github/issues-search/SADGHOBLIN/celestialog-m2?query=is%3Aissue%20is%3Aopen%20-label%3Abug&label=Open%20Issues&color=yellow)](https://www.github.com/SADGHOBLIN/celestialog-m2/issues?q=is%3Aissue%20is%3Aopen%20-label%3Abug) | ![screenshot](documentation/agile/issues-open.png) |
 | [![GitHub closed issues](https://img.shields.io/github/issues-search/SADGHOBLIN/celestialog-m2?query=is%3Aissue%20is%3Aclosed%20-label%3Abug&label=Closed%20Issues&color=green)](https://www.github.com/SADGHOBLIN/celestialog-m2/issues?q=is%3Aissue%20is%3Aclosed%20-label%3Abug) | ![screenshot](documentation/agile/issues-closed.png) |
 
-- ### MoSCoW Priorisation:
+### MoSCoW Priorisation:
 
 I've decomposed my Epics into User Stories for prioritising and implementing them. Using this approach, I was able to apply "MoSCoW" prioritisation and labels to my User Stories within the Issues tab.
 
@@ -379,7 +382,7 @@ There are no known major differences between the local version when compared to 
 
 ## Credits
 
-- ### Content:
+### Content:
 
 | Source | Notes |
 | --- | --- |
@@ -395,7 +398,7 @@ There are no known major differences between the local version when compared to 
 | [Realtime Colors](https://www.realtimecolors.com/?colors=dcd4ee-161519-9924dd-63519f-c4cd26&fonts=DM%20Sans-DM%20Sans) | Visualises colour palettes and fonts on a website, to check how colour choices look in realtime on different devices. |
 | [WebLLM Documentation - streaming chat completion](https://webllm.mlc.ai/docs/user/basic_usage.html#streaming-chat-completion) | Documentation for creating the typing effect when a response is displayed from the engine. Amended with the help of ChatGPT to create a effective solution for this specific website. |
 
-- ### Media:
+### Media:
 
 All main **media images** displayed on this site are either, original illustrations of the developer [Matt McCarthy](https://github.com/SADGHOBLIN), or public domain images that have been used as a starting point for creative work.
 
@@ -410,4 +413,10 @@ All main **media images** displayed on this site are either, original illustrati
 - **The Logician** is inspired by [the king of swords minor arcana card](https://steve-p.org/cards/pix/RWSa-S-KI.png) and uses it as a starting point
 
 
-- ### Acknowledgements:
+### Acknowledgements:
+
+- I would like to thank my Code Institute mentor, [Tim Nelson](https://www.github.com/TravelTimN) and his Markdown Builder that helps with README and TESTING templates
+
+- I would like to thank my college facilitator, [Rachel Furlong](https://github.com/RachelFurlong-dev) for the weekly cohort meetings, and the additional support after Code Institute decided to discontinue mentorship for the course 
+
+- I would like to thank my partner for her continued love and support as I take on a new challenge
