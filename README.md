@@ -287,11 +287,31 @@ To follow best practice, wireframes were constructed for mobile, tablet, and des
 
 
 ## Agile Development Process
-> [!NOTE]
-> TODO: Under development
+
 - ### GitHub Projects:
+
+[GitHub Projects](https://github.com/SADGHOBLIN/celestialog-m2/projects) served as an Agile tool for this project. Through it, EPICs, User Stories, issues/bugs, and Milestone tasks were planned, then subsequently tracked on a regular basis using the Kanban project board.
+
+![screenshot](documentation/agile/github-projects.png)
+
 - ### GitHub Issues:
+
+[GitHub Issues](https://www.github.com/SADGHOBLIN/celestialog-m2/issues) served as an another Agile tool. There, I managed my User Stories and Milestone tasks, and tracked any issues/bugs.
+
+| Link | Screenshot |
+| --- | --- |
+| [![GitHub issues](https://img.shields.io/github/issues-search/SADGHOBLIN/celestialog-m2?query=is%3Aissue%20is%3Aopen%20-label%3Abug&label=Open%20Issues&color=yellow)](https://www.github.com/SADGHOBLIN/celestialog-m2/issues?q=is%3Aissue%20is%3Aopen%20-label%3Abug) | ![screenshot](documentation/agile/issues-open.png) |
+| [![GitHub closed issues](https://img.shields.io/github/issues-search/SADGHOBLIN/celestialog-m2?query=is%3Aissue%20is%3Aclosed%20-label%3Abug&label=Closed%20Issues&color=green)](https://www.github.com/SADGHOBLIN/celestialog-m2/issues?q=is%3Aissue%20is%3Aclosed%20-label%3Abug) | ![screenshot](documentation/agile/issues-closed.png) |
+
 - ### MoSCoW Priorisation:
+
+I've decomposed my Epics into User Stories for prioritising and implementing them. Using this approach, I was able to apply "MoSCoW" prioritisation and labels to my User Stories within the Issues tab.
+
+- **Must Have**: guaranteed to be delivered - required to Pass the project (*max ~60% of stories*)
+- **Should Have**: adds significant value, but not vital (*~20% of stories*)
+- **Could Have**: has small impact if left out (*the rest ~20% of stories*)
+- **Won't Have**: not a priority for this iteration - future features
+
 --- 
 
 
