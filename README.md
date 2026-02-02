@@ -223,10 +223,41 @@ To follow best practice, wireframes were constructed for mobile, tablet, and des
 
 
 ## Features
-> [!NOTE]
-> TODO: Under development
+
 - ### Existing Features:
+
+| Feature | Notes | Screenshot |
+| --- | --- | --- |
+| Navbar | Simple navigation menu with the aim of keeping the focus on the main journaling app. Fully responsive across all screen sizes and available on all web pages. Provides links to the home page, journal page, and contact page, and allows the user to navigate the site without needing their browser buttons. | ![screenshot](documentation/features/navbar.png) |
+| Home page | Contains an animated logo in the landing section and a main CTA button to direct the user to the main journal page. Acts as a lightweight landing page, with the rationale that returning users would like to get back to the journal app as efficiently as possible. Leads into the About section, should the user wish to learn more before progressing to the app. | ![screenshot](documentation/features/home-page-cta.png) |
+| About section | Gentle introduction to the site, briefly highlighting the key features and primary purpose of the app. Main user flow is displayed in a simple list, as to not deter the user from trying to learn more about the site's purpose through long paragraphs. | ![screenshot](documentation/features/about.png) |
+| Narrative about section | Introduces tarot card personas to the user in more detail, exploring the narrative framing of the site and the purpose of the tarot card personas. | ![screenshot](documentation/features/narrative-about.png) |
+| Journal app | Main journaling space for the user, allowing them to create, save, edit, and delete notes. Responsive across all screen sizes, and amends layout to allow for a more pleasant user experience on different devices. | ![screenshot](documentation/features/journal-app.png) |
+| App buttons | For the notetaking functionality: save, create new, view notes, view recycle bin. Save button is the primary button and therefore given more space and a more dominant colour. | ![screenshot](documentation/features/note-buttons.png) | 
+| Save note function | Ability to save notes, with a 'note saved!' notification to give visual feedback to the user. Notes are saved to local storage and accessible offline. Note content data is tied to a title, the moon phase, moon illustration - represented with an icon - and date of creation. Traditional note taking apps tend to contain simple information, like the date and time, and Celestialog aims to add another narrative layer to connect the user to their notes. | ![screenshot](documentation/features/save-note.png) |
+| View saved notes | Allows users to open saved notes, or delete them by moving them to the recycle bin. These notes are displayed in a pop up modal, allowing the user to quickly open and close the modal when needed, offering a seamless experience with writing notes. | ![screenshot](documentation/features/saved-notes.png) |
+| Red Moon notes | Indicates to the user missed journaling days, and this feature can be toggled on/off based on user preference. These 'red moons' act as a gentle accountability reminder for the user and encourages them to write every day. This reminder is stylised as 'red moons' to contribute to the site's overall thematic narrative. Users are able to go back and add content to these notes, to make up for missed days, but are still saved as a 'red moon'. | ![screenshot](documentation/features/red-moons.png) |
+| Recycle bin | Allows user to recover deleted notes, in case they accidently delete a note. Once the user deletes them from the recycle bin, they are gone permanantly - this mimics the recycle bin system found on computers and mobile, allowing the user to handle their notes in a familar way. | ![screenshot](documentation/features/recycle-bin.png) |
+| Chat advisor | AI Chat window, with tarot archetype inspired personalities, styled thematically to integrate with the site's brand and narrative. The user can select a persona, and write to the AI advisor in a chat window, similar to tools like ChatGPT or messaging apps. This makes the system familiar and intuitive to use. | ![screenshot](documentation/features/chat-advisor.png) |
+| Chat help commands | The chat window contains hints and help for the user, integrated into the experience, and in a different colours to the regular advisor messages as to easily distinguish the difference between the various message types. Allows users to learn how to use the chat whilst asking for help/prompts. Reminds users to select a persona before continuing, and provides instructions and guidance if asked for. Hints and help disappear once the user sends a message, preventing instructions from clogging up the chat window. The hints are subtle, as to not hinder an experienced user of the site, but also noticeable for new users who may need some guidance. | ![screenshot](documentation/features/help-commands-1.png) ![screenshot](documentation/features/help-commands-2.png) ![screenshot](documentation/features/help-commands-3.png) ![screenshot](documentation/features/help-commands-4.png) |
+| Tarot card personas | A satisfying way to choose from various chat personalities which provide different response styles to user messages. Responsive to hovering and clicking, providing a satifying user experience. The cards change colour, to clearly indicate when they have been selected, and have motion effects to indicate that the user is waiting for a response. | ![screenshot](documentation/features/tarot-cards.png) |
+| Moon data | Displays the daily moon information to the user, tailored to their IP location. Shows today's moon phase, with an image, today's date, and the time that the moon is visible. This information is also then injected into the user's saved notes for the specific date they created it. The data is refreshed every 12 hours, and a copy is stored in local storage as to not continually pull API information, and so that users are unaffected if they temporaily go offline. | ![screenshot](documentation/features/moon-data.png) |
+| Contact page | Allows user to send a message, or email the developer with feedback, bugs, or other content. | ![screenshot](documentation/features/contact.png) |
+| Success page | Indicates to user that the form was submitted, and allows them to return to the home page without needing to use browser buttons - actual form submission are out of the scope of this project. | ![screenshot](documentation/features/success.png) |
+| Error 404 page | Informs user that something has gone wrong, and allows them to return to the home page without the need for browser buttons. | ![screenshot](documentation/features/error404.png) |
+
 - ### Future Features:
+
+- **Full Tarot deck of personas**: The site currently only has 3 unique advisor personalities. I would like to eventually create a fully illustrated deck, to provide a more robust experience. This opens up opportunities for monetisation in the future, as well as user-submitted designs, and more uniquely personalised experiences for users.
+
+- **Refined LLM prompts**: Each tarot archetype personality uses a system prompt to dictate its personality. Future development could lead to a more powerful and refined language model that is better tailored to providing journaling guidance and prompts to the user, customised to the needs of the celestialog app.
+
+- **Sun mode**: As previously mentioned, users will journal mostly in the early mornings or late evenings. Celestialog currently focuses on night-time writers, and a cohesive sun-mode that could be toggled on will certainly expand the user base for the website. The aim would be to provide a full overhaul of the website that can be toggled between **sun-mode** and **moon-mode**, complete with sun tracking information, similar to the current moon tracker.
+
+- **Full ambient experience**: The vision is for celestialog to provide a rich, ambient experience to the user. Music and sound play a huge part in cultivating a rich atmosphere, and future development should include optional music that help curate an inspiring place for journaling.
+
+- **Cloud-based storage option**: Currently, a nice feature about celestialog is that users do not have to sign in with their email, or worry about their data being shared - both their notes and LLM are essentially all local. However, some users may benefit from the option to save their notes in the cloud, so that they have a back-up, and can access their notes across various devices of their choosing.
+
 ---
 
 
