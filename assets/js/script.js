@@ -105,7 +105,7 @@ const moonImages = {
 // fetch user notes from localStorage (if any), or create empty object to store data
 let notes = initNotes();
 // create the webLLM engine: prepares to load LLM if user initiates by sending a message
-const getEngine = cacheEngine();
+const getEngine = cacheEngine(elements);
 
 // ------------------------------------------------------------------------------------------------------
 // EVENT LISTENERS

@@ -199,21 +199,35 @@ function pickModel(config) {
 }
 
 //  store language model engine, or create a new engine instance
-function cacheEngine() {
+function cacheEngine(elements) {
     let cachedEngine = null;
 
     return async function getEngine(config) {
         return cachedEngine ? cachedEngine
-                            : cachedEngine = await createEngine(config);
+                            : cachedEngine = await createEngine(config, elements);
     };
 }
-async function createEngine(config) {
+async function createEngine(config, elements) {
+
+    let loadingBubble = null;
+
     const engine = await CreateMLCEngine(pickModel(config), {
         initProgressCallback: (progress) => {
-            console.log("loading:", progress.progress);
+            const percent = Math.round(progress.progress * 100);
+
+            if (!loadingBubble) {
+                loadingBubble = createLoadingBubble(
+                    elements,
+                    "Summoning advisor..."
+                );
+            }
+            loadingBubble.textContent = `The Council gathers... ${percent}%`;
         }
     });
-    console.log("Model loading complete");
+    
+    if (loadingBubble) {
+        loadingBubble.remove();
+    }
     return engine;
 }
 
@@ -283,6 +297,16 @@ function createChatBubble(elements, classList, message) {
     scrollSmooth(elements.chatWindow);
     return newMessage;
 }
+
+function createLoadingBubble(elements, text) {
+    const bubble = document.createElement("p");
+    bubble.classList.add("advisor-msg", "loading");
+    bubble.textContent = text;
+    elements.chatWindow.appendChild(bubble);
+    scrollSmooth(elements.chatWindow);
+    return bubble;
+}
+
 
 //  scroll smoothly to target location
 function scrollSmooth(scrollToLocation) {

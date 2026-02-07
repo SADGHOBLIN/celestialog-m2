@@ -128,3 +128,38 @@ Defensive programming was manually tested with the below user acceptance testing
 | [Add advisor personas](https://github.com/SADGHOBLIN/celestialog-m2/issues/8) | As a user | I would love if there were multiple advisors to pick from | so that I could talk to different 'advisors' with different 'personalities' in order to get multiple perspectives on my ideas or thoughts. | ![screenshot](documentation/features/tarot-cards.png) ![screenshot](documentation/features/narrative-about.png) |
 | [Light theme mode with a todo list](https://github.com/SADGHOBLIN/celestialog-m2/issues/9) | As a user | It would be a bonus if you could toggle between a `sun-mode` and `moon-mode` for day time and night time theme. | As a `could-have` user story, this feature could not be implemented during this iteration due to time constraints. | It is acceptable to have not met this user story, as it had been categorised as a `could-have` feature. This has been now been labeled a `won't-have`, and will be a desirable feature for future iterations of the site. |
 | [Error pages](https://github.com/SADGHOBLIN/celestialog-m2/issues/10) | As a user | I want to see a 404 error page if I get lost | so that it is clear that I have accidently navigated to a page that doesn't exist, and I can be redirected back to the main site. | ![screenshot](documentation/defensive/error404.png) |
+
+
+## Bugs
+
+### Fixed Bugs & Issues
+
+[![GitHub issue custom search](https://img.shields.io/github/issues-search/SADGHOBLIN/celestialog-m2?query=is%3Aissue%20is%3Aclosed%20label%3Abug&label=Fixed%20Bugs&color=red)](https://www.github.com/SADGHOBLIN/celestialog-m2/issues?q=is%3Aissue+is%3Aclosed+label%3Abug)
+[![GitHub issue custom search](https://img.shields.io/github/issues-search/SADGHOBLIN/celestialog-m2?query=is%3Aissue%20is%3Aclosed%20label%3Aissue&label=Fixed%20Issues&color=green)](https://www.github.com/SADGHOBLIN/celestialog-m2/issues?q=is%3Aissue+is%3Aclosed+label%3Aissue)
+
+I've used [GitHub Issues](https://www.github.com/SADGHOBLIN/celestialog-m2/issues) to track and manage bugs and issues during the development stages of my project. A detailed breakdown of my bugfixing process and progress can be found by opening up the related issue.
+
+All previously closed/fixed bugs can be tracked [here (Bugs)](https://www.github.com/SADGHOBLIN/celestialog-m2/issues?q=is%3Aissue+is%3Aclosed+label%3Abug) and closed/fixed issues can be tracked [here (Issues)](https://github.com/SADGHOBLIN/celestialog-m2/issues?q=is%3Aissue%20is%3Aclosed%20label%3Aissue). 
+
+![screenshot](documentation/bugs/closed-bugs.png)
+
+Alternatively, click the link to each individual bug / issue for more details:
+| Label | Link |
+| --- | --- |
+| ![badge](https://img.shields.io/badge/bug-d73a4a) | [Engine crashing and errors](https://github.com/SADGHOBLIN/celestialog-m2/issues/13) |
+| ![badge](https://img.shields.io/badge/issue-abd84d) | [Restricted API calls for moon information](https://github.com/SADGHOBLIN/celestialog-m2/issues/11) |
+| ![badge](https://img.shields.io/badge/issue-abd84d) | [Storing and creating the language model engine](https://github.com/SADGHOBLIN/celestialog-m2/issues/12) |
+| ![badge](https://img.shields.io/badge/issue-abd84d) | [JavaScript code efficiency and readability](https://github.com/SADGHOBLIN/celestialog-m2/issues/14) |
+
+### Unfixed Bugs
+
+[![GitHub issue custom search](https://img.shields.io/github/issues-search/SADGHOBLIN/celestialog-m2?query=is%3Aissue%2Bis%3Aopen%2Blabel%3Abug&label=Unfixed%20Bugs&color=red)](https://www.github.com/SADGHOBLIN/celestialog-m2/issues?q=is%3Aissue+is%3Aopen+label%3Abug)
+
+After conducting thorough testing there are no known remaining bugs, but any remaining open issues can be tracked [here](https://github.com/SADGHOBLIN/celestialog-m2/issues?q=is%3Aissue%20is%3Aopen).
+
+### Known Issues
+
+| Issue | Description | Screenshot |
+| --- | --- | --- |
+| Cannot properly delete `red moon` placeholder notes | There is an issue with the logic that `fills missed journaling days` which prevents the user from being able to delete a `red moon` (missed day note) unless they delete their own user created notes. This is because the code will always try to fill in the gaps between journaling days for user created notes. Whilst I did think it was possible to 'track' whether the user had deleted a `red moon` note through a second recycle bin that is hidden from the user, I thought that this was a sub-optimal solution, and I believe that the impact of this issue on the user was minimal - they can use the toggle button to hide `red moon` notes, and deleting them would go against the note's purpose in the first place. Therefore, I decided that rewriting this bit of logic was beyond the scope of this deadline, and could be refactored at a later date. | ![screenshot](documentation/defensive/deleted-bin-restored.png) |
+| Advisor chatbot engine loadtime | I decided to use WebLLM to create a functional chat advisor, but due to the nature of how WebLLM functions, the initial first time download of the LLM model can take a good few minutes. This only has to be done once. There are visual cues of this for the user, and a smaller LLM model is automatically used for less powerful devices in order to try and optimise this experience for the user. Whilst this one off download could be an issue since it could turn away potential site visitors, I decided that this risk is an acceptable trade off for a small project like this, as I have deliberately selected the most lightweight LLM's that can be ran locally, whilst managing the effectiveness of the actual LLM's capability for this feature. The chat advisor feature is optional, does not impact the rest of the site's note taking functionality, and the user can carry out other tasks on the website page whilst waiting for the modal to load for the first time. | ![screenshot](documentation/defensive/send-chat-waiting.png) ![screenshot](documentation/bugs/advisor-loading.png) |
