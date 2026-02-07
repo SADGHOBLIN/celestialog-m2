@@ -17,3 +17,11 @@ I have used the recommended [HTML W3C Validator](https://validator.w3.org) to va
 | root | [index.html](https://github.com/SADGHOBLIN/celestialog-m2/blob/main/index.html) | [HTML Validator](https://validator.w3.org/nu/?doc=https://sadghoblin.github.io/celestialog-m2/index.html) | ![screenshot](documentation/validation/html-index.png) | No warnings / errors |
 | root | [journal.html](https://github.com/SADGHOBLIN/celestialog-m2/blob/main/journal.html) | [HTML Validator](https://validator.w3.org/nu/?doc=https://sadghoblin.github.io/celestialog-m2/journal.html) | ![screenshot](documentation/validation/html-journal.png) | No warnings / errors |
 | root | [success.html](https://github.com/SADGHOBLIN/celestialog-m2/blob/main/success.html) | [HTML Validator](https://validator.w3.org/nu/?doc=https://sadghoblin.github.io/celestialog-m2/success.html) | ![screenshot](documentation/validation/html-success.png) | No warnings / errors |
+
+### CSS
+
+I have used the recommended [CSS Jigsaw Validator](https://jigsaw.w3.org/css-validator) to validate my CSS files.
+
+| Directory | File | URL | Screenshot | Notes |
+| --- | --- | --- | --- | --- |
+| assets | [style.css](https://github.com/SADGHOBLIN/celestialog-m2/blob/main/assets/css/style.css) | [CSS Validator](https://jigsaw.w3.org/css-validator/validator?uri=https://sadghoblin.github.io/celestialog-m2) | ![screenshot](documentation/validation/css-style.png) | No errors, and warnings only relate to custom css properties and vendor-prefixed features which are used to ensure cross-browser compatibility |
