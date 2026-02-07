@@ -46,8 +46,8 @@
               <div class="note-header">
                 <div class="title-container">
                   <!-- note title -->
-                  <label for="note-title" class="hidden">Enter journal title</label>
-                  <input id="note-title" type="text" placeholder="Journal Title" autocomplete="off">
+                  <label for="note-title" class="vis-hidden">Enter journal title</label>
+                  <input id="note-title" name="note-title" type="text" placeholder="Journal Title" autocomplete="off">
                   <!-- note date -->
                   <p id="note-date"></p>
                 </div>
@@ -60,6 +60,7 @@
                 </div>
               </div>
               <!-- User input: note editor -->
+              <label for="note-content" class="vis-hidden">Write journal entry</label>
               <textarea
                 id="note-content"
                 name="note-content"
@@ -97,6 +98,7 @@
               </div>
               <!-- Chat user input area: advisor -->
               <div class="user-input-box">
+                <label for="user-msg-input" class="vis-hidden">Message to advisor</label>
                 <textarea
                   id="user-msg-input"
                   name="user-msg-input"
