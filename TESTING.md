@@ -54,3 +54,21 @@ I've tested my deployed project to check for responsiveness issues across mobile
 | Contact | ![screenshot](documentation/responsiveness/mobile-contact.png) | ![screenshot](documentation/responsiveness/tablet-contact.png) | ![screenshot](documentation/responsiveness/desktop-contact.png) | Works as expected |
 | Success | ![screenshot](documentation/responsiveness/mobile-success.png) | ![screenshot](documentation/responsiveness/tablet-success.png) | ![screenshot](documentation/responsiveness/desktop-success.png) | Works as expected |
 | 404 | ![screenshot](documentation/responsiveness/mobile-404.png) | ![screenshot](documentation/responsiveness/tablet-404.png) | ![screenshot](documentation/responsiveness/desktop-404.png) | Works as expected |
+
+
+## Browser Compatibility
+
+I've tested my deployed project on multiple browsers to check for compatibility issues. There are no known issues, and site also behave responsively as expected.
+
+| Page | Chrome | Firefox | Edge | Notes |
+| --- | --- | --- | --- | --- |
+| Home | ![screenshot](documentation/browsers/chrome-home.png) | ![screenshot](documentation/browsers/firefox-home.png) | ![screenshot](documentation/browsers/edge-home.png) | Works as expected |
+| About | ![screenshot](documentation/browsers/chrome-about.png) | ![screenshot](documentation/browsers/firefox-about.png) | ![screenshot](documentation/browsers/edge-about.png) | Works as expected |
+| Personas top | ![screenshot](documentation/browsers/chrome-personas-1.png) | ![screenshot](documentation/browsers/firefox-personas-1.png) | ![screenshot](documentation/browsers/edge-personas-1.png) | Works as expected |
+| Personas bot | ![screenshot](documentation/browsers/chrome-personas-2.png) | ![screenshot](documentation/browsers/firefox-personas-2.png) | ![screenshot](documentation/browsers/edge-personas-2.png) | Works as expected |
+| Journal notes | ![screenshot](documentation/browsers/chrome-journal-notes.png) | ![screenshot](documentation/browsers/firefox-journal-notes.png) | ![screenshot](documentation/browsers/edge-journal-notes.png) | Works as expected |
+| Journal advisor | ![screenshot](documentation/browsers/chrome-journal-advisor.png) | ![screenshot](documentation/browsers/firefox-journal-advisor.png) | ![screenshot](documentation/browsers/edge-journal-advisor.png) | Works as expected |
+| Journal modal | ![screenshot](documentation/browsers/chrome-journal-modal.png) | ![screenshot](documentation/browsers/firefox-journal-modal.png) | ![screenshot](documentation/browsers/edge-journal-modal.png) | Works as expected |
+| Contact | ![screenshot](documentation/browsers/chrome-contact.png) | ![screenshot](documentation/browsers/firefox-contact.png) | ![screenshot](documentation/browsers/edge-contact.png) | Works as expected |
+| Success | ![screenshot](documentation/browsers/chrome-success.png) | ![screenshot](documentation/browsers/firefox-success.png) | ![screenshot](documentation/browsers/edge-success.png) | Works as expected |
+| 404 | ![screenshot](documentation/browsers/chrome-404.png) | ![screenshot](documentation/browsers/firefox-404.png) | ![screenshot](documentation/browsers/edge-404.png) | Works as expected |
