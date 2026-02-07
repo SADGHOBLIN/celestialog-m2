@@ -44,7 +44,7 @@ I've tested my deployed project to check for responsiveness issues across mobile
 
 | Page / Section | Mobile | Tablet | Desktop | Notes |
 | --- | --- | --- | --- | --- |
-| Home | ![screenshot](documentation/responsiveness/mobile-home.png) | ![screenshot](documentation/responsiveness/tablet-home.png) | ![screenshot](documentation/responsiveness/desktop-home.png) | Works as expected |
+| Home (Index) | ![screenshot](documentation/responsiveness/mobile-home.png) | ![screenshot](documentation/responsiveness/tablet-home.png) | ![screenshot](documentation/responsiveness/desktop-home.png) | Works as expected |
 | About | ![screenshot](documentation/responsiveness/mobile-about.png) | ![screenshot](documentation/responsiveness/tablet-about.png) | ![screenshot](documentation/responsiveness/desktop-about.png) | Works as expected |
 | Personas top | ![screenshot](documentation/responsiveness/mobile-personas-1.png) | ![screenshot](documentation/responsiveness/tablet-personas-1.png) | ![screenshot](documentation/responsiveness/desktop-personas-1.png) | Works as expected |
 | Personas bot | ![screenshot](documentation/responsiveness/mobile-personas-2.png) | ![screenshot](documentation/responsiveness/tablet-personas-2.png) | ![screenshot](documentation/responsiveness/desktop-personas-2.png) | Works as expected |
@@ -62,7 +62,7 @@ I've tested my deployed project on multiple browsers to check for compatibility 
 
 | Page | Chrome | Firefox | Edge | Notes |
 | --- | --- | --- | --- | --- |
-| Home | ![screenshot](documentation/browsers/chrome-home.png) | ![screenshot](documentation/browsers/firefox-home.png) | ![screenshot](documentation/browsers/edge-home.png) | Works as expected |
+| Home (Index) | ![screenshot](documentation/browsers/chrome-home.png) | ![screenshot](documentation/browsers/firefox-home.png) | ![screenshot](documentation/browsers/edge-home.png) | Works as expected |
 | About | ![screenshot](documentation/browsers/chrome-about.png) | ![screenshot](documentation/browsers/firefox-about.png) | ![screenshot](documentation/browsers/edge-about.png) | Works as expected |
 | Personas top | ![screenshot](documentation/browsers/chrome-personas-1.png) | ![screenshot](documentation/browsers/firefox-personas-1.png) | ![screenshot](documentation/browsers/edge-personas-1.png) | Works as expected |
 | Personas bot | ![screenshot](documentation/browsers/chrome-personas-2.png) | ![screenshot](documentation/browsers/firefox-personas-2.png) | ![screenshot](documentation/browsers/edge-personas-2.png) | Works as expected |
@@ -72,3 +72,16 @@ I've tested my deployed project on multiple browsers to check for compatibility 
 | Contact | ![screenshot](documentation/browsers/chrome-contact.png) | ![screenshot](documentation/browsers/firefox-contact.png) | ![screenshot](documentation/browsers/edge-contact.png) | Works as expected |
 | Success | ![screenshot](documentation/browsers/chrome-success.png) | ![screenshot](documentation/browsers/firefox-success.png) | ![screenshot](documentation/browsers/edge-success.png) | Works as expected |
 | 404 | ![screenshot](documentation/browsers/chrome-404.png) | ![screenshot](documentation/browsers/firefox-404.png) | ![screenshot](documentation/browsers/edge-404.png) | Works as expected |
+
+
+## Lighthouse Audit
+
+I've tested my deployed project using the Lighthouse Audit tool to check for any major issues. I found that there were no major warnings, and the results for both mobile and desktop were very good.
+
+| Page | Mobile | Desktop |
+| --- | --- | --- |
+| Home (Index) | ![screenshot](documentation/lighthouse/mobile-home.png) | ![screenshot](documentation/lighthouse/desktop-home.png) |
+| Journal | ![screenshot](documentation/lighthouse/mobile-journal.png) | ![screenshot](documentation/lighthouse/desktop-journal.png) |
+| Contact | ![screenshot](documentation/lighthouse/mobile-contact.png) | ![screenshot](documentation/lighthouse/desktop-contact.png) |
+| Success | ![screenshot](documentation/lighthouse/mobile-success.png) | ![screenshot](documentation/lighthouse/desktop-success.png) |
+| 404 | ![screenshot](documentation/lighthouse/mobile-404.png) | ![screenshot](documentation/lighthouse/desktop-404.png) |
