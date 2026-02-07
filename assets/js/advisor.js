@@ -1,3 +1,4 @@
+/* jshint esversion: 11 */
 //  reference: Import AI language models and engine from WebLLM (MLC AI)
 import { CreateMLCEngine } from "https://esm.run/@mlc-ai/web-llm";
 // ------------------------------------------------------------------------------------------------------

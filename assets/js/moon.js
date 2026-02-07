@@ -1,3 +1,4 @@
+/* jshint esversion: 11 */
 //  reference: Astronomy API from IPGeolocation
 
 //  MOON API helpers
