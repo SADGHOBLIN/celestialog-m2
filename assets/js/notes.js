@@ -1,4 +1,3 @@
-/* jshint esversion: 11 */
 // import displayMoonData to ensure an updated time/moon phase is displayed when creating a new note
 import { displayMoonData } from "./moon.js";
 // ------------------------------------------------------------------------------------------------------
@@ -183,7 +182,7 @@ function deleteNoteData(noteId, notes) {
     //  if findIndex on notes array returns -1, the note must be in the recycle bin
     //  permanantly delete a note from the recycle bin
     if (noteIndex < 0) {
-        const noteInBinIndex = notes.recycleBin.findIndex( (note) => note.id === noteId)
+        const noteInBinIndex = notes.recycleBin.findIndex( (note) => note.id === noteId);
         notes.recycleBin.splice(noteInBinIndex, 1);
         return sortNotes(notes);
     }
@@ -299,12 +298,12 @@ function displayOverrideCheck(userEntry, notes, elements, modalTitle, nextAction
         updateNotesObject(overrideNoteData(userEntry, notes), notes);
         closeModal(elements);
         nextAction();
-    })
+    });
     //  create cancel button
     const cancelBtn = createModalBtn("Cancel", () => {
         closeModal(elements);
         nextAction();
-    })
+    });
 
     //  attaches element to DOM
     elements.modalBody.appendChild(saveBtn);
@@ -345,7 +344,7 @@ function createNoteElement(note, elements, notes, state, arrayType, moonImages) 
         mainBtn = createModalBtn("Restore note", () => {
             deleteNoteElement(note.id, elements);
             return updateNotesObject(restoreDeletedNote(note.id, notes), notes);
-        })
+        });
     }
 
     /*  delete button, will either permanantly delete a note from recycle bin,
@@ -354,7 +353,7 @@ function createNoteElement(note, elements, notes, state, arrayType, moonImages) 
     const deleteNoteBtn = createModalBtn("Delete note", () => {
         deleteNoteElement(note.id, elements);
         return updateNotesObject(deleteNoteData(note.id, notes), notes);
-    })
+    });
 
     //  add .red-moon class to placeholder notes for styling and `display visibility` toggle
     if (note.moon === "RED MOON") {
@@ -393,13 +392,14 @@ function toggleMissedDays(state) {
     const redMoons = document.querySelectorAll(".red-moon");
     state.showRedMoons = !state.showRedMoons;
     
-    document.getElementById("toggle-missed-days").innerText = state.showRedMoons
-    ? "Hide Missed Journaling Days"
-    : "Show Missed Journaling Days";
+    document.getElementById("toggle-missed-days").innerText = (
+        state.showRedMoons ? "Hide Missed Journaling Days"
+                           : "Show Missed Journaling Days"
+    );
 
     redMoons.forEach(note => {
         note.classList.toggle("hidden");
-    })
+    });
     return state;
 }
 
@@ -488,7 +488,7 @@ function captureUserEntry(elements, notes) {
     const content = elements.noteContent.value;
 
     if (!elements.noteContent.value.trim()) {
-        const editorContainer = document.querySelector(".note-editor-container")
+        const editorContainer = document.querySelector(".note-editor-container");
         if (editorContainer.querySelector(".error-notification")) {
             return;
         }
