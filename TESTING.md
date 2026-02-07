@@ -24,4 +24,15 @@ I have used the recommended [CSS Jigsaw Validator](https://jigsaw.w3.org/css-val
 
 | Directory | File | URL | Screenshot | Notes |
 | --- | --- | --- | --- | --- |
-| assets | [style.css](https://github.com/SADGHOBLIN/celestialog-m2/blob/main/assets/css/style.css) | [CSS Validator](https://jigsaw.w3.org/css-validator/validator?uri=https://sadghoblin.github.io/celestialog-m2) | ![screenshot](documentation/validation/css-style.png) | No errors, and warnings only relate to custom css properties and vendor-prefixed features which are used to ensure cross-browser compatibility |
+| assets/css | [style.css](https://github.com/SADGHOBLIN/celestialog-m2/blob/main/assets/css/style.css) | [CSS Validator](https://jigsaw.w3.org/css-validator/validator?uri=https://sadghoblin.github.io/celestialog-m2) | ![screenshot](documentation/validation/css-style.png) | No errors, and warnings only relate to custom css properties and vendor-prefixed features which are used to ensure cross-browser compatibility |
+
+### JavaScript
+
+I have used the recommended [JShint Validator](https://jshint.com) to validate all of my JS files.
+
+| Directory | File | URL | Screenshot | Notes |
+| --- | --- | --- | --- | --- |
+| assets/js | [advisor.js](https://github.com/SADGHOBLIN/celestialog-m2/blob/main/assets/js/advisor.js) |  | ![screenshot](documentation/validation/js-assets-advisor.png) | ⚠️ Notes (if applicable) |
+| assets/js | [moon.js](https://github.com/SADGHOBLIN/celestialog-m2/blob/main/assets/js/moon.js) |  | ![screenshot](documentation/validation/js-assets-moon.png) | ⚠️ Notes (if applicable) |
+| assets/js | [notes.js](https://github.com/SADGHOBLIN/celestialog-m2/blob/main/assets/js/notes.js) |  | ![screenshot](documentation/validation/js-assets-notes.png) | ⚠️ Notes (if applicable) |
+| assets/js | [script.js](https://github.com/SADGHOBLIN/celestialog-m2/blob/main/assets/js/script.js) |  | ![screenshot](documentation/validation/js-assets-script.png) | ⚠️ Notes (if applicable) |

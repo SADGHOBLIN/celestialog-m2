@@ -1,4 +1,3 @@
-/* jshint esversion: 11 */
 //  reference: Import AI language models and engine from WebLLM (MLC AI)
 import { CreateMLCEngine } from "https://esm.run/@mlc-ai/web-llm";
 // ------------------------------------------------------------------------------------------------------
@@ -195,9 +194,8 @@ function checkIfMobileDevice() {
     return smallScreen || lowMemory || lowCores;
 }
 function pickModel(config) {
-  return checkIfMobileDevice()
-    ? config.MODELS.mobileModel
-    : config.MODELS.defaultModel;
+    return checkIfMobileDevice() ? config.MODELS.mobileModel 
+                                 : config.MODELS.defaultModel;
 }
 
 //  store language model engine, or create a new engine instance
@@ -205,9 +203,8 @@ function cacheEngine() {
     let cachedEngine = null;
 
     return async function getEngine(config) {
-        return cachedEngine
-            ? cachedEngine
-            : cachedEngine = await createEngine(config);
+        return cachedEngine ? cachedEngine
+                            : cachedEngine = await createEngine(config);
     };
 }
 async function createEngine(config) {
