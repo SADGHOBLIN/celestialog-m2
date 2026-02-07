@@ -1,4 +1,3 @@
-/* jshint esversion: 11 */
 // Import custom functions from other modules
 import { displayMoonData } from "./moon.js";
 import { sendMessage, cacheEngine, chooseAdvisorCard, updateDeckName } from "./advisor.js";
@@ -103,6 +102,10 @@ const moonImages = {
         illustration: "assets/images/moon/red-moon.webp",
     },
 };
+// fetch user notes from localStorage (if any), or create empty object to store data
+let notes = initNotes();
+// create the webLLM engine: prepares to load LLM if user initiates by sending a message
+const getEngine = cacheEngine();
 
 // ------------------------------------------------------------------------------------------------------
 // EVENT LISTENERS
@@ -164,7 +167,7 @@ elements.userMsgInput.addEventListener("input", (e) => {
     } else {
         document.getElementById("command-hint").classList.remove("visible");
     }
-})
+});
 
 // animate tarot cards on load
 window.addEventListener("load", () => {
@@ -183,14 +186,8 @@ window.addEventListener("load", () => {
 
 // ------------------------------------------------------------------------------------------------------
 // INITIALISE
-// fetch user notes from localStorage (if any), or create empty object to store data
-let notes = initNotes();
-
 // pull moon data from api and display today's moon information to user
 await displayMoonData(config, elements, moonImages);
 
 // preloads the user's most recent note, if the note is from today
 displayTodaysNote(elements, notes);
-
-// create the webLLM engine: prepares to load LLM if user initiates by sending a message
-const getEngine = cacheEngine();
