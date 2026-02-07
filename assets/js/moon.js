@@ -1,4 +1,3 @@
-/* jshint esversion: 11 */
 //  reference: Astronomy API from IPGeolocation
 
 //  MOON API helpers
@@ -11,9 +10,8 @@ async function getMoonData(config) {
     }
 
     const payload = JSON.parse(savedData);
-    return isDataFresh(payload, config)
-        ? payload
-        : await saveAstronomyData(config);
+    return isDataFresh(payload, config) ? payload
+                                        : await saveAstronomyData(config);
 }
 
 //  get astronomy data from API and save to local storage
@@ -74,9 +72,8 @@ function checkMoonVisibility(moonrise, moonset) {
     const rise = rh * 100 + rm;
     const set = sh * 100 + sm;
 
-    return rise > set
-        ? now >= rise || now <= set
-        : now >= rise && now <= set;
+    return rise > set ? now >= rise || now <= set
+                      : now >= rise && now <= set;
 }
 
 // ------------------------------------------------------------------------------------------------------
@@ -108,9 +105,8 @@ async function displayMoonData(config, elements, moonImages) {
     //  display moon visibility
     const isVisible = checkMoonVisibility(moonrise, moonset);
 
-    elements.moonVisibility.textContent = isVisible
-        ? `${moonrise} - ${moonset}`
-        : `Moonrise at ${moonrise}`;
+    elements.moonVisibility.textContent = isVisible ? `${moonrise} - ${moonset}`
+                                                    : `Moonrise at ${moonrise}`;
 }
 // ------------------------------------------------------------------------------------------------------
 //  export functions

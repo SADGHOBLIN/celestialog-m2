@@ -32,7 +32,7 @@ I have used the recommended [JShint Validator](https://jshint.com) to validate a
 
 | Directory | File | URL | Screenshot | Notes |
 | --- | --- | --- | --- | --- |
-| assets/js | [advisor.js](https://github.com/SADGHOBLIN/celestialog-m2/blob/main/assets/js/advisor.js) |  | ![screenshot](documentation/validation/js-assets-advisor.png) | ⚠️ Notes (if applicable) |
-| assets/js | [moon.js](https://github.com/SADGHOBLIN/celestialog-m2/blob/main/assets/js/moon.js) |  | ![screenshot](documentation/validation/js-assets-moon.png) | ⚠️ Notes (if applicable) |
+| assets/js | [advisor.js](https://github.com/SADGHOBLIN/celestialog-m2/blob/main/assets/js/advisor.js) | n/a | ![screenshot](documentation/validation/js-advisor.png) | This project uses ES11 features and assumes a modern JS environment where these features are supported. The JSHint warnings are therefore acceptable |
+| assets/js | [moon.js](https://github.com/SADGHOBLIN/celestialog-m2/blob/main/assets/js/moon.js) | n/a | ![screenshot](documentation/validation/js-moon.png) | This project uses ES11 features and assumes a modern JS environment where these features are supported. The JSHint warnings are therefore acceptable |
 | assets/js | [notes.js](https://github.com/SADGHOBLIN/celestialog-m2/blob/main/assets/js/notes.js) |  | ![screenshot](documentation/validation/js-assets-notes.png) | ⚠️ Notes (if applicable) |
 | assets/js | [script.js](https://github.com/SADGHOBLIN/celestialog-m2/blob/main/assets/js/script.js) |  | ![screenshot](documentation/validation/js-assets-script.png) | ⚠️ Notes (if applicable) |
