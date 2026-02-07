@@ -368,7 +368,6 @@ async function sendMessage(getEngine, config, elements, state) {
     //  remove hints after a delay to remove clutter from chat window
     const hints = document.querySelectorAll(".advisor-help");
     if (hints.length) {
-        console.log("hints is firing");
         for (const hint of hints) {
             hint.classList.remove("visible");
         }
