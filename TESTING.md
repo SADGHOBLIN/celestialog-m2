@@ -130,6 +130,36 @@ Defensive programming was manually tested with the below user acceptance testing
 | [Error pages](https://github.com/SADGHOBLIN/celestialog-m2/issues/10) | As a user | I want to see a 404 error page if I get lost | so that it is clear that I have accidently navigated to a page that doesn't exist, and I can be redirected back to the main site. | ![screenshot](documentation/defensive/error404.png) |
 
 
+## Automated Testing
+
+Testing the validity of a deployed website can be broken down into two primary forms of testing:
+- (TDD) Test-driven development
+- (BDD) Behaviour-driven development
+
+TDD is a form of development that builds code with the focus of passing a series of automated tests with the minimal amount of code by using software tools that can automatically execute testing parameters on a snippet of code. Once a snippet of code passes a test, it can be optimised, and ran through more tests to iteratively test and stress the functionality. Jest is a framework used to run code against a series of tests, and successful code should pass a series of tests that can be ran in any order. This is a good way of working, as you can understand exactly when and why a piece of code breaks through automated testing.
+
+BDD is a useful way of testing the actual user experience with a website, which is something that TDD does not excel at, and focuses on User Stories to put strain on a developed site by mimicing how users will interact with the application. This can be effective at ensuring features deliver their expected outcomes whilst searching for edge cases that may cause unpredictable responses in the code. However, BDD is a manual form of testing and can be time consuming, particularly in larger projects.
+
+### JavaScript (Jest Testing)
+
+I have used the [Jest](https://jestjs.io) JavaScript testing framework to test the application functionality. Testing focused purely on utility functions that operate independently from the DOM, as I did not discover TDD and automating testing until near the end point of this project. Due to time contraints, it would not be effective to try and refactor all my code with TDD in mind. Therefore, I have used Jest to run a series of automated tests in order to learn more about the framework, and act as additional check on my code functionality, so that I can develop future projects with TDD in mind.
+
+> [!NOTE]  
+> I fully acknowledge and understand that, in a real-world scenario, an extensive set of additional tests would be more comprehensive.
+
+Jest was installed as a development dependency:
+
+`npm install --save-dev jest`
+
+Test files were created by using the naming convention `filename.test.js` within the `tests/` folder. This allows Jest to automatically detect and execute tests without additional configuration.
+
+As this projects JavaScript files use ES module syntax (`import`/`export`), which is supported and acceptable for modern browsers, the test runner was executed using:
+
+`"test": "node --experimental-vm-modules node_modules/jest/bin/jest.js"`
+
+This ensures compatibility with ES module syntax when running tests in a Node.js environment.
+
+
 ## Bugs
 
 ### Fixed Bugs & Issues

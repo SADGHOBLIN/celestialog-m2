@@ -583,3 +583,6 @@ function viewRecycleBin(elements, notes, state, moonImages) {
 // ------------------------------------------------------------------------------------------------------
 //  export functions
 export { initNotes, displayTodaysNote, captureUserEntry, createNewNote, viewAllNotes, viewRecycleBin, toggleHidden, closeModal };
+
+// Jest exports for testing
+export { generateNoteId };
