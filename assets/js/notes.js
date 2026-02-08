@@ -5,11 +5,41 @@ import { displayMoonData } from "./moon.js";
 // NOTES DATA helpers
 
 function initNotes() {
-    //  on load, fetches any saved notes from localStorage, or creates a new object to store data
-    return JSON.parse(localStorage.getItem("notes")) || {
-        userNotes: [],
+    const savedNotes = JSON.parse(localStorage.getItem("notes"));
+    if (savedNotes) {
+        return savedNotes;
+    }
+
+    const tutorialNoteContent = [
+        'Welcome to Celestialog',
+        '',
+        'NOTES:',
+        '• save: save note',
+        '• new: create new note',
+        '• open: open saved notes',
+        '• bin: view recycle bin',
+        '',
+        'JOURNAL:',
+        'Use the buttons to toggle between your Journal and your personal Advisor chat window.',
+        'Click "Talk to Advisor" to begin.',
+        '',
+        'MOON:',
+        'The current moon phase is shown alongside todays date and visibility window.',
+        'Let this guide your writing.',
+    ];
+    const tutorialNote = {
+        id: generateNoteId(),
+        title: "Tutorial",
+        date: new Date().toDateString(),
+        moon: "FULL MOON",
+        content: tutorialNoteContent.join("\n")
+    };
+    const emptyNotes = {
+        userNotes: [tutorialNote],
         recycleBin: [],
     };
+    localStorage.setItem("notes", JSON.stringify(emptyNotes));
+    return emptyNotes;
 }
 
 function generateNoteId() {
