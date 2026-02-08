@@ -132,32 +132,46 @@ Defensive programming was manually tested with the below user acceptance testing
 
 ## Automated Testing
 
-Testing the validity of a deployed website can be broken down into two primary forms of testing:
+### Manual Testing vs Automated Testing
+
+Testing the validity of a deployed website can be broken down into two primary forms of development approaches:
 - (TDD) Test-driven development
 - (BDD) Behaviour-driven development
 
 TDD is a form of development that builds code with the focus of passing a series of automated tests with the minimal amount of code by using software tools that can automatically execute testing parameters on a snippet of code. Once a snippet of code passes a test, it can be optimised, and ran through more tests to iteratively test and stress the functionality. Jest is a framework used to run code against a series of tests, and successful code should pass a series of tests that can be ran in any order. This is a good way of working, as you can understand exactly when and why a piece of code breaks through automated testing.
 
-BDD is a useful way of testing the actual user experience with a website, which is something that TDD does not excel at, and focuses on User Stories to put strain on a developed site by mimicing how users will interact with the application. This can be effective at ensuring features deliver their expected outcomes whilst searching for edge cases that may cause unpredictable responses in the code. However, BDD is a manual form of testing and can be time consuming, particularly in larger projects.
+BDD is a useful way of testing the actual user experience with a website, which is something that TDD does not excel at, and focuses on User Stories to put strain on a developed site by mimicking how users will interact with the application. This can be effective at ensuring features deliver their expected outcomes whilst searching for edge cases that may cause unpredictable responses in the code. However, BDD is a manual form of testing and can be time consuming, particularly in larger projects.
 
 ### JavaScript (Jest Testing)
 
-I have used the [Jest](https://jestjs.io) JavaScript testing framework to test the application functionality. Testing focused purely on utility functions that operate independently from the DOM, as I did not discover TDD and automating testing until near the end point of this project. Due to time contraints, it would not be effective to try and refactor all my code with TDD in mind. Therefore, I have used Jest to run a series of automated tests in order to learn more about the framework, and act as additional check on my code functionality, so that I can develop future projects with TDD in mind.
+I have used the [Jest](https://jestjs.io) JavaScript testing framework to test the application functionality. Testing focused purely on utility functions that operate independently from the DOM, as I did not discover TDD and automating testing until near the end point of this project. Due to time constraints, it would not be effective to try and refactor all my code with TDD in mind. Therefore, I have used Jest to run a series of automated tests in order to learn more about the framework, and act as additional check on my code's core functionality, so that I can develop future projects with TDD in mind.
+
+Therefore, UI driven interactions have been tested with User Story manual testing methods. LocalStorage functionality, DOM manipulation, AI and API output from `advisor.js` and `moon.js` were intentionally excluded from automated testing, and instead validated through manual testing with defensive programming in mind, as these features are better assessed through user interaction and visual inspection.
 
 > [!NOTE]  
 > I fully acknowledge and understand that, in a real-world scenario, an extensive set of additional tests would be more comprehensive.
 
-Jest was installed as a development dependency:
+#### Installation
 
-`npm install --save-dev jest`
+- Jest was installed as a development dependency:
 
-Test files were created by using the naming convention `filename.test.js` within the `tests/` folder. This allows Jest to automatically detect and execute tests without additional configuration.
+- `npm install --save-dev jest`
 
-As this projects JavaScript files use ES module syntax (`import`/`export`), which is supported and acceptable for modern browsers, the test runner was executed using:
+- Test files were created by using the naming convention `filename.test.js` within the `tests/` folder. This allows Jest to automatically detect and execute tests without additional configuration.
 
-`"test": "node --experimental-vm-modules node_modules/jest/bin/jest.js"`
+- As this projects JavaScript files use ES module syntax (`import`/`export`), which is supported and acceptable for modern browsers, the test runner was executed using:
 
-This ensures compatibility with ES module syntax when running tests in a Node.js environment.
+- `"test": "node --experimental-vm-modules node_modules/jest/bin/jest.js"`
+
+- This ensures compatibility with ES module syntax when running tests in a Node.js environment by using the following command:
+
+- `npm test`
+
+Below are the results from the tests that I've written for this application:
+
+| Test Suites | Tests | Screenshot |
+| --- | --- | --- |
+| 1 passed | 5 passed | ![screenshot](documentation/automation/jest-notes.png) |
 
 
 ## Bugs
@@ -193,3 +207,7 @@ After conducting thorough testing there are no known remaining bugs, but any rem
 | --- | --- | --- |
 | Cannot properly delete `red moon` placeholder notes | There is an issue with the logic that `fills missed journaling days` which prevents the user from being able to delete a `red moon` (missed day note) unless they delete their own user created notes. This is because the code will always try to fill in the gaps between journaling days for user created notes. Whilst I did think it was possible to 'track' whether the user had deleted a `red moon` note through a second recycle bin that is hidden from the user, I thought that this was a sub-optimal solution, and I believe that the impact of this issue on the user was minimal - they can use the toggle button to hide `red moon` notes, and deleting them would go against the note's purpose in the first place. Therefore, I decided that rewriting this bit of logic was beyond the scope of this deadline, and could be refactored at a later date. | ![screenshot](documentation/defensive/deleted-bin-restored.png) |
 | Advisor chatbot engine loadtime | I decided to use WebLLM to create a functional chat advisor, but due to the nature of how WebLLM functions, the initial first time download of the LLM model can take a good few minutes. This only has to be done once. There are visual cues of this for the user, and a smaller LLM model is automatically used for less powerful devices in order to try and optimise this experience for the user. Whilst this one off download could be an issue since it could turn away potential site visitors, I decided that this risk is an acceptable trade off for a small project like this, as I have deliberately selected the most lightweight LLM's that can be ran locally, whilst managing the effectiveness of the actual LLM's capability for this feature. The chat advisor feature is optional, does not impact the rest of the site's note taking functionality, and the user can carry out other tasks on the website page whilst waiting for the modal to load for the first time. | ![screenshot](documentation/defensive/send-chat-waiting.png) ![screenshot](documentation/bugs/advisor-loading.png) |
+
+
+> [!IMPORTANT]  
+> There are no remaining bugs that I am aware of, though, even after thorough testing, I cannot rule out the possibility.
