@@ -1,3 +1,4 @@
+/* jshint esversion: 11 */
 // Import custom functions from other modules
 import { displayMoonData } from "./moon.js";
 import { sendMessage, cacheEngine, chooseAdvisorCard, updateDeckName } from "./advisor.js";

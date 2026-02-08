@@ -1,3 +1,4 @@
+/* jshint esversion: 11 */
 // import displayMoonData to ensure an updated time/moon phase is displayed when creating a new note
 import { displayMoonData } from "./moon.js";
 // ------------------------------------------------------------------------------------------------------
